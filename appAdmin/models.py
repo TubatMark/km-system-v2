@@ -79,10 +79,9 @@ class ResourceMetadata(models.Model):
     ]
 
     id = models.AutoField(primary_key=True)
-    title = models.CharField(max_length=255)
     slug = models.SlugField(max_length=255, unique=True, default=generate_random_slug)
-    description = models.TextField(blank=True)
     resource_type = models.CharField(max_length=50, choices=RESOURCE_TYPES)
+    keywords = models.TextField(blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     created_by = models.ForeignKey(
@@ -108,14 +107,13 @@ class ResourceMetadata(models.Model):
 
     # Fields for controlling access/visibility
     is_approved = models.BooleanField(default=False)
-    is_featured = models.BooleanField(default=False)
 
     class Meta:
         ordering = ["-created_at"]
         db_table = "tbl_knowledge_resources_metadata"
 
     def __str__(self):
-        return self.title
+        return f"{self.resource_type.title()} - {self.slug}"
 
     def get_absolute_url(self):
         return reverse("resource_detail", kwargs={"slug": self.slug})
@@ -127,18 +125,22 @@ class Event(models.Model):
         ResourceMetadata, on_delete=models.CASCADE, related_name="event"
     )
     slug = models.SlugField(max_length=255, unique=True, default=generate_random_slug)
+    title = models.CharField(max_length=255)
+    venue = models.CharField(max_length=255, blank=True)
+    organizer = models.CharField(max_length=255)
     start_date = models.DateTimeField()
     end_date = models.DateTimeField()
-    location = models.CharField(max_length=255)
-    organizer = models.CharField(max_length=255)
-    event_file = models.FileField(upload_to="knowledge_resources/events/")
-    is_virtual = models.BooleanField(default=False)
+    event_type = models.CharField(max_length=100, blank=True)
+    documentation_link = models.URLField(blank=True)
+    pictures = models.ImageField(
+        upload_to="knowledge_resources/events/", blank=True, null=True
+    )
 
     class Meta:
         db_table = "tbl_knowledge_resources_event"
 
     def __str__(self):
-        return f"Event: {self.metadata.title}"
+        return f"Event: {self.title}"
 
     def get_absolute_url(self):
         return reverse("event_detail", kwargs={"slug": self.slug})
@@ -150,15 +152,16 @@ class InformationSystem(models.Model):
         ResourceMetadata, on_delete=models.CASCADE, related_name="information_system"
     )
     slug = models.SlugField(max_length=255, unique=True, default=generate_random_slug)
-    website_url = models.URLField()
-    system_owner = models.CharField(max_length=255)
-    last_updated = models.DateField(blank=True, null=True)
+    link = models.URLField(unique=True, blank=True)
+    organization_owner = models.CharField(max_length=255)
+    agency = models.CharField(max_length=255, blank=True)
+    brief_explanation = models.TextField()
 
     class Meta:
         db_table = "tbl_knowledge_resources_information_system"
 
     def __str__(self):
-        return f"InfoSystem: {self.metadata.title}"
+        return f"InfoSystem: {self.organization_owner}"
 
     def get_absolute_url(self):
         return reverse("info_system_detail", kwargs={"slug": self.slug})
@@ -195,79 +198,87 @@ class Media(models.Model):
         ResourceMetadata, on_delete=models.CASCADE, related_name="media"
     )
     slug = models.SlugField(max_length=255, unique=True, default=generate_random_slug)
-    media_type = models.CharField(
-        max_length=50,
-        choices=[
-            ("image", "Image"),
-            ("video", "Video"),
-            ("audio", "Audio"),
-            ("presentation", "Presentation"),
-        ],
-    )
-    media_file = models.FileField(upload_to="knowledge_resources/media/")
-    media_url = models.URLField(blank=True)
-    author = models.CharField(max_length=255, blank=True)
+    title = models.CharField(max_length=255)
+    link = models.URLField()
 
     class Meta:
         db_table = "tbl_knowledge_resources_media"
 
     def __str__(self):
-        return f"Media: {self.metadata.title}"
+        return f"Media: {self.title}"
 
     def get_absolute_url(self):
         return reverse("media_detail", kwargs={"slug": self.slug})
 
 
 class News(models.Model):
+    """
+    News model for current events, announcements, press releases, etc.
+    This is different from Publications which are academic/research documents.
+    """
+
     id = models.AutoField(primary_key=True)
     metadata = models.OneToOneField(
         ResourceMetadata, on_delete=models.CASCADE, related_name="news"
     )
     slug = models.SlugField(max_length=255, unique=True, default=generate_random_slug)
-    publication_date = models.DateField()
-    source = models.CharField(max_length=255)
-    external_url = models.URLField(blank=True)
+    headline = models.CharField(max_length=255, help_text="News headline/title")
+    author = models.CharField(max_length=255)
+    position = models.CharField(
+        max_length=255, blank=True, help_text="Author's position/title"
+    )
     content = models.TextField()
+    source = models.URLField(blank=True, help_text="Source URL of the news")
     featured_image = models.ImageField(
         upload_to="knowledge_resources/news_images/", blank=True, null=True
     )
 
     class Meta:
         db_table = "tbl_knowledge_resources_news"
+        verbose_name_plural = "News"
 
     def __str__(self):
-        return f"News: {self.metadata.title}"
+        return f"News: {self.headline}"
 
     def get_absolute_url(self):
         return reverse("news_detail", kwargs={"slug": self.slug})
 
 
 class Policy(models.Model):
+    POLICY_TYPES = [
+        ("research", "Policy Research"),
+        ("formulated", "Policy Formulated"),
+    ]
+
     id = models.AutoField(primary_key=True)
     metadata = models.OneToOneField(
         ResourceMetadata, on_delete=models.CASCADE, related_name="policy"
     )
     slug = models.SlugField(max_length=255, unique=True, default=generate_random_slug)
-    policy_number = models.CharField(max_length=100, blank=True)
-    effective_date = models.DateField()
-    issuing_body = models.CharField(max_length=255)
-    policy_file = models.FileField(upload_to="knowledge_resources/policies/")
-    policy_url = models.URLField(blank=True)
-    status = models.CharField(
-        max_length=50,
-        choices=[
-            ("draft", "Draft"),
-            ("active", "Active"),
-            ("superseded", "Superseded"),
-            ("archived", "Archived"),
-        ],
-    )
+    policy_type = models.CharField(max_length=50, choices=POLICY_TYPES)
+    agency = models.CharField(max_length=255)
+    description = models.TextField()
+    year = models.IntegerField()
+
+    # Fields for policy research
+    advocacy_project = models.CharField(max_length=255, blank=True)
+    author = models.CharField(max_length=255, blank=True)
+    findings = models.TextField(blank=True)
+
+    # Fields for policy formulated
+    policy = models.TextField(blank=True)
+
+    def save(self, *args, **kwargs):
+        # Auto-extract year if it's somehow a datetime
+        if hasattr(self.year, "year"):
+            self.year = self.year.year
+        super().save(*args, **kwargs)
 
     class Meta:
         db_table = "tbl_knowledge_resources_policy"
 
     def __str__(self):
-        return f"Policy: {self.metadata.title}"
+        return f"Policy: {self.policy_type} - {self.agency}"
 
     def get_absolute_url(self):
         return reverse("policy_detail", kwargs={"slug": self.slug})
@@ -279,11 +290,22 @@ class Project(models.Model):
         ResourceMetadata, on_delete=models.CASCADE, related_name="project"
     )
     slug = models.SlugField(max_length=255, unique=True, default=generate_random_slug)
+    program_title = models.CharField(max_length=255, blank=True)
+    project_title = models.CharField(max_length=255)
+    project_leader = models.CharField(max_length=255)
+    source_of_fund = models.CharField(max_length=255, blank=True)
+    cooperating_agency = models.CharField(max_length=255, blank=True)
+    collaborating_agency = models.CharField(max_length=255, blank=True)
+    implementing_agency = models.CharField(max_length=255, blank=True)
+    total_approved_budget = models.DecimalField(
+        max_digits=12, decimal_places=2, blank=True, null=True
+    )
+    implementing_agency_counterpart = models.DecimalField(
+        max_digits=12, decimal_places=2, blank=True, null=True
+    )
     start_date = models.DateField()
     end_date = models.DateField(blank=True, null=True)
-    budget = models.DecimalField(max_digits=12, decimal_places=2, blank=True, null=True)
-    funding_source = models.CharField(max_length=255, blank=True)
-    project_lead = models.CharField(max_length=255)
+    extension_months = models.IntegerField(blank=True, null=True)
     contact_email = models.EmailField(blank=True)
     status = models.CharField(
         max_length=50,
@@ -305,13 +327,23 @@ class Project(models.Model):
 
 
 class Publication(models.Model):
+    """
+    Publications model for academic papers, research reports, technical documents, etc.
+    This is different from News which are current events/announcements.
+    """
+
     id = models.AutoField(primary_key=True)
     metadata = models.OneToOneField(
         ResourceMetadata, on_delete=models.CASCADE, related_name="publication"
     )
     slug = models.SlugField(max_length=255, unique=True, default=generate_random_slug)
-    authors = models.CharField(max_length=500)
-    publication_date = models.DateField()
+    title = models.CharField(max_length=255)
+    description = models.TextField(blank=True)
+    author = models.CharField(max_length=500)
+    file = models.FileField(
+        upload_to="knowledge_resources/publications/", blank=True, null=True
+    )
+    date_published = models.DateField()
     publisher = models.CharField(max_length=255, blank=True)
     doi = models.CharField(max_length=100, blank=True, verbose_name="DOI")
     isbn = models.CharField(max_length=20, blank=True, verbose_name="ISBN")
@@ -325,37 +357,71 @@ class Publication(models.Model):
             ("thesis", "Thesis/Dissertation"),
             ("other", "Other"),
         ],
-    )
-    publication_file = models.FileField(
-        upload_to="knowledge_resources/publications/", blank=True, null=True
+        default="other",
     )
 
     class Meta:
         db_table = "tbl_knowledge_resources_publication"
 
     def __str__(self):
-        return f"Publication: {self.metadata.title}"
+        return f"Publication: {self.title}"
 
     def get_absolute_url(self):
         return reverse("publication_detail", kwargs={"slug": self.slug})
 
 
 class Technology(models.Model):
+    ADOPTION_CHOICES = [
+        ("adopted", "Adopted"),
+        ("for_incubation", "For Incubation"),
+    ]
+
+    FUNDING_CHOICES = [
+        ("pcaarrd", "PCAARRD-funded"),
+        ("dost", "DOST-funded"),
+        ("suc", "SUC-funded"),
+        ("other", "Other"),
+    ]
+
     id = models.AutoField(primary_key=True)
     metadata = models.OneToOneField(
         ResourceMetadata, on_delete=models.CASCADE, related_name="technology"
     )
     slug = models.SlugField(max_length=255, unique=True, default=generate_random_slug)
-    developer = models.CharField(max_length=255)
-    release_date = models.DateField(blank=True, null=True)
-    patent_number = models.CharField(max_length=100, blank=True)
-    license_type = models.CharField(max_length=100, blank=True)
+    commodity = models.ForeignKey(
+        Commodity, on_delete=models.CASCADE, related_name="technologies"
+    )
+    technologies = models.CharField(max_length=255)
+    products = models.CharField(max_length=255)
+    adoption_status = models.CharField(max_length=50, choices=ADOPTION_CHOICES)
+    year_introduced = models.IntegerField()
+    ip_asset = models.CharField(max_length=255, blank=True)
+    brief_description = models.TextField()
+    support_facilities = models.TextField(blank=True)
+    available_experts = models.TextField(blank=True)
+    experts_email = models.EmailField(blank=True)
+    experts_phone = models.CharField(max_length=20, blank=True)
+    funding_source = models.CharField(
+        max_length=50, choices=FUNDING_CHOICES, blank=True
+    )
+    technologies_offered_for = models.CharField(max_length=255, blank=True)
+    technology_transfer_pathway = models.TextField(blank=True)
+    google_link_photos = models.URLField(blank=True)
+    pictures = models.ImageField(
+        upload_to="knowledge_resources/technologies/", blank=True, null=True
+    )
+
+    def save(self, *args, **kwargs):
+        # Auto-extract year if it's somehow a datetime
+        if hasattr(self.year_introduced, "year"):
+            self.year_introduced = self.year_introduced.year
+        super().save(*args, **kwargs)
 
     class Meta:
         db_table = "tbl_knowledge_resources_technology"
 
     def __str__(self):
-        return f"Technology: {self.metadata.title}"
+        return f"Technology: {self.technologies}"
 
     def get_absolute_url(self):
         return reverse("technology_detail", kwargs={"slug": self.slug})
@@ -367,17 +433,24 @@ class TrainingSeminar(models.Model):
         ResourceMetadata, on_delete=models.CASCADE, related_name="training_seminar"
     )
     slug = models.SlugField(max_length=255, unique=True, default=generate_random_slug)
-    start_date = models.DateTimeField()
-    end_date = models.DateTimeField()
-    location = models.CharField(max_length=255)
-    trainers = models.TextField(blank=True)
-    target_audience = models.CharField(max_length=255, blank=True)
+    title = models.CharField(max_length=255)
+    description = models.TextField(blank=True)
+    start_date = models.DateTimeField(blank=True, null=True)
+    end_date = models.DateTimeField(blank=True, null=True)
+    venue = models.CharField(max_length=255, blank=True)
+    organizer = models.CharField(max_length=255)
+    speakers = models.TextField(blank=True)
+    total_participants = models.IntegerField(blank=True, null=True)
+    documentation_link = models.URLField(blank=True)
+    pictures = models.ImageField(
+        upload_to="knowledge_resources/training/", blank=True, null=True
+    )
 
     class Meta:
         db_table = "tbl_knowledge_resources_training_seminar"
 
     def __str__(self):
-        return f"Training/Seminar: {self.metadata.title}"
+        return f"Training/Seminar: {self.title}"
 
     def get_absolute_url(self):
         return reverse("training_detail", kwargs={"slug": self.slug})
@@ -389,16 +462,22 @@ class Webinar(models.Model):
         ResourceMetadata, on_delete=models.CASCADE, related_name="webinar"
     )
     slug = models.SlugField(max_length=255, unique=True, default=generate_random_slug)
-    webinar_date = models.DateTimeField()
-    duration_minutes = models.IntegerField(default=60)
+    title = models.CharField(max_length=255)
+    duration = models.IntegerField(help_text="Duration in minutes")
+    date = models.DateTimeField()
+    speaker = models.CharField(max_length=255)
     platform = models.CharField(max_length=100)
-    presenters = models.TextField()
+    attendance = models.IntegerField(blank=True, null=True)
+    documentation_link = models.URLField(blank=True)
+    pictures = models.ImageField(
+        upload_to="knowledge_resources/webinars/", blank=True, null=True
+    )
 
     class Meta:
         db_table = "tbl_knowledge_resources_webinar"
 
     def __str__(self):
-        return f"Webinar: {self.metadata.title}"
+        return f"Webinar: {self.title}"
 
     def get_absolute_url(self):
         return reverse("webinar_detail", kwargs={"slug": self.slug})
@@ -410,16 +489,21 @@ class Product(models.Model):
         ResourceMetadata, on_delete=models.CASCADE, related_name="product"
     )
     slug = models.SlugField(max_length=255, unique=True, default=generate_random_slug)
-    manufacturer = models.CharField(max_length=255)
-    features = models.TextField()
-    technical_specifications = models.TextField(blank=True)
+    products = models.CharField(max_length=255)
+    description = models.TextField()
+    company = models.CharField(max_length=255)
     price = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
+    contact_info = models.TextField(blank=True)
+    documentation_link = models.URLField(blank=True)
+    pictures = models.ImageField(
+        upload_to="knowledge_resources/products/", blank=True, null=True
+    )
 
     class Meta:
         db_table = "tbl_knowledge_resources_product"
 
     def __str__(self):
-        return f"Product: {self.metadata.title}"
+        return f"Product: {self.products}"
 
     def get_absolute_url(self):
         return reverse("product_detail", kwargs={"slug": self.slug})

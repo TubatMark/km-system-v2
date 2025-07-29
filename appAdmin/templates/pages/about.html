@@ -1,249 +1,1503 @@
-{% extends 'base/admin-index.html' %} {% load embed_video_tags %} {% load static %}
-{% block title %} Admin About {% endblock %} {% block stylesheet %}
-<link rel="stylesheet" href="{% static 'style/css/admin.about.css' %}" />
-<!-- CSS -->
-<link
-  href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css"
-  rel="stylesheet"
-/>
-{% endblock %} {% block content %}
-<br />
-<div class="masonry-item col-12">
-  <div class="bd bgc-white">
-    <div class="peers fxw-nw@lg+ ai-s">
-      <div class="peer peer-greed w-70p@lg+ w-100@lg- p-20">
-        <div class="row">
-          <div class="col-md-12">
-            <div class="button-container-head">
-              <button type="button" id="about-page-btn" style="background-color: #0C356A; color: #fff; border: 0; border-radius: 3px; padding: 5px; font-weight: bold;">About Page Component</button>
-              <button type="button" id="about-footer-btn" style="background-color: #0C356A; color: #fff; border: 0; border-radius: 3px; padding: 5px; font-weight: bold;">About Footer Component</button>
-              <button type="button" id="video-btn" style="background-color: #0C356A; color: #fff; border: 0; border-radius: 3px; padding: 5px; font-weight: bold;">"How To Use (Video)" Component</button>
-            </div>
+{% extends 'base/admin-index.html' %}
+{% load embed_video_tags %}
+{% load static %}
+{% block title %} Admin About {% endblock %}
+
+{% block stylesheet %}
+<!-- Summernote CSS -->
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">
+
+<style>
+  /* CSS Variables for consistent theming */
+  :root {
+    --primary-color: #2C6E49;
+    --primary-light: #e8f5e8;
+    --primary-dark: #1e4d35;
+    --success-color: #28a745;
+    --info-color: #17a2b8;
+    --warning-color: #ffc107;
+    --danger-color: #dc3545;
+    --light-gray: #f8f9fa;
+    --border-color: #e9ecef;
+    --text-color: #374151;
+    --text-muted: #6B7280;
+    --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    --box-shadow-hover: 0 8px 24px rgba(0, 0, 0, 0.15);
+    --border-radius: 8px;
+    --border-radius-lg: 12px;
+    --transition: all 0.3s ease;
+  }
+
+  /* Base Layout Styles */
+  .dashboard-header {
+    text-align: center;
+    margin-bottom: 2rem;
+    padding: 1.5rem 0;
+  }
+
+  .dashboard-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+  }
+
+  .dashboard-subtitle {
+    color: var(--text-muted);
+    font-size: 1rem;
+    margin: 0;
+  }
+
+  /* Stats Grid */
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .stat-card {
+    background: white;
+    border-radius: var(--border-radius-lg);
+    padding: 1.5rem;
+    box-shadow: var(--box-shadow);
+    border: 1px solid var(--border-color);
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .stat-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--box-shadow-hover);
+  }
+
+  .stat-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary-color), var(--info-color));
+  }
+
+  .stat-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+
+  .stat-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.5rem;
+  }
+
+  .stat-content {
+    text-align: left;
+  }
+
+  .stat-value {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--text-color);
+    margin-bottom: 0.25rem;
+  }
+
+  .stat-label {
+    color: var(--text-muted);
+    font-size: 0.875rem;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+  }
+
+  .stat-change {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+  }
+
+  .stat-change.positive {
+    color: var(--success-color);
+  }
+
+  /* Content Overview Analytics */
+  .content-overview {
+    margin-bottom: 2rem;
+  }
+
+  .content-analytics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .analytics-card {
+    background: white;
+    border-radius: var(--border-radius-lg);
+    padding: 1.5rem;
+    box-shadow: var(--box-shadow);
+    border: 1px solid var(--border-color);
+    transition: var(--transition);
+  }
+
+  .analytics-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--box-shadow-hover);
+  }
+
+  .analytics-header {
+    margin-bottom: 1rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  .analytics-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--primary-color);
+    margin: 0;
+    display: flex;
+    align-items: center;
+  }
+
+  /* Status List */
+  .status-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .status-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid #f1f1f1;
+  }
+
+  .status-item:last-child {
+    border-bottom: none;
+  }
+
+  .status-info {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .status-text {
+    font-size: 13px;
+    color: var(--text-color);
+    font-weight: 500;
+  }
+
+  .status-badge {
+    font-size: 11px;
+    font-weight: 600;
+    padding: 4px 8px;
+    border-radius: 12px;
+  }
+
+  .status-badge.published {
+    background: var(--primary-light);
+    color: var(--primary-color);
+  }
+
+  .status-badge.active {
+    background: #e3f2fd;
+    color: #1976d2;
+  }
+
+  /* Changes List */
+  .changes-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    max-height: 280px;
+    overflow-y: auto;
+  }
+  
+  .change-item {
+    display: flex;
+    align-items: flex-start;
+    padding: 0.75rem;
+    border-radius: 8px;
+    background: #f8f9fa;
+    transition: all 0.3s ease;
+    position: relative;
+    border-left: 3px solid transparent;
+  }
+  
+  .change-item:hover {
+    background: #e9ecef;
+    transform: translateX(2px);
+    border-left-color: var(--primary-color);
+  }
+  
+  .change-item[data-change-type="about"] {
+    border-left-color: #28a745;
+  }
+  
+  .change-item[data-change-type="footer"] {
+    border-left-color: #17a2b8;
+  }
+  
+  .change-item[data-change-type="video"] {
+    border-left-color: #ffc107;
+  }
+  
+  .change-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 0.75rem;
+    flex-shrink: 0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .change-icon i {
+    color: white;
+    font-size: 12px;
+  }
+  
+  .change-content {
+    flex: 1;
+    min-width: 0;
+  }
+  
+  .change-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: #374151;
+    margin-bottom: 0.25rem;
+    line-height: 1.3;
+  }
+  
+  .change-time {
+    font-size: 11px;
+    color: #6B7280;
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.25rem;
+  }
+  
+  .change-description {
+    font-size: 11px;
+    color: #9CA3AF;
+    line-height: 1.4;
+    font-style: italic;
+  }
+  
+  .change-status {
+    display: flex;
+    align-items: center;
+    margin-left: 0.5rem;
+  }
+  
+  .status-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  /* Actions Grid */
+  .actions-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+  }
+
+  .action-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    background: white;
+    transition: var(--transition);
+    cursor: pointer;
+    text-decoration: none;
+    color: var(--text-color);
+  }
+
+  .action-card:hover {
+    border-color: var(--primary-color);
+    background: var(--light-gray);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(44, 110, 73, 0.1);
+    color: var(--text-color);
+    text-decoration: none;
+  }
+
+  .action-card i {
+    font-size: 1.5rem;
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+  }
+
+  .action-card span {
+    font-size: 12px;
+    font-weight: 500;
+    text-align: center;
+  }
+
+  /* Main Content Grid */
+  .content-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 2rem;
+  }
+
+  /* Chart Card */
+  .chart-card {
+    background: white;
+    border-radius: var(--border-radius-lg);
+    padding: 1.5rem;
+    box-shadow: var(--box-shadow);
+    border: 1px solid var(--border-color);
+  }
+
+  .custom-card {
+    box-shadow: 0 6px 24px rgba(44, 110, 73, 0.15);
+    border: 1.5px solid var(--primary-color);
+  }
+
+  .chart-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  .chart-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--primary-color);
+    margin: 0;
+  }
+
+  .chart-controls {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  /* Tab Buttons */
+  .tab-buttons {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .tab-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    background: var(--light-gray);
+    color: var(--text-muted);
+    font-weight: 500;
+    font-size: 13px;
+    transition: var(--transition);
+    cursor: pointer;
+  }
+
+  .tab-btn:hover {
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+    background: var(--primary-light);
+  }
+
+  .tab-btn.active {
+    border-color: var(--primary-color);
+    background: var(--primary-color);
+    color: white;
+  }
+
+  .tab-btn i {
+    font-size: 14px;
+  }
+
+  /* Content Sections */
+  .content-sections {
+    margin-top: 1.5rem;
+  }
+
+  .content-section {
+    padding: 1.5rem 0;
+  }
+
+  .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  .section-info {
+    flex: 1;
+  }
+
+  .section-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+  }
+
+  .section-description {
+    color: var(--text-muted);
+    margin: 0;
+    font-size: 14px;
+  }
+
+  .section-actions {
+    flex-shrink: 0;
+  }
+
+  .status-indicator {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 12px;
+    font-weight: 500;
+    padding: 0.5rem 0.75rem;
+    border-radius: 20px;
+  }
+
+  .status-indicator.published {
+    background: var(--primary-light);
+    color: var(--primary-color);
+  }
+
+  /* Content Editor */
+  .content-editor {
+    background: var(--light-gray);
+    border-radius: var(--border-radius);
+    padding: 1.5rem;
+  }
+
+  .editor-container {
+    margin-bottom: 1.5rem;
+  }
+
+  .content-textarea {
+    width: 100%;
+    min-height: 350px;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    padding: 1rem;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--text-color);
+    background: white;
+    transition: var(--transition);
+  }
+
+  .content-textarea:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(44, 110, 73, 0.1);
+    outline: none;
+  }
+
+  .form-actions {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+  }
+
+  /* Video Container */
+  .video-container {
+    background: var(--light-gray);
+    border-radius: var(--border-radius);
+    padding: 1.5rem;
+  }
+
+  .video-wrapper {
+    display: flex;
+    gap: 1.5rem;
+    align-items: flex-start;
+  }
+
+  .video-player {
+    flex-shrink: 0;
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    box-shadow: var(--box-shadow);
+  }
+
+  .no-video-state {
+    text-align: center;
+    padding: 3rem 2rem;
+    color: var(--text-muted);
+  }
+
+  .no-video-icon {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: var(--border-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.5rem;
+  }
+
+  .no-video-icon i {
+    font-size: 2rem;
+    color: #9CA3AF;
+  }
+
+  .no-video-state h5 {
+    color: var(--text-color);
+    margin-bottom: 0.5rem;
+  }
+
+  .no-video-state p {
+    margin-bottom: 1.5rem;
+  }
+
+  /* Messages Panel */
+  .messages-panel {
+    background: white;
+    border-radius: var(--border-radius-lg);
+    padding: 1.5rem;
+    box-shadow: var(--box-shadow);
+    border: 1px solid var(--border-color);
+    height: fit-content;
+  }
+
+  .messages-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  .messages-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--primary-color);
+    margin: 0;
+  }
+
+  /* Preview Content */
+  .preview-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .preview-item {
+    background: white;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    padding: 1rem;
+    transition: var(--transition);
+  }
+
+  .preview-item.active {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(44, 110, 73, 0.1);
+  }
+
+  .preview-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.75rem;
+  }
+
+  .preview-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--primary-color);
+    margin: 0;
+  }
+
+  .preview-status {
+    font-size: 11px;
+    font-weight: 600;
+    padding: 4px 8px;
+    border-radius: 12px;
+  }
+
+  .preview-status.published {
+    background: var(--primary-light);
+    color: var(--primary-color);
+  }
+
+  .preview-status.active {
+    background: #e3f2fd;
+    color: #1976d2;
+  }
+
+  .preview-description {
+    color: var(--text-muted);
+    font-size: 13px;
+    margin-bottom: 1rem;
+    line-height: 1.5;
+  }
+
+  .preview-actions {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  /* Button Styles */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1rem;
+    border-radius: 6px;
+    font-weight: 500;
+    font-size: 14px;
+    text-decoration: none;
+    border: 1px solid transparent;
+    transition: var(--transition);
+    cursor: pointer;
+    text-align: center;
+    justify-content: center;
+  }
+
+  .btn:hover {
+    text-decoration: none;
+    transform: translateY(-1px);
+  }
+
+  .btn:focus {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
+  }
+
+  .btn-primary {
+    background: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+  }
+
+  .btn-primary:hover {
+    background: var(--primary-dark);
+    border-color: var(--primary-dark);
+    color: white;
+  }
+
+  .btn-success {
+    background: var(--success-color);
+    color: white;
+    border-color: var(--success-color);
+  }
+
+  .btn-success:hover {
+    background: #218838;
+    border-color: #1e7e34;
+    color: white;
+  }
+
+  .btn-outline-primary {
+    background: transparent;
+    color: var(--primary-color);
+    border-color: var(--primary-color);
+  }
+
+  .btn-outline-primary:hover {
+    background: var(--primary-color);
+    color: white;
+  }
+
+  .btn-outline-secondary {
+    background: transparent;
+    color: var(--secondary-color);
+    border-color: var(--secondary-color);
+  }
+
+  .btn-outline-secondary:hover {
+    background: var(--secondary-color);
+    color: white;
+  }
+
+  .btn-sm {
+    padding: 0.5rem 0.75rem;
+    font-size: 12px;
+  }
+
+  /* Summernote Editor Customization */
+  .note-editor {
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .note-toolbar {
+    background: var(--light-gray);
+    border-bottom: 1px solid var(--border-color);
+    border-radius: var(--border-radius) var(--border-radius) 0 0;
+  }
+
+  .note-btn-group .note-btn {
+    border: none;
+    background: transparent;
+    color: var(--text-color);
+  }
+
+  .note-btn-group .note-btn:hover {
+    background: var(--border-color);
+    color: var(--primary-color);
+  }
+
+  .note-btn-group .note-btn.active {
+    background: var(--primary-color);
+    color: white;
+  }
+
+  .note-editable {
+    background: white;
+    color: var(--text-color);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    line-height: 1.6;
+    padding: 1rem;
+  }
+
+  .note-editable:focus {
+    background: white;
+  }
+
+  /* Mobile Responsive Design */
+  @media (max-width: 1200px) {
+    .content-analytics-grid {
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1rem;
+    }
+    
+    .content-grid {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+  }
+
+  @media (max-width: 768px) {
+    /* Dashboard header adjustments */
+    .dashboard-header {
+      text-align: center;
+      padding: 1rem;
+    }
+    
+    .dashboard-title {
+      font-size: 1.5rem;
+    }
+    
+    .dashboard-subtitle {
+      font-size: 0.875rem;
+    }
+
+    /* Stats grid mobile layout */
+    .stats-grid {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+
+    /* Analytics cards mobile layout */
+    .content-analytics-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .analytics-card {
+      padding: 1rem;
+    }
+
+    .actions-grid {
+      grid-template-columns: 1fr;
+    }
+    
+    /* Chart controls mobile */
+    .chart-header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+    
+    .chart-title {
+      font-size: 1.125rem;
+    }
+
+    .tab-buttons {
+      width: 100%;
+      justify-content: center;
+    }
+
+    .tab-btn {
+      flex: 1;
+      justify-content: center;
+      min-width: 0;
+    }
+
+    .tab-btn span {
+      display: none;
+    }
+
+    .tab-btn i {
+      font-size: 16px;
+    }
+    
+    /* Section header mobile */
+    .section-header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+
+    .section-actions {
+      width: 100%;
+    }
+
+    .status-indicator {
+      width: 100%;
+      justify-content: center;
+    }
+    
+    /* Content editor mobile */
+    .content-editor {
+      padding: 1rem;
+    }
+
+    .content-textarea {
+      min-height: 250px;
+    }
+
+    .form-actions {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .btn {
+      justify-content: center;
+      text-align: center;
+    }
+    
+    /* Video container mobile */
+    .video-wrapper {
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .video-player {
+      width: 100%;
+    }
+
+    .no-video-state {
+      padding: 2rem 1rem;
+    }
+
+    .no-video-icon {
+      width: 60px;
+      height: 60px;
+      margin-bottom: 1rem;
+    }
+
+    .no-video-icon i {
+      font-size: 1.5rem;
+    }
+
+    /* Preview panel mobile */
+    .preview-item {
+      padding: 0.75rem;
+    }
+
+    .preview-header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.5rem;
+    }
+
+    .preview-actions {
+      width: 100%;
+    }
+
+    .preview-actions .btn {
+      flex: 1;
+    }
+  }
+
+  @media (max-width: 480px) {
+    /* Extra small screens */
+    .chart-card,
+    .messages-panel {
+      padding: 1rem;
+    }
+    
+    /* Stat cards mobile */
+    .stat-card {
+      padding: 1rem;
+    }
+    
+    .stat-value {
+      font-size: 1.5rem;
+    }
+    
+    .stat-label {
+      font-size: 0.75rem;
+    }
+
+    /* Analytics cards extra small */
+    .analytics-card {
+      padding: 0.75rem;
+    }
+
+    .analytics-title {
+      font-size: 0.875rem;
+    }
+
+    .status-text,
+    .change-title {
+      font-size: 12px;
+    }
+
+    .change-time {
+      font-size: 10px;
+    }
+
+    .action-card {
+      padding: 0.75rem 0.5rem;
+    }
+
+    .action-card i {
+      font-size: 1.25rem;
+    }
+
+    .action-card span {
+      font-size: 11px;
+    }
+
+    /* Section styling mobile */
+    .section-title {
+      font-size: 1.125rem;
+    }
+
+    .section-description {
+      font-size: 13px;
+    }
+
+    /* Tab buttons extra small */
+    .tab-btn {
+      padding: 0.5rem;
+      min-width: 44px;
+    }
+
+    /* Form elements mobile */
+    .btn {
+      padding: 0.75rem;
+      font-size: 13px;
+    }
+
+    .btn-sm {
+      padding: 0.5rem;
+      font-size: 11px;
+    }
+  }
+
+  /* Tablet landscape adjustments */
+  @media (min-width: 769px) and (max-width: 1024px) {
+    .content-analytics-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.25rem;
+    }
+    
+    .actions-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .video-wrapper {
+      flex-direction: column;
+    }
+  }
+
+  /* Accessibility improvements */
+  .btn:focus,
+  .tab-btn:focus,
+  .action-card:focus,
+  .content-textarea:focus {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
+  }
+
+  /* High contrast mode support */
+  @media (prefers-contrast: high) {
+    .stat-card,
+    .analytics-card,
+    .preview-item,
+    .action-card {
+      border: 2px solid var(--text-color);
+    }
+  }
+
+  /* Reduced motion support */
+  @media (prefers-reduced-motion: reduce) {
+    .stat-card,
+    .analytics-card,
+    .btn,
+    .tab-btn,
+    .action-card,
+    .preview-item {
+      animation: none;
+      transition: none;
+    }
+  }
+
+  /* Print styles */
+  @media print {
+    .chart-controls,
+    .form-actions,
+    .preview-actions {
+      display: none;
+    }
+    
+    .content-analytics-grid {
+      grid-template-columns: 1fr;
+    }
+    
+    .content-grid {
+      grid-template-columns: 1fr;
+    }
+    
+    .dashboard-header {
+      margin-bottom: 1rem;
+    }
+  }
+
+  /* Loading states */
+  .loading {
+    opacity: 0.6;
+    pointer-events: none;
+  }
+
+  .loading::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Animation classes */
+  .fade-in {
+    animation: fadeIn 0.3s ease-in;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+  <!-- Page Header -->
+  <div class="dashboard-header">
+    <h1 class="dashboard-title">About Page Management</h1>
+    <p class="dashboard-subtitle">Manage about page content and video components</p>
+  </div>
+
+  <!-- Main Content Grid -->
+  <div class="content-grid">
+    <!-- About Page Management -->
+    <div class="chart-card custom-card">
+      <div class="chart-header">
+        <h3 class="chart-title">Content Management</h3>
+        <div class="chart-controls">
+          <div class="tab-buttons">
+            <button type="button" id="about-page-btn" class="tab-btn active">
+              <i class="fas fa-file-alt"></i>
+              <span>About Page</span>
+            </button>
+            <button type="button" id="about-footer-btn" class="tab-btn">
+              <i class="fas fa-columns"></i>
+              <span>About Footer</span>
+            </button>
+            <button type="button" id="video-btn" class="tab-btn">
+              <i class="fas fa-video"></i>
+              <span>Video Component</span>
+            </button>
           </div>
         </div>
-        <hr style="color: black;" />
-  
-        <div class="about-page" id="about-page">
-          <h3 style="font-weight:bold;">ADMIN 'ABOUT PAGE'</h3>
-  
-          <div class="row">
-            <div class="col-lg-12" style="margin-top:20px; width: 100%;">
-              <form action="{{ form_action }}" method="post">
-                {% csrf_token %}
-                <textarea name="content" id="about-page-textarea">
-                  {% if about_content %}
-                    {{ about_content.0.content }}
-                  {% else %}
-                    <span>No content</span>
-                  {% endif %}
-                </textarea>
-                <button type="submit" class="btn btn-success" style="float:right; margin-top:20px;">Update</button>
-              </form>
+      </div>
+      
+      <div class="content-sections">
+        <!-- About Page Section -->
+        <div class="content-section about-page" id="about-page">
+          <div class="section-header">
+            <div class="section-info">
+              <h4 class="section-title">About Page Content</h4>
+              <p class="section-description">Edit the main about page content that users will see</p>
+            </div>
+            <div class="section-actions">
+              <span class="status-indicator published">
+                <i class="fas fa-check-circle"></i>
+                Published
+              </span>
             </div>
           </div>
+          
+          <div class="content-editor">
+            <form action="{{ form_action }}" method="post" class="editor-form">
+              {% csrf_token %}
+              <div class="editor-container">
+                <textarea name="content" id="about-page-textarea" class="content-textarea">{% if about_content %}{{ about_content.0.content }}{% else %}No content available. Start writing your about page content here...{% endif %}</textarea>
+              </div>
+              <div class="form-actions">
+                <button type="submit" class="btn btn-success">
+                  <i class="fas fa-save"></i>
+                  <span>Update Content</span>
+                </button>
+               
+              </div>
+            </form>
+          </div>
         </div>
-  
-        <div class="about-footer" id="about-footer">
-          <h3 style="font-weight:bold;">ADMIN 'ABOUT FOOTER'</h3>
-  
-          <div class="row">
-            <div class="col-lg-12" style="margin-top:20px; width: 100%;">
-              <form action="{{ form_action_footer }}" method="post">
-                {% csrf_token %}
-                <textarea name="content_footer" id="about-footer-textarea">
-                  {% if footer_content %}
-                    {{ footer_content.0.content_footer }}
-                  {% else %}
-                    <span>No content</span>
-                  {% endif %}
-                </textarea>
-                <button type="submit" class="btn btn-success" style="float:right; margin-top:20px;">Update</button>
-              </form>
+
+        <!-- About Footer Section -->
+        <div class="content-section about-footer" id="about-footer" style="display: none;">
+          <div class="section-header">
+            <div class="section-info">
+              <h4 class="section-title">About Footer Content</h4>
+              <p class="section-description">Edit the footer content for the about page</p>
+            </div>
+            <div class="section-actions">
+              <span class="status-indicator published">
+                <i class="fas fa-check-circle"></i>
+                Published
+              </span>
             </div>
           </div>
-        </div>
-  
-        <div class="video-component" id="video-component">
-          <div class="header d-flex justify-content-between align-items-center">
-            <h3 style="font-weight:bold;">ADMIN 'HOW TO USE' VIDEO</h3>
-            <button type="button" title="Upload" style="background-color: #0C356A; color: #fff; border: 0; border-radius: 3px; padding: 5px; font-weight: bold;" data-toggle="modal" data-target="#uploadvideoModal">Upload Video</button>
+          
+          <div class="content-editor">
+            <form action="{{ form_action_footer }}" method="post" class="editor-form">
+              {% csrf_token %}
+              <div class="editor-container">
+                <textarea name="content_footer" id="about-footer-textarea" class="content-textarea">{% if footer_content %}{{ footer_content.0.content_footer }}{% else %}No footer content available. Add your footer content here...{% endif %}</textarea>
+              </div>
+              <div class="form-actions">
+                <button type="submit" class="btn btn-success">
+                  <i class="fas fa-save"></i>
+                  <span>Update Footer</span>
+                </button>
+              </div>
+            </form>
           </div>
-  
-          <div class="row">
-            <div class="col-lg-12" style="margin-top:20px; width: 100%;">
-              {% video videos.url '1000x700' %}
+        </div>
+
+        <!-- Video Component Section -->
+        <div class="content-section video-component" id="video-component" style="display: none;">
+          <div class="section-header">
+            <div class="section-info">
+              <h4 class="section-title">How To Use Video</h4>
+              <p class="section-description">Manage instructional video content for user guidance</p>
+            </div>
+            <div class="section-actions">
+              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#uploadvideoModal">
+                <i class="fas fa-upload"></i>
+                <span>Upload Video</span>
+              </button>
+            </div>
+          </div>
+          
+          <div class="video-container">
+            <div class="video-wrapper">
+              {% if videos.url %}
+                <div class="video-player">
+                  {% video videos.url 'small' %}
+                </div>
+              {% else %}
+                <div class="no-video-state">
+                  <div class="no-video-icon">
+                    <i class="fas fa-video"></i>
+                  </div>
+                  <h5>No Video Uploaded</h5>
+                  <p>Upload an instructional video to help users understand how to use the platform.</p>
+                  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#uploadvideoModal">
+                    <i class="fas fa-upload"></i>
+                    Upload Your First Video
+                  </button>
+                </div>
+              {% endif %}
             </div>
           </div>
         </div>
       </div>
     </div>
+
+    <!-- Preview Panel -->
+    <div class="messages-panel">
+      <div class="messages-header">
+        <h3 class="messages-title">Content Preview</h3>
+        <button style="background: none; border: none; color: var(--primary-color); cursor: pointer;">
+          <i class="fas fa-eye"></i>
+        </button>
+      </div>
+      
+      <div class="preview-content">
+        <div class="preview-item about-preview active">
+          <div class="preview-header">
+            <h5 class="preview-title">About Page</h5>
+            <span class="preview-status published">Published</span>
+          </div>
+          <p class="preview-description">Main about page content that introduces your platform to users and explains your mission.</p>
+          <div class="preview-actions">
+            <button type="button" class="btn btn-sm btn-outline-primary" onclick="switchToSection('about-page')">
+              <i class="fas fa-edit"></i>
+              Edit
+            </button>
+          </div>
+        </div>
+        
+        <div class="preview-item footer-preview">
+          <div class="preview-header">
+            <h5 class="preview-title">About Footer</h5>
+            <span class="preview-status published">Published</span>
+          </div>
+          <p class="preview-description">Footer content that appears at the bottom of the about page with additional information.</p>
+          <div class="preview-actions">
+            <button type="button" class="btn btn-sm btn-outline-primary" onclick="switchToSection('about-footer')">
+              <i class="fas fa-edit"></i>
+              Edit
+            </button>
+          </div>
+        </div>
+        
+        <div class="preview-item video-preview">
+          <div class="preview-header">
+            <h5 class="preview-title">Video Component</h5>
+            <span class="preview-status active">Active</span>
+          </div>
+          <p class="preview-description">Instructional video content to help users understand platform features and functionality.</p>
+          <div class="preview-actions">
+            <button type="button" class="btn btn-sm btn-outline-primary" onclick="switchToSection('video-component')">
+              <i class="fas fa-video"></i>
+              Manage
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-</div>
-{% include 'modal/about/upload-video.html' %} {% endblock %} {%block script %}
-<!-- JavaScript -->
-<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
-{% if messages %} {% for message in messages %} {% if message.tags == 'success'%}
-<script>
-  // Display SweetAlert success message
-  Swal.fire({
-    icon: "success",
-    title: "Success!",
-    text: "{{ message }}",
-  });
-</script>
-{% endif %} {% endfor %} {% endif %}
 
-<script>
-  $(document).ready(function () {
-    $("#about-page textarea").summernote({
-      height: 300,
-      placeholder: "Write here...",
-      toolbar: [
-        ["style", ["style", "bold", "italic", "underline", "clear"]],
-        ["font", ["strikethrough", "superscript", "subscript"]],
-        ["fontsize", ["fontsize"]],
-        ["color", ["color"]],
-        ["para", ["ul", "ol", "paragraph"]],
-        ["insert", ["link", "picture", "video"]],
-        ["insert", ["hr"]],
-        ["insert", ["table"]],
-        ["misc", ["undo", "redo"]],
-        ["mybutton", ["codeview"]],
-        ["mybutton", ["spellchecker"]],
-        ["mybutton", ["cut", "copy", "paste", "plainpaste", "wordpaste"]],
-        ["mybutton", ["link", "unlink", "anchor"]],
-      ],
-      buttons: {
-        spellchecker: function (context) {
-          var ui = $.summernote.ui;
-          // create button
-          var button = ui.button({
-            contents: '<i class="fa fa-magic"/>',
-            tooltip: "Spell Checker",
-            click: function () {
-              context.invoke("editor.spellCheck");
-            },
-          });
-          return button.render();
-        },
-      },
-      styleTags: ["p", "h1", "h2", "h3", "h4", "h5", "h6"], // Include more styles as needed
-      fontSizes: ["8", "9", "10", "11", "12", "14", "18", "24", "36"], // Add your desired font sizes
-      colors: [
-        [
-          "#000000",
-          "#ffffff",
-          "#e0e0e0",
-          "#b0b0b0",
-          "#808080",
-          "#404040",
-          "#ff0000",
-          "#ff9900",
-          "#ffff00",
-          "#00ff00",
-          "#00ffff",
-          "#0000ff",
-          "#9900ff",
-          "#ff00ff",
-          "#f7f7f7",
-          "#ccc",
+  {% include 'modal/about/upload-video.html' %}
+{% endblock %}
+
+{% block script %}
+  <!-- Summernote JavaScript -->
+  <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
+  
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      initializeSummernote();
+      initializeTabSwitching();
+      initializePreviewUpdates();
+    });
+
+    function initializeSummernote() {
+      // About Page Editor
+      $("#about-page-textarea").summernote({
+        height: 350,
+        placeholder: "Write your about page content here...",
+        toolbar: [
+          ["style", ["style", "bold", "italic", "underline", "clear"]],
+          ["font", ["strikethrough", "superscript", "subscript"]],
+          ["fontsize", ["fontsize"]],
+          ["color", ["color"]],
+          ["para", ["ul", "ol", "paragraph"]],
+          ["insert", ["link", "picture", "video"]],
+          ["insert", ["hr", "table"]],
+          ["misc", ["undo", "redo"]],
+          ["view", ["codeview", "fullscreen", "help"]]
         ],
-      ], // Add your desired color palette
-    });
-  });
+        styleTags: ["p", "h1", "h2", "h3", "h4", "h5", "h6"],
+        fontSizes: ["8", "9", "10", "11", "12", "14", "18", "24", "36"],
+        callbacks: {
+          onChange: function(contents, $editable) {
+            updatePreview('about', contents);
+          }
+        }
+      });
 
-  $(document).ready(function () {
-    $("#about-footer textarea").summernote({
-      height: 300,
-      placeholder: "Write here...",
-      toolbar: [
-        ["style", ["style", "bold", "italic", "underline", "clear"]],
-        ["font", ["strikethrough", "superscript", "subscript"]],
-        ["fontsize", ["fontsize"]],
-        ["color", ["color"]],
-        ["para", ["ul", "ol", "paragraph"]],
-        ["insert", ["link", "picture", "video"]],
-        ["insert", ["hr"]],
-        ["insert", ["table"]],
-        ["misc", ["undo", "redo"]],
-        ["mybutton", ["codeview"]],
-        ["mybutton", ["spellchecker"]],
-        ["mybutton", ["cut", "copy", "paste", "plainpaste", "wordpaste"]],
-        ["mybutton", ["link", "unlink", "anchor"]],
-      ],
-      buttons: {
-        spellchecker: function (context) {
-          var ui = $.summernote.ui;
-          // create button
-          var button = ui.button({
-            contents: '<i class="fa fa-magic"/>',
-            tooltip: "Spell Checker",
-            click: function () {
-              context.invoke("editor.spellCheck");
-            },
-          });
-          return button.render();
-        },
-      },
-      styleTags: ["p", "h1", "h2", "h3", "h4", "h5", "h6"], // Include more styles as needed
-      fontSizes: ["8", "9", "10", "11", "12", "14", "18", "24", "36"], // Add your desired font sizes
-      colors: [
-        [
-          "#000000",
-          "#ffffff",
-          "#e0e0e0",
-          "#b0b0b0",
-          "#808080",
-          "#404040",
-          "#ff0000",
-          "#ff9900",
-          "#ffff00",
-          "#00ff00",
-          "#00ffff",
-          "#0000ff",
-          "#9900ff",
-          "#ff00ff",
-          "#f7f7f7",
-          "#ccc",
+      // Footer Editor
+      $("#about-footer-textarea").summernote({
+        height: 350,
+        placeholder: "Write your footer content here...",
+        toolbar: [
+          ["style", ["style", "bold", "italic", "underline", "clear"]],
+          ["font", ["strikethrough", "superscript", "subscript"]],
+          ["fontsize", ["fontsize"]],
+          ["color", ["color"]],
+          ["para", ["ul", "ol", "paragraph"]],
+          ["insert", ["link", "picture", "video"]],
+          ["insert", ["hr", "table"]],
+          ["misc", ["undo", "redo"]],
+          ["view", ["codeview", "fullscreen", "help"]]
         ],
-      ], // Add your desired color palette
-    });
-  });
-
-  document.addEventListener("DOMContentLoaded", function () {
-    var aboutPage = document.getElementById("about-page");
-    var aboutFooter = document.getElementById("about-footer");
-    var videoComponent = document.getElementById("video-component");
-
-    var pageBtn = document.getElementById("about-page-btn");
-    var footerBtn = document.getElementById("about-footer-btn");
-    var videoBtn = document.getElementById("video-btn");
-
-    hideAllTablesExcept(aboutPage);
-
-    pageBtn.addEventListener("click", function () {
-      aboutPage.style.display = "block";
-      hideAllTablesExcept(aboutPage);
-    });
-
-    footerBtn.addEventListener("click", function () {
-      aboutFooter.style.display = "block";
-      hideAllTablesExcept(aboutFooter);
-    });
-
-    videoBtn.addEventListener("click", function () {
-      videoComponent.style.display = "block";
-      hideAllTablesExcept(videoComponent);
-    });
-
-    function hideAllTablesExcept(exceptTable) {
-      var tables = [aboutPage, aboutFooter, videoComponent];
-      tables.forEach(function (table) {
-        if (table !== exceptTable) {
-          table.style.display = "none";
+        styleTags: ["p", "h1", "h2", "h3", "h4", "h5", "h6"],
+        fontSizes: ["8", "9", "10", "11", "12", "14", "18", "24", "36"],
+        callbacks: {
+          onChange: function(contents, $editable) {
+            updatePreview('footer', contents);
+          }
         }
       });
     }
-  });
-</script>
+
+    function initializeTabSwitching() {
+      // Tab switching functionality
+      $("#about-page-btn").click(function() {
+        switchToSection('about-page');
+      });
+
+      $("#about-footer-btn").click(function() {
+        switchToSection('about-footer');
+      });
+
+      $("#video-btn").click(function() {
+        switchToSection('video-component');
+      });
+    }
+
+    function switchToSection(sectionId) {
+      // Hide all sections
+      $(".content-sections .content-section").hide();
+      
+      // Show selected section
+      $("#" + sectionId).show();
+      
+      // Update tab buttons
+      $(".tab-btn").removeClass("active");
+      
+      // Map section IDs to button IDs
+      let buttonId;
+      switch(sectionId) {
+        case 'about-page':
+          buttonId = '#about-page-btn';
+          break;
+        case 'about-footer':
+          buttonId = '#about-footer-btn';
+          break;
+        case 'video-component':
+          buttonId = '#video-btn';
+          break;
+      }
+      
+      $(buttonId).addClass("active");
+      
+      // Update preview panel
+      updatePreviewActive(sectionId);
+    }
+
+    function updatePreviewActive(sectionId) {
+      $(".preview-item").removeClass("active");
+      
+      switch(sectionId) {
+        case 'about-page':
+          $(".about-preview").addClass("active");
+          break;
+        case 'about-footer':
+          $(".footer-preview").addClass("active");
+          break;
+        case 'video-component':
+          $(".video-preview").addClass("active");
+          break;
+      }
+    }
+
+    function initializePreviewUpdates() {
+      // Real-time preview updates would go here
+      // This is a placeholder for future implementation
+    }
+
+    function updatePreview(type, content) {
+      // Update preview content in real-time
+      // This is a placeholder for future implementation
+      console.log('Updating preview for:', type, content.substring(0, 50) + '...');
+    }
+
+    function previewContent() {
+      // Open content in a new tab/window for full preview
+      const currentSection = $(".content-section:visible").attr('id');
+      console.log('Previewing:', currentSection);
+      
+      // Implement actual preview functionality here
+      Swal.fire({
+        title: 'Preview Content',
+        text: 'Content preview functionality would open here.',
+        icon: 'info',
+        confirmButtonText: 'OK',
+        confirmButtonColor: '#2C6E49'
+      });
+    }
+  </script>
+  
+  
+  
+  {% if messages %} 
+    {% for message in messages %} 
+      {% if message.tags == 'success'%}
+        <script>
+          Swal.fire({
+            icon: "success",
+            title: "Success!",
+            text: "{{ message }}",
+            confirmButtonColor: '#2C6E49'
+          });
+        </script>
+      {% elif message.tags == 'error'%}
+        <script>
+          Swal.fire({
+            icon: "error",
+            title: "Error!",
+            text: "{{ message }}",
+            confirmButtonColor: '#2C6E49'
+          });
+        </script>
+      {% endif %} 
+    {% endfor %} 
+  {% endif %}
 {% endblock %}

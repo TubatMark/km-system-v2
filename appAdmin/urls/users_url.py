@@ -8,6 +8,7 @@ app_name = "appAdmin"
 urlpatterns = (
     [
         path("users/", users_view.display_users, name="display-users"),
+        path("admin-add-user/", users_view.admin_add_user, name="admin-add-user"),
     ]
     + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
     + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

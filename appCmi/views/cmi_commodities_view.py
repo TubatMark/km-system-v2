@@ -5,7 +5,6 @@ from appCmi.models import Forum
 from utils.user_control import user_access_required
 
 
-@user_access_required(["admin", "cmi"], error_type=404)
 def all_commodities(request):
     """
     View function for displaying all commodities.

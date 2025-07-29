@@ -62,10 +62,10 @@ def get_forum_posts_by_month_current_year():
     formatted_months = []  # For display in format "January: 10"
 
     # For debugging - print the raw counts from Counter
-    print("Month counts from Counter:")
-    for month_num in range(1, 13):
-        count = month_counts[month_num]
-        print(f"Month {month_num}: {count} posts")
+    # print("Month counts from Counter:")
+    # for month_num in range(1, 13):
+    #     count = month_counts[month_num]
+    #     print(f"Month {month_num}: {count} posts")
 
     # Process data for all months
     total_posts = 0

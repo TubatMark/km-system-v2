@@ -2,16 +2,15 @@
 <div class="modal fade" id="createResourceModal" tabindex="-1" aria-labelledby="createResourceModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
-            <div class="modal-header bg-primary text-white">
+            <div class="modal-header text-white">
                 <h5 class="modal-title" id="createResourceModalLabel">Add New Knowledge Resource</h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <form id="resourceForm" action="{% url "appAdmin:add-resources-post" %}" method="POST" enctype="multipart/form-data">
                     {% csrf_token %}
                     <div class="mb-4">
                         <label for="resourceType" class="form-field-label required-field">Resource Type</label>
-                        <select class="form-select" id="resourceType" name="resourceType" required>
+                        <select class="form-select" id="resourceType" name="resourceType" required style="border: 1px solid #2C6E49; ">
                             <option value="" selected disabled>Select resource type</option>
                             {% if knowledge_resources %}
                             {% for resource in knowledge_resources %}
@@ -28,15 +27,9 @@
                         
                         <div class="row">
                             <div class="col-12 form-field-group">
-                                <label for="resourceTitle" class="form-field-label required-field">Title</label>
-                                <input type="text" class="form-control" id="resourceTitle" name="resourceTitle" required>
-                            </div>
-                        </div>
-                        
-                        <div class="row">
-                            <div class="col-12 form-field-group">
-                                <label for="resourceDescription" class="form-field-label required-field">Description</label>
-                                <textarea class="form-control" id="resourceDescription" name="resourceDescription" rows="4" required></textarea>
+                                <label for="resourceKeywords" class="form-field-label">Keywords</label>
+                                <textarea class="form-control" id="resourceKeywords" name="resourceKeywords" rows="2" placeholder="Enter comma-separated keywords for search and categorization"></textarea>
+                                <div class="form-hint">Comma-separated keywords for search and categorization</div>
                             </div>
                         </div>
                         
@@ -82,12 +75,6 @@
                                         Approved for public view
                                     </label>
                                 </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="is_featured" name="is_featured">
-                                    <label class="form-check-label" for="is_featured">
-                                        Featured resource
-                                    </label>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -96,6 +83,24 @@
                     <div id="eventsFields" class="resource-specific-fields" style="display: none;">
                         <div class="form-section">
                             <h6 class="form-section-title">Event Details</h6>
+                            
+                            <div class="row">
+                                <div class="col-12 form-field-group">
+                                    <label for="eventTitle" class="form-field-label required-field">Event Title</label>
+                                    <input type="text" class="form-control" id="eventTitle" name="eventTitle" required>
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-md-6 form-field-group">
+                                    <label for="eventVenue" class="form-field-label required-field">Venue</label>
+                                    <input type="text" class="form-control" id="eventVenue" name="eventVenue" required>
+                                </div>
+                                <div class="col-md-6 form-field-group">
+                                    <label for="eventOrganizer" class="form-field-label required-field">Organizer</label>
+                                    <input type="text" class="form-control" id="eventOrganizer" name="eventOrganizer" required>
+                                </div>
+                            </div>
                             
                             <div class="row">
                                 <div class="col-md-6 form-field-group">
@@ -110,26 +115,19 @@
                             
                             <div class="row">
                                 <div class="col-md-6 form-field-group">
-                                    <label for="eventLocation" class="form-field-label required-field">Location</label>
-                                    <input type="text" class="form-control" id="eventLocation" name="eventLocation" required>
+                                    <label for="eventType" class="form-field-label">Event Type</label>
+                                    <input type="text" class="form-control" id="eventType" name="eventType">
                                 </div>
                                 <div class="col-md-6 form-field-group">
-                                    <label for="eventOrganizer" class="form-field-label required-field">Organizer</label>
-                                    <input type="text" class="form-control" id="eventOrganizer" name="eventOrganizer" required>
+                                    <label for="eventDocumentationLink" class="form-field-label">Documentation Link</label>
+                                    <input type="url" class="form-control" id="eventDocumentationLink" name="eventDocumentationLink">
                                 </div>
-                            </div>
-                            
-                            <div class="form-check mb-3">
-                                <input class="form-check-input" type="checkbox" id="eventIsVirtual" name="eventIsVirtual">
-                                <label class="form-check-label" for="eventIsVirtual">
-                                    This is a virtual event
-                                </label>
                             </div>
                             
                             <div class="row">
                                 <div class="col-12 form-field-group">
-                                    <label for="eventFile" class="form-field-label">Event File</label>
-                                    <input type="file" class="form-control" id="eventFile" name="eventFile">
+                                    <label for="eventPictures" class="form-field-label">Event Pictures</label>
+                                    <input type="file" class="form-control" id="eventPictures" name="eventPictures" accept="image/*">
                                 </div>
                             </div>
                         </div>
@@ -142,19 +140,26 @@
                             
                             <div class="row">
                                 <div class="col-md-6 form-field-group">
-                                    <label for="infoSystemUrl" class="form-field-label required-field">Website URL</label>
-                                    <input type="url" class="form-control" id="infoSystemUrl" name="infoSystemUrl" required>
+                                    <label for="infoSystemLink" class="form-field-label">Website Link</label>
+                                    <input type="url" class="form-control" id="infoSystemLink" name="infoSystemLink">
                                 </div>
                                 <div class="col-md-6 form-field-group">
-                                    <label for="infoSystemOwner" class="form-field-label required-field">System Owner</label>
-                                    <input type="text" class="form-control" id="infoSystemOwner" name="infoSystemOwner" required>
+                                    <label for="infoSystemOrganizationOwner" class="form-field-label required-field">Organization/Owner</label>
+                                    <input type="text" class="form-control" id="infoSystemOrganizationOwner" name="infoSystemOrganizationOwner" required>
                                 </div>
                             </div>
                             
                             <div class="row">
                                 <div class="col-md-6 form-field-group">
-                                    <label for="infoSystemLastUpdated" class="form-field-label">Last Updated</label>
-                                    <input type="date" class="form-control" id="infoSystemLastUpdated" name="infoSystemLastUpdated">
+                                    <label for="infoSystemAgency" class="form-field-label">Agency</label>
+                                    <input type="text" class="form-control" id="infoSystemAgency" name="infoSystemAgency">
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-12 form-field-group">
+                                    <label for="infoSystemBriefExplanation" class="form-field-label required-field">Brief Explanation</label>
+                                    <textarea class="form-control" id="infoSystemBriefExplanation" name="infoSystemBriefExplanation" rows="4" required></textarea>
                                 </div>
                             </div>
                         </div>
@@ -196,28 +201,12 @@
                             
                             <div class="row">
                                 <div class="col-md-6 form-field-group">
-                                    <label for="mediaType" class="form-field-label required-field">Media Type</label>
-                                    <select class="form-select" id="mediaType" name="mediaType" required>
-                                        <option value="image">Image</option>
-                                        <option value="video">Video</option>
-                                        <option value="audio">Audio</option>
-                                        <option value="presentation">Presentation</option>
-                                    </select>
+                                    <label for="mediaTitle" class="form-field-label required-field">Media Title</label>
+                                    <input type="text" class="form-control" id="mediaTitle" name="mediaTitle" required>
                                 </div>
                                 <div class="col-md-6 form-field-group">
-                                    <label for="mediaAuthor" class="form-field-label">Author/Creator</label>
-                                    <input type="text" class="form-control" id="mediaAuthor" name="mediaAuthor">
-                                </div>
-                            </div>
-                            
-                            <div class="row">
-                                <div class="col-md-6 form-field-group">
-                                    <label for="mediaFile" class="form-field-label">Media File</label>
-                                    <input type="file" class="form-control" id="mediaFile" name="mediaFile">
-                                </div>
-                                <div class="col-md-6 form-field-group">
-                                    <label for="mediaUrl" class="form-field-label">Media URL</label>
-                                    <input type="url" class="form-control" id="mediaUrl" name="mediaUrl">
+                                    <label for="mediaLink" class="form-field-label required-field">Media Link</label>
+                                    <input type="url" class="form-control" id="mediaLink" name="mediaLink" required>
                                 </div>
                             </div>
                         </div>
@@ -229,20 +218,30 @@
                             <h6 class="form-section-title">News Details</h6>
                             
                             <div class="row">
-                                <div class="col-md-6 form-field-group">
-                                    <label for="newsPublishDate" class="form-field-label required-field">Publication Date</label>
-                                    <input type="date" class="form-control" id="newsPublishDate" name="newsPublishDate" required>
-                                </div>
-                                <div class="col-md-6 form-field-group">
-                                    <label for="newsSource" class="form-field-label required-field">Source</label>
-                                    <input type="text" class="form-control" id="newsSource" name="newsSource" required>
+                                <div class="col-12 form-field-group">
+                                    <label for="newsHeadline" class="form-field-label required-field">News Headline</label>
+                                    <input type="text" class="form-control" id="newsHeadline" name="newsHeadline" required>
+                                    <div class="form-hint">News headline/title</div>
                                 </div>
                             </div>
                             
                             <div class="row">
                                 <div class="col-md-6 form-field-group">
-                                    <label for="newsSourceUrl" class="form-field-label">External URL</label>
-                                    <input type="url" class="form-control" id="newsSourceUrl" name="newsSourceUrl">
+                                    <label for="newsAuthor" class="form-field-label required-field">Author</label>
+                                    <input type="text" class="form-control" id="newsAuthor" name="newsAuthor" required>
+                                </div>
+                                <div class="col-md-6 form-field-group">
+                                    <label for="newsAuthorPosition" class="form-field-label">Author Position</label>
+                                    <input type="text" class="form-control" id="newsAuthorPosition" name="newsAuthorPosition">
+                                    <div class="form-hint">Author's position/title</div>
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-md-6 form-field-group">
+                                    <label for="newsSource" class="form-field-label">Source URL</label>
+                                    <input type="url" class="form-control" id="newsSource" name="newsSource">
+                                    <div class="form-hint">Source URL of the news</div>
                                 </div>
                                 <div class="col-md-6 form-field-group">
                                     <label for="newsFeaturedImage" class="form-field-label">Featured Image</label>
@@ -263,42 +262,59 @@
                     <div id="policiesFields" class="resource-specific-fields" style="display: none;">
                         <div class="form-section">
                             <h6 class="form-section-title">Policy Details</h6>
-                            
                             <div class="row">
                                 <div class="col-md-6 form-field-group">
-                                    <label for="policyNumber" class="form-field-label">Policy Number</label>
-                                    <input type="text" class="form-control" id="policyNumber" name="policyNumber">
-                                </div>
-                                <div class="col-md-6 form-field-group">
-                                    <label for="policyEffectiveDate" class="form-field-label required-field">Effective Date</label>
-                                    <input type="date" class="form-control" id="policyEffectiveDate" name="policyEffectiveDate" required>
-                                </div>
-                            </div>
-                            
-                            <div class="row">
-                                <div class="col-md-6 form-field-group">
-                                    <label for="policyIssuingBody" class="form-field-label required-field">Issuing Authority</label>
-                                    <input type="text" class="form-control" id="policyIssuingBody" name="policyIssuingBody" required>
-                                </div>
-                                <div class="col-md-6 form-field-group">
-                                    <label for="policyStatus" class="form-field-label required-field">Status</label>
-                                    <select class="form-select" id="policyStatus" name="policyStatus" required>
-                                        <option value="draft">Draft</option>
-                                        <option value="active">Active</option>
-                                        <option value="superseded">Superseded</option>
-                                        <option value="archived">Archived</option>
+                                    <label for="policyType" class="form-field-label required-field">Policy Type</label>
+                                    <select class="form-select" id="policyType" name="policyType" required>
+                                        <option value="" disabled selected>Select policy type</option>
+                                        <option value="research">Policy Research</option>
+                                        <option value="formulated">Policy Formulated</option>
                                     </select>
                                 </div>
+                                
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 form-field-group">
+                                    <label for="policy" class="form-field-label required-field">Policy</label>
+                                    <input type="text" class="form-control" id="policy" name="policy" required>
+                                </div>
+
+                                <div class="col-md-6 form-field-group">
+                                    <label for="policyAgency" class="form-field-label required-field">Agency</label>
+                                    <input type="text" class="form-control" id="policyAgency" name="policyAgency" required>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 form-field-group">
+                                    <label for="policyYear" class="form-field-label required-field">Year</label>
+                                    <input type="number" class="form-control" id="policyYear" name="policyYear" required min="1900" max="2100">
+                                </div>
+                                <div class="col-md-6 form-field-group">
+                                    <label for="policyAuthor" class="form-field-label">Author</label>
+                                    <input type="text" class="form-control" id="policyAuthor" name="policyAuthor">
+                                </div>
                             </div>
                             
                             <div class="row">
-                                <div class="col-md-6 form-field-group">
-                                    <label for="policyFile" class="form-field-label">Policy File</label>
-                                    <input type="file" class="form-control" id="policyFile" name="policyFile">
+                                <div class="col-12 form-field-group">
+                                    <label for="policyDescription" class="form-field-label required-field">Description</label>
+                                    <textarea class="form-control" id="policyDescription" name="policyDescription" rows="4" required></textarea>
                                 </div>
-                                <div class="col-md-6 form-field-group">
-                                    <label for="policyUrl" class="form-field-label">Policy URL</label>
-                                    <input type="url" class="form-control" id="policyUrl" name="policyUrl">
+                            </div>
+                            <!-- Fields for Policy Research -->
+                            <div id="policyResearchFields" style="display: none;">
+                                <div class="row">
+                                    <div class="col-md-6 form-field-group">
+                                        <label for="policyAdvocacyProject" class="form-field-label">Advocacy Project</label>
+                                        <input type="text" class="form-control" id="policyAdvocacyProject" name="policyAdvocacyProject">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12 form-field-group">
+                                        <label for="policyFindings" class="form-field-label">Findings</label>
+                                        <textarea class="form-control" id="policyFindings" name="policyFindings" rows="4"></textarea>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -311,31 +327,34 @@
                             
                             <div class="row">
                                 <div class="col-md-6 form-field-group">
-                                    <label for="projectStartDate" class="form-field-label required-field">Start Date</label>
-                                    <input type="date" class="form-control" id="projectStartDate" name="projectStartDate" required>
+                                    <label for="projectProgramTitle" class="form-field-label">Program Title</label>
+                                    <input type="text" class="form-control" id="projectProgramTitle" name="projectProgramTitle">
                                 </div>
                                 <div class="col-md-6 form-field-group">
-                                    <label for="projectEndDate" class="form-field-label">End Date</label>
-                                    <input type="date" class="form-control" id="projectEndDate" name="projectEndDate">
-                                    <div class="form-hint">Leave blank for ongoing projects</div>
-                                </div>
-                            </div>
-                            
-                            <div class="row">
-                                <div class="col-md-6 form-field-group">
-                                    <label for="projectBudget" class="form-field-label">Budget</label>
-                                    <input type="number" step="0.01" class="form-control" id="projectBudget" name="projectBudget">
-                                </div>
-                                <div class="col-md-6 form-field-group">
-                                    <label for="projectFundingSource" class="form-field-label">Funding Source</label>
-                                    <input type="text" class="form-control" id="projectFundingSource" name="projectFundingSource">
+                                    <label for="projectTitle" class="form-field-label required-field">Project Title</label>
+                                    <input type="text" class="form-control" id="projectTitle" name="projectTitle" required>
                                 </div>
                             </div>
                             
                             <div class="row">
                                 <div class="col-md-6 form-field-group">
-                                    <label for="projectLead" class="form-field-label required-field">Project Lead</label>
-                                    <input type="text" class="form-control" id="projectLead" name="projectLead" required>
+                                    <label for="projectLeader" class="form-field-label required-field">Project Leader</label>
+                                    <input type="text" class="form-control" id="projectLeader" name="projectLeader" required>
+                                </div>
+                                <div class="col-md-6 form-field-group">
+                                    <label for="projectStatus" class="form-field-label required-field">Status</label>
+                                    <select class="form-select" id="projectStatus" name="projectStatus" required>
+                                        <option value="ongoing">Ongoing</option>
+                                        <option value="completed">Completed</option>
+                                        <option value="terminated">Terminated</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-md-6 form-field-group">
+                                    <label for="projectSourceOfFund" class="form-field-label">Source of Fund</label>
+                                    <input type="text" class="form-control" id="projectSourceOfFund" name="projectSourceOfFund">
                                 </div>
                                 <div class="col-md-6 form-field-group">
                                     <label for="projectContactEmail" class="form-field-label">Contact Email</label>
@@ -345,12 +364,46 @@
                             
                             <div class="row">
                                 <div class="col-md-6 form-field-group">
-                                    <label for="projectStatus" class="form-field-label required-field">Project Status</label>
-                                    <select class="form-select" id="projectStatus" name="projectStatus" required>
-                                        <option value="ongoing">Ongoing</option>
-                                        <option value="completed">Completed</option>
-                                        <option value="terminated">Terminated</option>
-                                    </select>
+                                    <label for="projectCooperatingAgency" class="form-field-label">Cooperating Agency</label>
+                                    <input type="text" class="form-control" id="projectCooperatingAgency" name="projectCooperatingAgency">
+                                </div>
+                                <div class="col-md-6 form-field-group">
+                                    <label for="projectCollaboratingAgency" class="form-field-label">Collaborating Agency</label>
+                                    <input type="text" class="form-control" id="projectCollaboratingAgency" name="projectCollaboratingAgency">
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-md-6 form-field-group">
+                                    <label for="projectImplementingAgency" class="form-field-label">Implementing Agency</label>
+                                    <input type="text" class="form-control" id="projectImplementingAgency" name="projectImplementingAgency">
+                                </div>
+                                <div class="col-md-6 form-field-group">
+                                    <label for="projectExtensionMonths" class="form-field-label">Extension (months)</label>
+                                    <input type="number" class="form-control" id="projectExtensionMonths" name="projectExtensionMonths">
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-md-6 form-field-group">
+                                    <label for="projectTotalApprovedBudget" class="form-field-label">Total Approved Budget</label>
+                                    <input type="number" step="0.01" class="form-control" id="projectTotalApprovedBudget" name="projectTotalApprovedBudget">
+                                </div>
+                                <div class="col-md-6 form-field-group">
+                                    <label for="projectImplementingAgencyCounterpart" class="form-field-label">Implementing Agency Counterpart</label>
+                                    <input type="number" step="0.01" class="form-control" id="projectImplementingAgencyCounterpart" name="projectImplementingAgencyCounterpart">
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-md-6 form-field-group">
+                                    <label for="projectStartDate" class="form-field-label required-field">Start Date</label>
+                                    <input type="date" class="form-control" id="projectStartDate" name="projectStartDate" required>
+                                </div>
+                                <div class="col-md-6 form-field-group">
+                                    <label for="projectEndDate" class="form-field-label">End Date</label>
+                                    <input type="date" class="form-control" id="projectEndDate" name="projectEndDate">
+                                    <div class="form-hint">Leave blank for ongoing projects</div>
                                 </div>
                             </div>
                         </div>
@@ -362,14 +415,28 @@
                             <h6 class="form-section-title">Publication Details</h6>
                             
                             <div class="row">
+                                <div class="col-12 form-field-group">
+                                    <label for="publicationTitle" class="form-field-label required-field">Publication Title</label>
+                                    <input type="text" class="form-control" id="publicationTitle" name="publicationTitle" required>
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-12 form-field-group">
+                                    <label for="publicationDescription" class="form-field-label">Description</label>
+                                    <textarea class="form-control" id="publicationDescription" name="publicationDescription" rows="3"></textarea>
+                                </div>
+                            </div>
+                            
+                            <div class="row">
                                 <div class="col-md-6 form-field-group">
-                                    <label for="publicationAuthors" class="form-field-label required-field">Authors</label>
-                                    <input type="text" class="form-control" id="publicationAuthors" name="publicationAuthors" required>
+                                    <label for="publicationAuthor" class="form-field-label required-field">Author(s)</label>
+                                    <input type="text" class="form-control" id="publicationAuthor" name="publicationAuthor" required>
                                     <div class="form-hint">Separate multiple authors with commas</div>
                                 </div>
                                 <div class="col-md-6 form-field-group">
-                                    <label for="publicationDate" class="form-field-label required-field">Publication Date</label>
-                                    <input type="date" class="form-control" id="publicationDate" name="publicationDate" required>
+                                    <label for="publicationDatePublished" class="form-field-label required-field">Date Published</label>
+                                    <input type="date" class="form-control" id="publicationDatePublished" name="publicationDatePublished" required>
                                 </div>
                             </div>
                             
@@ -386,7 +453,7 @@
                                         <option value="book">Book</option>
                                         <option value="report">Technical Report</option>
                                         <option value="thesis">Thesis/Dissertation</option>
-                                        <option value="other">Other</option>
+                                        <option value="other" selected>Other</option>
                                     </select>
                                 </div>
                             </div>
@@ -418,23 +485,110 @@
                             
                             <div class="row">
                                 <div class="col-md-6 form-field-group">
-                                    <label for="technologyDeveloper" class="form-field-label required-field">Developer</label>
-                                    <input type="text" class="form-control" id="technologyDeveloper" name="technologyDeveloper" required>
+                                    <label for="technologyCommodity" class="form-field-label required-field">Related Commodity</label>
+                                    <select class="form-select" id="technologyCommodity" name="technologyCommodity" required>
+                                        <option value="" disabled selected>Select a commodity</option>
+                                        {% for commodity in commodities %}
+                                            <option value="{{ commodity.commodity_id }}">{{ commodity.commodity_name }}</option>
+                                        {% endfor %}
+                                    </select>
                                 </div>
                                 <div class="col-md-6 form-field-group">
-                                    <label for="technologyReleaseDate" class="form-field-label">Release Date</label>
-                                    <input type="date" class="form-control" id="technologyReleaseDate" name="technologyReleaseDate">
+                                    <label for="technologyName" class="form-field-label required-field">Technology Name</label>
+                                    <input type="text" class="form-control" id="technologyName" name="technologyName" required>
+                                </div>
+                            </div>
+                           
+                            <div class="row">
+                                <div class="col-md-6 form-field-group">
+                                    <label for="technologyProducts" class="form-field-label required-field">Products</label>
+                                    <input type="text" class="form-control" id="technologyProducts" name="technologyProducts" required>
+                                </div>
+                                <div class="col-md-6 form-field-group">
+                                    <label for="technologyAdoptionStatus" class="form-field-label required-field">Adoption Status</label>
+                                    <select class="form-select" id="technologyAdoptionStatus" name="technologyAdoptionStatus" required>
+                                        <option value="" disabled selected>Select adoption status</option>
+                                        <option value="adopted">Adopted</option>
+                                        <option value="for_incubation">For Incubation</option>
+                                    </select>
                                 </div>
                             </div>
                             
                             <div class="row">
                                 <div class="col-md-6 form-field-group">
-                                    <label for="technologyPatentNumber" class="form-field-label">Patent Number</label>
-                                    <input type="text" class="form-control" id="technologyPatentNumber" name="technologyPatentNumber">
+                                    <label for="technologyYearIntroduced" class="form-field-label required-field">Year Introduced</label>
+                                    <input type="number" class="form-control" id="technologyYearIntroduced" name="technologyYearIntroduced" required min="1900" max="2100">
                                 </div>
                                 <div class="col-md-6 form-field-group">
-                                    <label for="technologyLicenseType" class="form-field-label">License Type</label>
-                                    <input type="text" class="form-control" id="technologyLicenseType" name="technologyLicenseType">
+                                    <label for="technologyIpAsset" class="form-field-label">IP Asset</label>
+                                    <input type="text" class="form-control" id="technologyIpAsset" name="technologyIpAsset">
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-12 form-field-group">
+                                    <label for="technologyBriefDescription" class="form-field-label required-field">Brief Description</label>
+                                    <textarea class="form-control" id="technologyBriefDescription" name="technologyBriefDescription" rows="4" required></textarea>
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-12 form-field-group">
+                                    <label for="technologySupportFacilities" class="form-field-label">Support Facilities</label>
+                                    <textarea class="form-control" id="technologySupportFacilities" name="technologySupportFacilities" rows="3"></textarea>
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-12 form-field-group">
+                                    <label for="technologyAvailableExperts" class="form-field-label">Available Experts</label>
+                                    <textarea class="form-control" id="technologyAvailableExperts" name="technologyAvailableExperts" rows="3"></textarea>
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-md-6 form-field-group">
+                                    <label for="technologyExpertsEmail" class="form-field-label">Experts Email</label>
+                                    <input type="email" class="form-control" id="technologyExpertsEmail" name="technologyExpertsEmail">
+                                </div>
+                                <div class="col-md-6 form-field-group">
+                                    <label for="technologyExpertsPhone" class="form-field-label">Experts Phone</label>
+                                    <input type="tel" class="form-control" id="technologyExpertsPhone" name="technologyExpertsPhone">
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-md-6 form-field-group">
+                                    <label for="technologyFundingSource" class="form-field-label">Funding Source</label>
+                                    <select class="form-select" id="technologyFundingSource" name="technologyFundingSource">
+                                        <option value="" disabled selected>Select funding source</option>
+                                        <option value="pcaarrd">PCAARRD-funded</option>
+                                        <option value="dost">DOST-funded</option>
+                                        <option value="suc">SUC-funded</option>
+                                        <option value="other">Other</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6 form-field-group">
+                                    <label for="technologyOfferedFor" class="form-field-label">Technologies Offered For</label>
+                                    <input type="text" class="form-control" id="technologyOfferedFor" name="technologyOfferedFor">
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-12 form-field-group">
+                                    <label for="technologyTransferPathway" class="form-field-label">Technology Transfer Pathway</label>
+                                    <textarea class="form-control" id="technologyTransferPathway" name="technologyTransferPathway" rows="3"></textarea>
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-md-6 form-field-group">
+                                    <label for="technologyGoogleLinkPhotos" class="form-field-label">Google Link Photos</label>
+                                    <input type="url" class="form-control" id="technologyGoogleLinkPhotos" name="technologyGoogleLinkPhotos">
+                                </div>
+                                <div class="col-md-6 form-field-group">
+                                    <label for="technologyPictures" class="form-field-label">Technology Pictures</label>
+                                    <input type="file" class="form-control" id="technologyPictures" name="technologyPictures" accept="image/*">
                                 </div>
                             </div>
                         </div>
@@ -446,31 +600,58 @@
                             <h6 class="form-section-title">Training/Seminar Details</h6>
                             
                             <div class="row">
-                                <div class="col-md-6 form-field-group">
-                                    <label for="trainingStartDate" class="form-field-label required-field">Start Date</label>
-                                    <input type="datetime-local" class="form-control" id="trainingStartDate" name="trainingStartDate" required>
-                                </div>
-                                <div class="col-md-6 form-field-group">
-                                    <label for="trainingEndDate" class="form-field-label required-field">End Date</label>
-                                    <input type="datetime-local" class="form-control" id="trainingEndDate" name="trainingEndDate" required>
-                                </div>
-                            </div>
-                            
-                            <div class="row">
-                                <div class="col-md-6 form-field-group">
-                                    <label for="trainingLocation" class="form-field-label required-field">Location</label>
-                                    <input type="text" class="form-control" id="trainingLocation" name="trainingLocation" required>
-                                </div>
-                                <div class="col-md-6 form-field-group">
-                                    <label for="trainingTargetAudience" class="form-field-label">Target Audience</label>
-                                    <input type="text" class="form-control" id="trainingTargetAudience" name="trainingTargetAudience">
+                                <div class="col-12 form-field-group">
+                                    <label for="trainingTitle" class="form-field-label required-field">Training/Seminar Title</label>
+                                    <input type="text" class="form-control" id="trainingTitle" name="trainingTitle" required>
                                 </div>
                             </div>
                             
                             <div class="row">
                                 <div class="col-12 form-field-group">
-                                    <label for="trainers" class="form-field-label">Trainers</label>
-                                    <textarea class="form-control" id="trainers" name="trainers" rows="3"></textarea>
+                                    <label for="trainingDescription" class="form-field-label">Description</label>
+                                    <textarea class="form-control" id="trainingDescription" name="trainingDescription" rows="3"></textarea>
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-md-6 form-field-group">
+                                    <label for="trainingDates" class="form-field-label required-field">Dates</label>
+                                    <input type="text" class="form-control" id="trainingDates" name="trainingDates" required>
+                                    <div class="form-hint">Flexible date format (e.g., "June 15-17, 2024" or "Every Monday")</div>
+                                </div>
+                                <div class="col-md-6 form-field-group">
+                                    <label for="trainingVenue" class="form-field-label required-field">Venue</label>
+                                    <input type="text" class="form-control" id="trainingVenue" name="trainingVenue" required>
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-md-6 form-field-group">
+                                    <label for="trainingOrganizer" class="form-field-label required-field">Organizer</label>
+                                    <input type="text" class="form-control" id="trainingOrganizer" name="trainingOrganizer" required>
+                                </div>
+                                <div class="col-md-6 form-field-group">
+                                    <label for="trainingTotalParticipants" class="form-field-label">Total Participants</label>
+                                    <input type="number" class="form-control" id="trainingTotalParticipants" name="trainingTotalParticipants">
+                                    <div class="form-hint">If conducted</div>
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-12 form-field-group">
+                                    <label for="trainingSpeakers" class="form-field-label">Speakers</label>
+                                    <textarea class="form-control" id="trainingSpeakers" name="trainingSpeakers" rows="3"></textarea>
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-md-6 form-field-group">
+                                    <label for="trainingDocumentationLink" class="form-field-label">Documentation Link</label>
+                                    <input type="url" class="form-control" id="trainingDocumentationLink" name="trainingDocumentationLink">
+                                </div>
+                                <div class="col-md-6 form-field-group">
+                                    <label for="trainingPictures" class="form-field-label">Training Pictures</label>
+                                    <input type="file" class="form-control" id="trainingPictures" name="trainingPictures" accept="image/*">
                                 </div>
                             </div>
                         </div>
@@ -482,6 +663,13 @@
                             <h6 class="form-section-title">Webinar Details</h6>
                             
                             <div class="row">
+                                <div class="col-12 form-field-group">
+                                    <label for="webinarTitle" class="form-field-label required-field">Webinar Title</label>
+                                    <input type="text" class="form-control" id="webinarTitle" name="webinarTitle" required>
+                                </div>
+                            </div>
+                            
+                            <div class="row">
                                 <div class="col-md-6 form-field-group">
                                     <label for="webinarDate" class="form-field-label required-field">Date</label>
                                     <input type="datetime-local" class="form-control" id="webinarDate" name="webinarDate" required>
@@ -489,17 +677,36 @@
                                 <div class="col-md-6 form-field-group">
                                     <label for="webinarDuration" class="form-field-label required-field">Duration (minutes)</label>
                                     <input type="number" class="form-control" id="webinarDuration" name="webinarDuration" required value="60">
+                                    <div class="form-hint">Duration in minutes</div>
                                 </div>
                             </div>
                             
                             <div class="row">
                                 <div class="col-md-6 form-field-group">
+                                    <label for="webinarSpeaker" class="form-field-label required-field">Speaker</label>
+                                    <input type="text" class="form-control" id="webinarSpeaker" name="webinarSpeaker" required>
+                                </div>
+                                <div class="col-md-6 form-field-group">
                                     <label for="webinarPlatform" class="form-field-label required-field">Platform</label>
                                     <input type="text" class="form-control" id="webinarPlatform" name="webinarPlatform" required>
                                 </div>
+                            </div>
+                            
+                            <div class="row">
                                 <div class="col-md-6 form-field-group">
-                                    <label for="webinarPresenters" class="form-field-label required-field">Presenters</label>
-                                    <textarea class="form-control" id="webinarPresenters" name="webinarPresenters" required></textarea>
+                                    <label for="webinarAttendance" class="form-field-label">Attendance</label>
+                                    <input type="number" class="form-control" id="webinarAttendance" name="webinarAttendance">
+                                </div>
+                                <div class="col-md-6 form-field-group">
+                                    <label for="webinarDocumentationLink" class="form-field-label">Documentation Link</label>
+                                    <input type="url" class="form-control" id="webinarDocumentationLink" name="webinarDocumentationLink">
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-12 form-field-group">
+                                    <label for="webinarPictures" class="form-field-label">Webinar Pictures</label>
+                                    <input type="file" class="form-control" id="webinarPictures" name="webinarPictures" accept="image/*">
                                 </div>
                             </div>
                         </div>
@@ -512,38 +719,55 @@
                             
                             <div class="row">
                                 <div class="col-md-6 form-field-group">
-                                    <label for="productManufacturer" class="form-field-label required-field">Manufacturer</label>
-                                    <input type="text" class="form-control" id="productManufacturer" name="productManufacturer" required>
+                                    <label for="productName" class="form-field-label required-field">Product Name</label>
+                                    <input type="text" class="form-control" id="productName" name="productName" required>
                                 </div>
+                                <div class="col-md-6 form-field-group">
+                                    <label for="productCompany" class="form-field-label required-field">Company</label>
+                                    <input type="text" class="form-control" id="productCompany" name="productCompany" required>
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-12 form-field-group">
+                                    <label for="productDescription" class="form-field-label required-field">Description</label>
+                                    <textarea class="form-control" id="productDescription" name="productDescription" rows="4" required></textarea>
+                                </div>
+                            </div>
+                            
+                            <div class="row">
                                 <div class="col-md-6 form-field-group">
                                     <label for="productPrice" class="form-field-label">Price</label>
                                     <input type="number" step="0.01" class="form-control" id="productPrice" name="productPrice">
                                 </div>
-                            </div>
-                            
-                            <div class="row">
-                                <div class="col-12 form-field-group">
-                                    <label for="productFeatures" class="form-field-label required-field">Features</label>
-                                    <textarea class="form-control" id="productFeatures" name="productFeatures" rows="3" required></textarea>
+                                <div class="col-md-6 form-field-group">
+                                    <label for="productDocumentationLink" class="form-field-label">Documentation Link</label>
+                                    <input type="url" class="form-control" id="productDocumentationLink" name="productDocumentationLink">
                                 </div>
                             </div>
                             
                             <div class="row">
                                 <div class="col-12 form-field-group">
-                                    <label for="productTechSpecs" class="form-field-label">Technical Specifications</label>
-                                    <textarea class="form-control" id="productTechSpecs" name="productTechSpecs" rows="3"></textarea>
+                                    <label for="productContactInfo" class="form-field-label">Contact Information</label>
+                                    <textarea class="form-control" id="productContactInfo" name="productContactInfo" rows="3"></textarea>
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-12 form-field-group">
+                                    <label for="productPictures" class="form-field-label">Product Pictures</label>
+                                    <input type="file" class="form-control" id="productPictures" name="productPictures" accept="image/*">
                                 </div>
                             </div>
                         </div>
                     </div>
                     
                     <div class="form-action-buttons">
-                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
-                        <button type="button" class="btn btn-outline-primary" id="saveDraftButton">Save as Draft</button>
-                        <button type="submit" class="btn btn-primary">Submit Resource</button>
+                        <button type="button" class="btn btn-cancel" data-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-submit">Submit Resource</button>
                     </div>
                 </form>
             </div>  
         </div>
     </div>
-</div>
+ </div>

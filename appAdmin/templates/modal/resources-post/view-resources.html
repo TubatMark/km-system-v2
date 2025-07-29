@@ -1,0 +1,637 @@
+<!-- View Resource Modal -->
+<div class="modal fade" id="viewResourceModal" tabindex="-1" aria-labelledby="viewResourceModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header bg-primary text-white">
+        <div class="d-flex align-items-center">
+          <div id="resourceTypeIcon" class="resource-icon me-3">
+            <i class="fas fa-file-alt"></i>
+          </div>
+          <div>
+            <h5 class="modal-title mb-0" id="viewResourceModalLabel">Resource Details</h5>
+            <small class="opacity-75" id="resourceTypeText">Loading...</small>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-body p-2">
+        <div class="container">
+          <!-- Loading State -->
+          <div id="loadingState" class="text-center py-5">
+            <div class="spinner-border text-primary" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+            <p class="mt-3 text-muted">Loading resource details...</p>
+          </div>
+
+          <!-- Content Container -->
+          <div id="resourceContent" class="d-none">
+            <!-- Resource Header Section -->
+            <div class="resource-header">
+              <div class="container-fluid p-3">
+                <div class="row">
+                  <div class="col-lg-8">
+                    <h3 id="resourceTitle" class="fw-bold mb-2"></h3>
+                    <p id="resourceDescription" class="text-muted mb-2"></p>
+
+                    <!-- Status Badges -->
+                    <div class="mb-2">
+                      <span id="approvalBadge" class="badge me-2"></span>
+                      <span id="featuredBadge" class="badge me-2 d-none"></span>
+                      <span id="resourceTypeBadge" class="badge bg-info"></span>
+                    </div>
+
+                    <!-- Keywords/Tags -->
+                    <div id="keywordsSection" class="mb-2">
+                      <h6 class="fw-semibold mb-2">Keywords:</h6>
+                      <div id="keywordsTags" class="d-flex flex-wrap gap-1"></div>
+                    </div>
+                  </div>
+
+                  <div class="col-lg-4">
+                    <!-- Quick Info Card -->
+                    <div class="card bg-light h-100">
+                      <div class="card-body">
+                        <h6 class="card-title fw-semibold mb-3"><i class="fas fa-info-circle me-2 text-primary"></i>Quick Info</h6>
+                        <div id="quickInfoContent">
+                          <!-- Dynamic content based on resource type -->
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Divider -->
+            <div class="border-top"></div>
+
+            <!-- Resource Details Section -->
+            <div class="resource-details">
+              <div class="container-fluid p-3">
+                <div class="row">
+                  <div class="col-12">
+                    <!-- Event Details -->
+                    <div id="eventDetails" class="resource-type-details d-none">
+                      <h5 class="fw-semibold mb-2"><i class="fas fa-calendar-alt me-2 text-primary"></i>Event Information</h5>
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="detail-item">
+                            <div class="detail-label">Venue</div>
+                            <div class="detail-value" id="viewEventVenue"></div>
+                          </div>
+                          <div class="detail-item">
+                            <div class="detail-label">Organizer</div>
+                            <div class="detail-value" id="viewEventOrganizer"></div>
+                          </div>
+                          <div class="detail-item">
+                            <div class="detail-label">Event Type</div>
+                            <div class="detail-value" id="viewEventType"></div>
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="detail-item">
+                            <div class="detail-label">Start Date</div>
+                            <div class="detail-value" id="viewEventStartDate"></div>
+                          </div>
+                          <div class="detail-item">
+                            <div class="detail-label">End Date</div>
+                            <div class="detail-value" id="viewEventEndDate"></div>
+                          </div>
+                          <div class="detail-item" id="viewEventDocumentationSection">
+                            <div class="detail-label">Documentation</div>
+                            <div class="detail-value" id="viewEventDocumentation"></div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="mt-3" id="viewEventPicturesSection">
+                        <h6 class="fw-semibold mb-2">Event Photos</h6>
+                        <img id="viewEventPictures" class="img-fluid rounded" style="max-width: 300px;" />
+                      </div>
+                    </div>
+
+                    <!-- Webinar Details -->
+                    <div id="webinarDetails" class="resource-type-details d-none">
+                      <h5 class="fw-semibold mb-2"><i class="fas fa-video me-2 text-primary"></i>Webinar Information</h5>
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="detail-item">
+                            <div class="detail-label">Speaker</div>
+                            <div class="detail-value" id="viewWebinarSpeaker"></div>
+                          </div>
+                          <div class="detail-item">
+                            <div class="detail-label">Platform</div>
+                            <div class="detail-value" id="viewWebinarPlatform"></div>
+                          </div>
+                          <div class="detail-item">
+                            <div class="detail-label">Duration</div>
+                            <div class="detail-value" id="viewWebinarDuration"></div>
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="detail-item">
+                            <div class="detail-label">Date & Time</div>
+                            <div class="detail-value" id="viewWebinarDate"></div>
+                          </div>
+                          <div class="detail-item" id="viewWebinarAttendanceSection">
+                            <div class="detail-label">Attendance</div>
+                            <div class="detail-value" id="viewWebinarAttendance"></div>
+                          </div>
+                          <div class="detail-item" id="viewWebinarDocumentationSection">
+                            <div class="detail-label">Recording/Materials</div>
+                            <div class="detail-value" id="viewWebinarDocumentation"></div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="mt-3" id="viewWebinarPicturesSection">
+                        <h6 class="fw-semibold mb-2">Webinar Photos</h6>
+                        <img id="viewWebinarPictures" class="img-fluid rounded" style="max-width: 300px;" />
+                      </div>
+                    </div>
+
+                    <!-- News Details -->
+                    <div id="newsDetails" class="resource-type-details d-none">
+                      <h5 class="fw-semibold mb-2"><i class="fas fa-newspaper me-2 text-primary"></i>News Article</h5>
+                      <div class="row">
+                        <div class="col-md-8">
+                          <div class="detail-item">
+                            <div class="detail-label">Headline</div>
+                            <div class="detail-value fw-bold" id="viewNewsHeadline"></div>
+                          </div>
+                          <div class="detail-item">
+                            <div class="detail-label">Author</div>
+                            <div class="detail-value" id="viewNewsAuthor"></div>
+                          </div>
+                          <div class="detail-item" id="viewNewsPositionSection">
+                            <div class="detail-label">Author Position</div>
+                            <div class="detail-value" id="viewNewsPosition"></div>
+                          </div>
+                          <div class="detail-item">
+                            <div class="detail-label">Content</div>
+                            <div class="detail-value" id="viewNewsContent"></div>
+                          </div>
+                          <div class="detail-item" id="viewNewsSourceSection">
+                            <div class="detail-label">Source</div>
+                            <div class="detail-value" id="viewNewsSource"></div>
+                          </div>
+                        </div>
+                        <div class="col-md-4">
+                          <div id="viewNewsFeaturedImageSection">
+                            <h6 class="fw-semibold mb-2">Featured Image</h6>
+                            <img id="viewNewsFeaturedImage" class="img-fluid rounded" />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Publication Details -->
+                    <div id="publicationDetails" class="resource-type-details d-none">
+                      <h5 class="fw-semibold mb-2"><i class="fas fa-file-alt me-2 text-primary"></i>Publication Information</h5>
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="detail-item">
+                            <div class="detail-label">Authors</div>
+                            <div class="detail-value" id="viewPublicationAuthor"></div>
+                          </div>
+                          <div class="detail-item">
+                            <div class="detail-label">Publication Date</div>
+                            <div class="detail-value" id="viewPublicationDate"></div>
+                          </div>
+                          <div class="detail-item">
+                            <div class="detail-label">Type</div>
+                            <div class="detail-value" id="viewPublicationType"></div>
+                          </div>
+                          <div class="detail-item" id="viewPublicationPublisherSection">
+                            <div class="detail-label">Publisher</div>
+                            <div class="detail-value" id="viewPublicationPublisher"></div>
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="detail-item" id="viewPublicationDoiSection">
+                            <div class="detail-label">DOI</div>
+                            <div class="detail-value" id="viewPublicationDoi"></div>
+                          </div>
+                          <div class="detail-item" id="viewPublicationIsbnSection">
+                            <div class="detail-label">ISBN</div>
+                            <div class="detail-value" id="viewPublicationIsbn"></div>
+                          </div>
+                          <div class="detail-item" id="viewPublicationFileSection">
+                            <div class="detail-label">Publication File</div>
+                            <div class="detail-value" id="viewPublicationFile"></div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="mt-4" id="viewPublicationDescriptionSection">
+                        <h6 class="fw-semibold mb-2">Abstract</h6>
+                        <div class="bg-light p-3 rounded">
+                          <p class="mb-0" id="viewPublicationDescription"></p>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Technology Details -->
+                    <div id="technologyDetails" class="resource-type-details d-none">
+                      <h5 class="fw-semibold mb-2"><i class="fas fa-cog me-2 text-primary"></i>Technology Overview</h5>
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="detail-item">
+                            <div class="detail-label">Technology Name</div>
+                            <div class="detail-value" id="viewTechnologyName"></div>
+                          </div>
+                          <div class="detail-item">
+                            <div class="detail-label">Products</div>
+                            <div class="detail-value" id="viewTechnologyProducts"></div>
+                          </div>
+                          <div class="detail-item">
+                            <div class="detail-label">Adoption Status</div>
+                            <div class="detail-value" id="viewTechnologyAdoptionStatus"></div>
+                          </div>
+                          <div class="detail-item">
+                            <div class="detail-label">Year Introduced</div>
+                            <div class="detail-value" id="viewTechnologyYearIntroduced"></div>
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="detail-item" id="viewTechnologyIpAssetSection">
+                            <div class="detail-label">IP Asset</div>
+                            <div class="detail-value" id="viewTechnologyIpAsset"></div>
+                          </div>
+                          <div class="detail-item" id="viewTechnologyFundingSection">
+                            <div class="detail-label">Funding Source</div>
+                            <div class="detail-value" id="viewTechnologyFundingSource"></div>
+                          </div>
+                          <div class="detail-item" id="viewTechnologyExpertSection">
+                            <div class="detail-label">Contact Expert</div>
+                            <div class="detail-value" id="viewTechnologyExpertEmail"></div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="mt-4" id="viewTechnologyDescriptionSection">
+                        <h6 class="fw-semibold mb-2">Description</h6>
+                        <div class="bg-light p-3 rounded">
+                          <p class="mb-0" id="viewTechnologyDescription"></p>
+                        </div>
+                      </div>
+                      <div class="mt-4" id="viewTechnologySupportSection">
+                        <h6 class="fw-semibold mb-2">Support Facilities</h6>
+                        <div class="bg-light p-3 rounded">
+                          <p class="mb-0" id="viewTechnologySupportFacilities"></p>
+                        </div>
+                      </div>
+                      <div class="mt-4" id="viewTechnologyExpertsSection">
+                        <h6 class="fw-semibold mb-2">Available Experts</h6>
+                        <div class="bg-light p-3 rounded">
+                          <p class="mb-0" id="viewTechnologyAvailableExperts"></p>
+                        </div>
+                      </div>
+                      <div class="mt-4" id="viewTechnologyPicturesSection">
+                        <h6 class="fw-semibold mb-2">Technology Photos</h6>
+                        <img id="viewTechnologyPictures" class="img-fluid rounded" style="max-width: 300px;" />
+                      </div>
+                    </div>
+
+                    <!-- Project Details -->
+                    <div id="projectDetails" class="resource-type-details d-none">
+                      <h5 class="fw-semibold mb-2"><i class="fas fa-project-diagram me-2 text-primary"></i>Project Information</h5>
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="detail-item" id="viewProjectProgramSection">
+                            <div class="detail-label">Program Title</div>
+                            <div class="detail-value" id="viewProjectProgramTitle"></div>
+                          </div>
+                          <div class="detail-item">
+                            <div class="detail-label">Project Title</div>
+                            <div class="detail-value" id="viewProjectTitle"></div>
+                          </div>
+                          <div class="detail-item">
+                            <div class="detail-label">Project Leader</div>
+                            <div class="detail-value" id="viewProjectLeader"></div>
+                          </div>
+                          <div class="detail-item">
+                            <div class="detail-label">Status</div>
+                            <div class="detail-value" id="viewProjectStatus"></div>
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="detail-item">
+                            <div class="detail-label">Start Date</div>
+                            <div class="detail-value" id="viewProjectStartDate"></div>
+                          </div>
+                          <div class="detail-item" id="viewProjectEndDateSection">
+                            <div class="detail-label">End Date</div>
+                            <div class="detail-value" id="viewProjectEndDate"></div>
+                          </div>
+                          <div class="detail-item" id="viewProjectBudgetSection">
+                            <div class="detail-label">Total Budget</div>
+                            <div class="detail-value" id="viewProjectBudget"></div>
+                          </div>
+                          <div class="detail-item" id="viewProjectExtensionSection">
+                            <div class="detail-label">Extension</div>
+                            <div class="detail-value" id="viewProjectExtension"></div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row mt-4">
+                        <div class="col-12">
+                          <h6 class="fw-semibold mb-3">Agencies & Partnerships</h6>
+                          <div class="row">
+                            <div class="col-md-6" id="viewProjectFundingSection">
+                              <div class="detail-item">
+                                <div class="detail-label">Funding Source</div>
+                                <div class="detail-value" id="viewProjectFundingSource"></div>
+                              </div>
+                            </div>
+                            <div class="col-md-6" id="viewProjectImplementingSection">
+                              <div class="detail-item">
+                                <div class="detail-label">Implementing Agency</div>
+                                <div class="detail-value" id="viewProjectImplementingAgency"></div>
+                              </div>
+                            </div>
+                            <div class="col-md-6" id="viewProjectCooperatingSection">
+                              <div class="detail-item">
+                                <div class="detail-label">Cooperating Agency</div>
+                                <div class="detail-value" id="viewProjectCooperatingAgency"></div>
+                              </div>
+                            </div>
+                            <div class="col-md-6" id="viewProjectCollaboratingSection">
+                              <div class="detail-item">
+                                <div class="detail-label">Collaborating Agency</div>
+                                <div class="detail-value" id="viewProjectCollaboratingAgency"></div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Policy Details -->
+                    <div id="policyDetails" class="resource-type-details d-none">
+                      <h5 class="fw-semibold mb-2"><i class="fas fa-gavel me-2 text-primary"></i>Policy Information</h5>
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="detail-item">
+                            <div class="detail-label">Policy Type</div>
+                            <div class="detail-value" id="viewPolicyType"></div>
+                          </div>
+                          <div class="detail-item">
+                            <div class="detail-label">Agency</div>
+                            <div class="detail-value" id="viewPolicyAgency"></div>
+                          </div>
+                          <div class="detail-item">
+                            <div class="detail-label">Year</div>
+                            <div class="detail-value" id="viewPolicyYear"></div>
+                          </div>
+                          <div class="detail-item" id="viewPolicyAuthorSection">
+                            <div class="detail-label">Author</div>
+                            <div class="detail-value" id="viewPolicyAuthor"></div>
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="detail-item" id="viewPolicyAdvocacySection">
+                            <div class="detail-label">Advocacy Project</div>
+                            <div class="detail-value" id="viewPolicyAdvocacyProject"></div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="mt-4">
+                        <h6 class="fw-semibold mb-2">Description</h6>
+                        <div class="bg-light p-3 rounded">
+                          <p class="mb-0" id="viewPolicyDescription"></p>
+                        </div>
+                      </div>
+                      <div class="mt-4" id="viewPolicyFindingsSection">
+                        <h6 class="fw-semibold mb-2">Findings</h6>
+                        <div class="bg-light p-3 rounded">
+                          <p class="mb-0" id="viewPolicyFindings"></p>
+                        </div>
+                      </div>
+                      <div class="mt-4" id="viewPolicyTextSection">
+                        <h6 class="fw-semibold mb-2">Policy Text</h6>
+                        <div class="bg-light p-3 rounded">
+                          <p class="mb-0" id="viewPolicyText"></p>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Training Details -->
+                    <div id="trainingDetails" class="resource-type-details d-none">
+                      <h5 class="fw-semibold mb-2"><i class="fas fa-chalkboard-teacher me-2 text-primary"></i>Training Information</h5>
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="detail-item">
+                            <div class="detail-label">Venue</div>
+                            <div class="detail-value" id="viewTrainingVenue"></div>
+                          </div>
+                          <div class="detail-item">
+                            <div class="detail-label">Organizer</div>
+                            <div class="detail-value" id="viewTrainingOrganizer"></div>
+                          </div>
+                          <div class="detail-item">
+                            <div class="detail-label">Start Date</div>
+                            <div class="detail-value" id="viewTrainingStartDate"></div>
+                          </div>
+                          <div class="detail-item" id="viewTrainingEndDateSection">
+                            <div class="detail-label">End Date</div>
+                            <div class="detail-value" id="viewTrainingEndDate"></div>
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="detail-item" id="viewTrainingSpeakersSection">
+                            <div class="detail-label">Speakers</div>
+                            <div class="detail-value" id="viewTrainingSpeakers"></div>
+                          </div>
+                          <div class="detail-item" id="viewTrainingParticipantsSection">
+                            <div class="detail-label">Total Participants</div>
+                            <div class="detail-value" id="viewTrainingParticipants"></div>
+                          </div>
+                          <div class="detail-item" id="viewTrainingDocumentationSection">
+                            <div class="detail-label">Documentation</div>
+                            <div class="detail-value" id="viewTrainingDocumentation"></div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="mt-3" id="viewTrainingDescriptionSection">
+                        <h6 class="fw-semibold mb-2">Description</h6>
+                        <div class="bg-light p-3 rounded">
+                          <p class="mb-0" id="viewTrainingDescription"></p>
+                        </div>
+                      </div>
+                      <div class="mt-3" id="viewTrainingPicturesSection">
+                        <h6 class="fw-semibold mb-2">Training Photos</h6>
+                        <img id="viewTrainingPictures" class="img-fluid rounded" style="max-width: 300px;" />
+                      </div>
+                    </div>
+
+                    <!-- Media Details -->
+                    <div id="mediaDetails" class="resource-type-details d-none">
+                      <h5 class="fw-semibold mb-2"><i class="fas fa-photo-video me-2 text-primary"></i>Media Information</h5>
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="detail-item">
+                            <div class="detail-label">Media Title</div>
+                            <div class="detail-value" id="viewMediaTitle"></div>
+                          </div>
+                          <div class="detail-item" id="viewMediaLinkSection">
+                            <div class="detail-label">Media Link</div>
+                            <div class="detail-value" id="viewMediaLink"></div>
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="file-preview">
+                            <i class="fas fa-photo-video fa-3x text-muted"></i>
+                            <p class="mb-0 mt-2">Media Content</p>
+                            <small class="text-muted">Click the link above to view</small>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Product Details -->
+                    <div id="productDetails" class="resource-type-details d-none">
+                      <h5 class="fw-semibold mb-2"><i class="fas fa-box me-2 text-primary"></i>Product Information</h5>
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="detail-item">
+                            <div class="detail-label">Product Name</div>
+                            <div class="detail-value" id="viewProductName"></div>
+                          </div>
+                          <div class="detail-item">
+                            <div class="detail-label">Company</div>
+                            <div class="detail-value" id="viewProductCompany"></div>
+                          </div>
+                          <div class="detail-item" id="viewProductPriceSection">
+                            <div class="detail-label">Price</div>
+                            <div class="detail-value" id="viewProductPrice"></div>
+                          </div>
+                          <div class="detail-item" id="viewProductDocumentationSection">
+                            <div class="detail-label">Product Documentation</div>
+                            <div class="detail-value" id="viewProductDocumentation"></div>
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div id="viewProductPicturesSection">
+                            <h6 class="fw-semibold mb-2">Product Image</h6>
+                            <img id="viewProductPictures" class="img-fluid rounded" />
+                          </div>
+                        </div>
+                      </div>
+                      <div class="mt-4">
+                        <h6 class="fw-semibold mb-2">Description</h6>
+                        <div class="bg-light p-3 rounded">
+                          <p class="mb-0" id="viewProductDescription"></p>
+                        </div>
+                      </div>
+                      <div class="mt-4" id="viewProductContactSection">
+                        <h6 class="fw-semibold mb-2">Contact Information</h6>
+                        <div class="bg-light p-3 rounded">
+                          <p class="mb-0" id="viewProductContactInfo"></p>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Information System Details -->
+                    <div id="infoSystemDetails" class="resource-type-details d-none">
+                      <h5 class="fw-semibold mb-2"><i class="fas fa-desktop me-2 text-primary"></i>System Information</h5>
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="detail-item">
+                            <div class="detail-label">Organization/Owner</div>
+                            <div class="detail-value" id="viewInfoSystemOwner"></div>
+                          </div>
+                          <div class="detail-item" id="viewInfoSystemAgencySection">
+                            <div class="detail-label">Agency</div>
+                            <div class="detail-value" id="viewInfoSystemAgency"></div>
+                          </div>
+                          <div class="detail-item" id="viewInfoSystemLinkSection">
+                            <div class="detail-label">System Link</div>
+                            <div class="detail-value" id="viewInfoSystemLink"></div>
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="file-preview">
+                            <i class="fas fa-desktop fa-3x text-muted"></i>
+                            <p class="mb-0 mt-2">Information System</p>
+                            <small class="text-muted">Click the link to access</small>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="mt-4" id="viewInfoSystemExplanationSection">
+                        <h6 class="fw-semibold mb-2">System Description</h6>
+                        <div class="bg-light p-3 rounded">
+                          <p class="mb-0" id="viewInfoSystemExplanation"></p>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Map Details -->
+                    <div id="mapDetails" class="resource-type-details d-none">
+                      <h5 class="fw-semibold mb-2"><i class="fas fa-map me-2 text-primary"></i>Map Information</h5>
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="detail-item" id="viewMapCoordinatesSection">
+                            <div class="detail-label">Coordinates</div>
+                            <div class="detail-value" id="viewMapCoordinates"></div>
+                          </div>
+                          <div class="detail-item" id="viewMapUrlSection">
+                            <div class="detail-label">Map Link</div>
+                            <div class="detail-value" id="viewMapUrl"></div>
+                          </div>
+                          <div class="detail-item" id="viewMapFileSection">
+                            <div class="detail-label">Map File</div>
+                            <div class="detail-value" id="viewMapFile"></div>
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="file-preview">
+                            <i class="fas fa-map fa-3x text-muted"></i>
+                            <p class="mb-0 mt-2">Map Resource</p>
+                            <small class="text-muted">Geographic information</small>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Related Resources Section -->
+            <div id="relatedResourcesSection" class="border-top bg-light">
+              <div class="container-fluid p-3">
+                <h5 class="fw-semibold mb-2"><i class="fas fa-link me-2 text-primary"></i>Related Information</h5>
+                <div class="row" id="relatedContent">
+                  <!-- Tags and Commodities -->
+                  <div class="col-md-6 mb-3">
+                    <h6 class="fw-semibold">Tags</h6>
+                    <div id="allTags" class="d-flex flex-wrap gap-1">
+                      <!-- Tags will be populated here -->
+                    </div>
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <h6 class="fw-semibold">Related Commodities</h6>
+                    <div id="relatedCommodities">
+                      <!-- Commodities will be populated here -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer bg-light">
+        <div class="d-flex justify-content-between w-100 align-items-center">
+          <div class="text-muted small">
+            <i class="fas fa-calendar-alt me-1"></i>
+            Created: <span id="createdDate"></span>
+            <span id="updatedDate" class="ms-3"></span>
+          </div>
+          <div>
+            <button type="button" class="btn btn-outline-secondary" data-dismiss="modal"><i class="fas fa-times me-2"></i>Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

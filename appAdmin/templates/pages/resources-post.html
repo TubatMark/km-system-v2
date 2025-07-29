@@ -4,316 +4,350 @@
 {% block title %}
   Admin Knowledge Management
 {% endblock %}
+
 {% block stylesheet %}
-<link rel="stylesheet" href="{% static 'style/css/admin.resources-post.css' %}">
-{% endblock %}
+<link rel="stylesheet" href="{% static "style/css/admin.resources-post.css" %}">
+{% endblock stylesheet %}
 
 {% block content %}
-<div class="masonry-item col-12">
-  <!-- Dashboard Header -->
+  <!-- Page Header -->
   <div class="dashboard-header">
-    <h1 class="dashboard-title">
-        Knowledge Resources 
-        <div class="btn-group">
-            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createResourceModal">
-                <i class="fas fa-plus"></i> Add New Resource
-            </button>
-            <button class="btn btn-outline-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                <i class="fas fa-filter"></i>
-            </button>
-            <ul class="dropdown-menu dropdown-menu-end">
-                <li><a class="dropdown-item" href="#">All Resources</a></li>
-                <li><a class="dropdown-item" href="#">Featured Only</a></li>
-                <li><a class="dropdown-item" href="#">Pending Approval</a></li>
-                <li><a class="dropdown-item" href="#">Recently Added</a></li>
-            </ul>
-        </div>
-    </h1>
+    <h1 class="dashboard-title">Knowledge Resources Management</h1>
+    <p class="dashboard-subtitle">Manage knowledge resources, publications, and research materials</p>
   </div>
 
-  <!-- Stats Row -->
-  <div class="row">
-    <div class="col-md-3 col-sm-6">
-        <div class="stats-card">
-            <div class="stats-icon blue">
-                <i class="fas fa-book"></i>
-            </div>
-            <div class="stats-info">
-                <h3>{{total_resources}}</h3>
-                <p>Total Resources</p>
-            </div>
+  <!-- Stats Grid -->
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-header">
+        <div class="stat-icon" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+          <i class="fas fa-book"></i>
         </div>
-    </div>
-    <div class="col-md-3 col-sm-6">
-        <div class="stats-card">
-            <div class="stats-icon green">
-                <i class="fas fa-check-circle"></i>
-            </div>
-            <div class="stats-info">
-                <h3>{{total_approved_resources}}</h3>
-                <p>Approved</p>
-            </div>
+      </div>
+      <div class="stat-content">
+        <div class="stat-value">{{ total_resources|default:"0" }}</div>
+        <div class="stat-label">Total Resources</div>
+        <div class="stat-change positive">
+          <i class="fas fa-arrow-up"></i>
+          <span>Active</span>
         </div>
-    </div>
-    <div class="col-md-3 col-sm-6">
-        <div class="stats-card">
-            <div class="stats-icon yellow">
-                <i class="fas fa-clock"></i>
-            </div>
-            <div class="stats-info">
-                <h3>{{total_pending_resources}}</h3>
-                <p>Pending Approval</p>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-3 col-sm-6">
-        <div class="stats-card">
-            <div class="stats-icon red">
-                <i class="fas fa-star"></i>
-            </div>
-            <div class="stats-info">
-                <h3>{{total_featured_resources}}</h3>
-                <p>Featured Resources</p>
-            </div>
-        </div>
-    </div>
-  </div>
-
-  <!-- Main Content Area -->
-  <div class="row">
-    <!-- Left Side - Filters -->
-    <div class="col-lg-3">
-        <div class="filter-container">
-            <h4 class="filter-title">Filter Resources</h4>
-            
-            <div class="filter-section">
-                <h5>Resource Type</h5>
-                {% for knowledge in knowledge_resources %}
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="filterEvent" checked>
-                    <label class="form-check-label" for="filterEvent">
-                        {{knowledge.knowledge_title}}
-                    </label>
-                </div>
-                {% endfor %}
-                
-                <div class="mb-2"></div>
-                <button class="btn btn-sm btn-link text-primary p-0">Show more</button>
-            </div>
-            
-            <div class="filter-section">
-                <h5>Status</h5>
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="filterApproved" checked>
-                    <label class="form-check-label" for="filterApproved">
-                        Approved
-                    </label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="filterPending" checked>
-                    <label class="form-check-label" for="filterPending">
-                        Pending
-                    </label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="filterFeatured">
-                    <label class="form-check-label" for="filterFeatured">
-                        Featured
-                    </label>
-                </div>
-            </div>
-            
-            <div class="filter-section">
-                <h5>Date Added</h5>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="dateFilter" id="filterToday">
-                    <label class="form-check-label" for="filterToday">
-                        Today
-                    </label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="dateFilter" id="filterWeek">
-                    <label class="form-check-label" for="filterWeek">
-                        This Week
-                    </label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="dateFilter" id="filterMonth">
-                    <label class="form-check-label" for="filterMonth">
-                        This Month
-                    </label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="dateFilter" id="filterYear" checked>
-                    <label class="form-check-label" for="filterYear">
-                        This Year
-                    </label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="dateFilter" id="filterAll">
-                    <label class="form-check-label" for="filterAll">
-                        All Time
-                    </label>
-                </div>
-            </div>
-            
-            <div class="filter-section">
-                <h5>Tags</h5>
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="filterTagRice">
-                    <label class="form-check-label" for="filterTagRice">
-                        Rice
-                    </label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="filterTagCorn">
-                    <label class="form-check-label" for="filterTagCorn">
-                        Corn
-                    </label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="filterTagCoconut">
-                    <label class="form-check-label" for="filterTagCoconut">
-                        Coconut
-                    </label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="filterTagAquaculture">
-                    <label class="form-check-label" for="filterTagAquaculture">
-                        Aquaculture
-                    </label>
-                </div>
-                <div class="mb-2"></div>
-                <button class="btn btn-sm btn-link text-primary p-0">Show more</button>
-            </div>
-            
-            <div class="d-flex justify-content-between mt-3">
-                <button class="btn btn-sm btn-outline-secondary">Reset Filters</button>
-                <button class="btn btn-sm btn-primary">Apply Filters</button>
-            </div>
-        </div>
+      </div>
     </div>
     
-    <!-- Right Side - Content -->
-    <div class="col-lg-9">
-        <div class="table-container">
-            <div class="table-header">
-                <h4 class="table-title">All Knowledge Resources</h4>
-                <div class="d-flex">
-                    <div class="input-group me-2">
-                        <input type="text" class="form-control" placeholder="Quick search...">
-                        <button class="btn btn-outline-secondary" type="button">
-                            <i class="fas fa-search"></i>
-                        </button>
-                    </div>
-                    <div class="btn-group">
-                        <button class="btn btn-outline-secondary active">
-                            <i class="fas fa-table"></i>
-                        </button>
-                        <button class="btn btn-outline-secondary">
-                            <i class="fas fa-th-large"></i>
-                        </button>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="table-responsive">
-                <table class="table resource-table">
-                    <thead>
-                        <tr>
-                            <th style="width: 40px;"><input type="checkbox" class="form-check-input"></th>
-                            <th>Title</th> <!--resource title-->
-                            <th>Type</th> <!--resource type-->
-                            <th>Date Added</th> <!--created_at-->
-                            <th>Status</th> <!--is_approved is_featured-->
-                            <th style="width: 150px;">Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for resource in resources_data %}
-                        <tr>
-                            <td><input type="checkbox" class="form-check-input"></td>
-                            <td>
-                                <div class="d-flex align-items-center">
-                                    {% if resource.resource_type == 'events' %}
-                                    <div class="type-icon event-icon me-3">
-                                        <i class="fas fa-calendar-alt text-warning"></i>
-                                    </div>
-                                    {% elif resource.resource_type == 'webinars' %}
-                                    <div class="type-icon webinar-icon me-3">
-                                        <i class="fas fa-video text-success"></i>
-                                    </div>
-                                    {% elif resource.resource_type == 'news' %}
-                                    <div class="type-icon news-icon me-3">
-                                        <i class="fas fa-newspaper text-primary"></i>
-                                    </div>
-                                    {% elif resource.resource_type == 'policies' %}
-                                    <div class="type-icon policy-icon me-3">
-                                        <i class="fas fa-gavel text-danger"></i>
-                                    </div>
-                                    {% else %}
-                                    <div class="type-icon publication-icon me-3">
-                                        <i class="fas fa-file-alt text-info"></i>
-                                    </div>
-                                    {% endif %}
-                                    <div>
-                                        <div class="fw-bold">{{ resource.title }}</div>
-                                    </div>
-                                </div>
-                            </td>
-                            <td><span class="resource-type publication">{{ resource.resource_type|get_knowledge_title }}</span></td>
-                            <td>{{resource.created_at}}</td>
-                            <td>
-                                {% if resource.is_approved %}
-                                <span class="status-badge approved"> Approved </span>
-                                {% elif resource.is_featured %}
-                                <span class="status-badge featured"> Featured </span>
-                                {% else %}
-                                <span class="status-badge pending"> Pending </span>
-                                {% endif %}
-                            </td>
-                            <td class="action-buttons">
-                                <button class="btn btn-sm btn-outline-primary" onclick="viewResource('{{ resource.slug }}')">
-                                    <i class="fas fa-eye"></i>
-                                </button>
-                            
-                                <button class="btn btn-sm btn-outline-success" onclick="confirmStatusUpdate('{{ resource.slug }}', '{{ resource.is_approved }}')">
-                                    <i class="fas {% if resource.is_approved %}fas fa-edit{% else %}fas fa-edit{% endif %}"></i>
-                                </button>
-                                <button onclick="confirmDelete('{{ resource.slug }}')" class="btn btn-sm btn-outline-danger">
-                                    <i class="fas fa-trash"></i>
-                                </button>
-                            </td>
-                        </tr>
-                        {% endfor %}
-                        
-                    </tbody>
-                </table>
-            </div>
-            
-            <nav aria-label="Page navigation">
-                <ul class="pagination">
-                    <li class="page-item disabled">
-                        <a class="page-link" href="#" aria-label="Previous">
-                            <span aria-hidden="true">&laquo;</span>
-                        </a>
-                    </li>
-                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <li class="page-item">
-                        <a class="page-link" href="#" aria-label="Next">
-                            <span aria-hidden="true">&raquo;</span>
-                        </a>
-                    </li>
-                </ul>
-            </nav>
+    <div class="stat-card">
+      <div class="stat-header">
+        <div class="stat-icon" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+          <i class="fas fa-check-circle"></i>
         </div>
+      </div>
+      <div class="stat-content">
+        <div class="stat-value">{{ total_approved_resources|default:"0" }}</div>
+        <div class="stat-label">Approved</div>
+        <div class="stat-change positive">
+          <i class="fas fa-check"></i>
+          <span>Verified</span>
+        </div>
+      </div>
+    </div>
+    
+    <div class="stat-card">
+      <div class="stat-header">
+        <div class="stat-icon" style="background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);">
+          <i class="fas fa-clock"></i>
+        </div>
+      </div>
+      <div class="stat-content">
+        <div class="stat-value">{{ total_pending_resources|default:"0" }}</div>
+        <div class="stat-label">Pending Approval</div>
+        <div class="stat-change warning">
+          <i class="fas fa-exclamation-triangle"></i>
+          <span>Review</span>
+        </div>
+      </div>
     </div>
   </div>
-</div>
 
-{% include 'modal/resources-post/add-resources.html' %}
+  <!-- Main Content Grid -->
+  <div class="analytics-grid" style="display: grid;  gap: 2rem; margin-bottom: 2rem;">
+    <!-- Resources Management Panel -->
+    <div class="chart-card">
+      <div class="chart-header">
+        <h3 class="chart-title">Knowledge Resources Overview</h3>
+        <div class="chart-controls">
+          <button type="button" class="btn btn-submit" data-toggle="modal" data-target="#createResourceModal">
+            <i class="fas fa-plus modal-trigger-icon" title="Add Resource"></i> Add New Resource
+          </button>
+        </div>
+      </div>
+      
+      <!-- Filters Section -->
+      <div class="filters-section" style="margin-bottom: 20px; padding: 20px; background: #f8f9fa; border-radius: 8px;">
+        <h4 style="margin-bottom: 15px; color: #333;">Filter Resources</h4>
+        
+        <form id="resourceFilterForm" method="GET" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+          <!-- Resource Type Filter -->
+          <div class="filter-group">
+            <label style="font-weight: 600; color: #333; margin-bottom: 8px; display: block;">Resource Type</label>
+            {% for knowledge in knowledge_resources %}
+              <div class="form-check" style="margin-bottom: 8px;">
+                <input class="form-check-input filter-checkbox" 
+                       type="checkbox" 
+                       name="resource_types" 
+                       value="{{ knowledge.slug }}" 
+                       id="filter_{{ knowledge.slug }}"
+                       {% if knowledge.slug in current_filters.resource_types %}checked{% endif %} />
+                <label class="form-check-label" for="filter_{{ knowledge.slug }}" style="font-size: 13px;">
+                  {{ knowledge.knowledge_title }}
+                  <span class="resource-count" style="color: #6c757d;">({{ knowledge.resource_count }})</span>
+                </label>
+              </div>
+            {% endfor %}
+          </div>
+      
+          <!-- Status Filter -->
+          <div class="filter-group">
+            <label style="font-weight: 600; color: #333; margin-bottom: 8px; display: block;">Status</label>
+            <div class="form-check" style="margin-bottom: 8px;">
+              <input class="form-check-input filter-checkbox" 
+                     type="checkbox" 
+                     name="status" 
+                     value="approved" 
+                     id="filterApproved" 
+                     {% if 'approved' in current_filters.status %}checked{% endif %} />
+              <label class="form-check-label" for="filterApproved" style="font-size: 13px;">
+                Approved <span class="resource-count" style="color: #6c757d;">({{ total_approved_resources }})</span>
+              </label>
+            </div>
+            <div class="form-check" style="margin-bottom: 8px;">
+              <input class="form-check-input filter-checkbox" 
+                     type="checkbox" 
+                     name="status" 
+                     value="pending" 
+                     id="filterPending" 
+                     {% if 'pending' in current_filters.status %}checked{% endif %} />
+              <label class="form-check-label" for="filterPending" style="font-size: 13px;">
+                Pending <span class="resource-count" style="color: #6c757d;">({{ total_pending_resources }})</span>
+              </label>
+            </div>
+            <div class="form-check" style="margin-bottom: 8px;">
+              <input class="form-check-input filter-checkbox" 
+                     type="checkbox" 
+                     name="status" 
+                     value="featured" 
+                     id="filterFeatured" 
+                     {% if 'featured' in current_filters.status %}checked{% endif %} />
+              <label class="form-check-label" for="filterFeatured" style="font-size: 13px;">Featured</label>
+            </div>
+          </div>
+      
+          <!-- Date Filter -->
+          <div class="filter-group">
+            <label style="font-weight: 600; color: #333; margin-bottom: 8px; display: block;">Date Added</label>
+            <div class="form-check" style="margin-bottom: 8px;">
+              <input class="form-check-input" 
+                     type="radio" 
+                     name="date_filter" 
+                     value="today" 
+                     id="filterToday" 
+                     {% if current_filters.date_filter == 'today' %}checked{% endif %} />
+              <label class="form-check-label" for="filterToday" style="font-size: 13px;">Today</label>
+            </div>
+            <div class="form-check" style="margin-bottom: 8px;">
+              <input class="form-check-input" 
+                     type="radio" 
+                     name="date_filter" 
+                     value="week" 
+                     id="filterWeek" 
+                     {% if current_filters.date_filter == 'week' %}checked{% endif %} />
+              <label class="form-check-label" for="filterWeek" style="font-size: 13px;">This Week</label>
+            </div>
+            <div class="form-check" style="margin-bottom: 8px;">
+              <input class="form-check-input" 
+                     type="radio" 
+                     name="date_filter" 
+                     value="month" 
+                     id="filterMonth" 
+                     {% if current_filters.date_filter == 'month' %}checked{% endif %} />
+              <label class="form-check-label" for="filterMonth" style="font-size: 13px;">This Month</label>
+            </div>
+            <div class="form-check" style="margin-bottom: 8px;">
+              <input class="form-check-input" 
+                     type="radio" 
+                     name="date_filter" 
+                     value="year" 
+                     id="filterYear" 
+                     {% if current_filters.date_filter == 'year' or not current_filters.date_filter %}checked{% endif %} />
+              <label class="form-check-label" for="filterYear" style="font-size: 13px;">This Year</label>
+            </div>
+            <div class="form-check" style="margin-bottom: 8px;">
+              <input class="form-check-input" 
+                     type="radio" 
+                     name="date_filter" 
+                     value="all" 
+                     id="filterAll" 
+                     {% if current_filters.date_filter == 'all' %}checked{% endif %} />
+              <label class="form-check-label" for="filterAll" style="font-size: 13px;">All Time</label>
+            </div>
+          </div>
+          <!-- Tags Filter -->
+          <div class="filter-group">
+            <label style="font-weight: 600; color: #333; margin-bottom: 8px; display: block;">Tags</label>
+            {% for tag in common_tags %}
+              <div class="form-check" style="margin-bottom: 8px;">
+                <input class="form-check-input filter-checkbox" 
+                      type="checkbox" 
+                      name="tags" 
+                      value="{{ tag.slug }}" 
+                      id="filterTag{{ tag.id }}" 
+                      {% if tag.slug in current_filters.tags %}checked{% endif %} />
+                <label class="form-check-label" for="filterTag{{ tag.id }}" style="font-size: 13px;">
+                  {{ tag.name }}
+                  <span class="resource-count" style="color: #6c757d;">({{ tag.resource_count }})</span>
+                </label>
+              </div>
+            {% endfor %}
+          </div>
+        </form>
+        
+        <!-- Filter Actions -->
+        <div class="filter-actions" style="margin-top: 15px; display: flex; gap: 10px; align-items: center;">
+          <button type="submit" form="resourceFilterForm" class="btn btn-primary" style="font-size: 12px;">
+            <i class="fas fa-filter"></i> Apply Filters
+          </button>
+          <button type="button" class="btn btn-outline-secondary" onclick="clearFilters()" style="font-size: 12px;">
+            <i class="fas fa-times"></i> Clear All
+          </button>
+          <span style="font-size: 12px; color: #6c757d; margin-left: auto;">
+            Showing {{ filtered_resources|length }} of {{ total_resources }} resources
+          </span>
+        </div>
+      </div>
+      
+      <!-- Resources Table -->
+      <div class="table-container" style="max-height: 600px; overflow-y: auto; overflow-x: auto; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+        <table id="resourcesTable" class="table table-bordered theme-header" style="width: 100%; min-width: 800px; margin-bottom: 0; background: white;">
+          <thead class="theme-header" style="background: #2C6E49 !important; color: #fff !important; font-size: 13px; font-weight: bolder;">
+            <tr>
+              <th style="padding: 15px; font-weight: 600; border: none; width: 40px; min-width: 40px;">
+                <input type="checkbox" class="form-check-input" id="selectAll">
+              </th>
+              <th style="padding: 15px; font-weight: 600; border: none; width: 80px; min-width: 80px;">ID</th>
+              <th style="padding: 15px; font-weight: 600; border: none; min-width: 150px;">Title</th>
+              <th style="padding: 15px; font-weight: 600; border: none; min-width: 120px;">Type</th>
+              <th style="padding: 15px; font-weight: 600; border: none; min-width: 100px;">Status</th>
+              <th style="padding: 15px; font-weight: 600; border: none; min-width: 120px;">Date Added</th>
+              <th style="padding: 15px; font-weight: 600; border: none; text-align: center; width: 120px; min-width: 120px;">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for resource in resources %}
+              <tr class="user-row" style="border-bottom: 1px solid #e9ecef; transition: all 0.3s ease; background: white;" 
+                  onmouseover="this.style.backgroundColor='#f8f9fa'" 
+                  onmouseout="this.style.backgroundColor='white'">
+                
+                <td style="padding: 15px; vertical-align: middle; border: none; text-align: center;">
+                  <input type="checkbox" class="form-check-input resource-checkbox" value="{{ resource.id }}">
+                </td>
+                
+                <td style="padding: 15px; vertical-align: middle; border: none; font-weight: 500; color: #2C6E49;">
+                  {{ resource.id }}
+                </td>
+                
+                <td style="padding: 15px; vertical-align: middle; border: none;">
+                  <div style="font-weight: 500; color: #333; margin-bottom: 4px;">
+                    {{ resource.title|default:"Untitled Resource"|truncatechars:30 }}
+                  </div>
+                  {% if resource.description %}
+                    <div style="font-size: 12px; color: #6c757d;">
+                      {{ resource.description|truncatechars:50 }}
+                    </div>
+                  {% endif %}
+                </td>
+                
+                <td style="padding: 15px; vertical-align: middle; border: none;">
+                  <span class="resource-type" style="background: #e3f2fd; color: #1976d2; padding: 6px 12px; border-radius: 20px; font-size: 12px; font-weight: 500; display: inline-block;">
+                    {{ resource.resource_type|get_knowledge_title }}
+                  </span>
+                </td>
+                
+                <td style="padding: 15px; vertical-align: middle; border: none;">
+                  {% if resource.is_approved %}
+                    <span class="status-badge approved" style="background: #d4edda; color: #155724; padding: 6px 12px; border-radius: 20px; font-size: 12px; font-weight: 500; display: inline-block;">
+                      <i class="fas fa-check-circle" style="margin-right: 4px;"></i>
+                      Approved
+                    </span>
+                  {% else %}
+                    <span class="status-badge pending" style="background: #fff3cd; color: #856404; padding: 6px 12px; border-radius: 20px; font-size: 12px; font-weight: 500; display: inline-block;">
+                      <i class="fas fa-clock" style="margin-right: 4px;"></i>
+                      Pending
+                    </span>
+                  {% endif %}
+                  
+                  {% if resource.is_featured %}
+                    <span class="status-badge featured" style="background: #e1f5fe; color: #01579b; padding: 4px 8px; border-radius: 12px; font-size: 11px; font-weight: 500; display: inline-block; margin-left: 4px;">
+                      <i class="fas fa-star" style="margin-right: 2px;"></i>
+                      Featured
+                    </span>
+                  {% endif %}
+                </td>
+                
+                <td style="padding: 15px; vertical-align: middle; border: none;">
+                  <div style="font-weight: 500; color: #333; margin-bottom: 2px;">
+                    {{ resource.created_at|date:"M d, Y" }}
+                  </div>
+                  <div style="font-size: 12px; color: #6c757d;">
+                    {{ resource.created_at|timesince }} ago
+                  </div>
+                </td>
+                
+                <td style="padding: 15px; vertical-align: middle; border: none; text-align: center;">
+                  <div class="btn-group" role="group" style="display: flex; gap: 4px; justify-content: center;">
+                    <button type="button" 
+                            class="btn btn-sm btn-outline-primary"
+                            style="padding: 6px 10px; border-radius: 6px; font-size: 12px; transition: all 0.3s ease;"
+                            data-resource-slug="{{ resource.slug }}"
+                            onclick="viewResource('{{ resource.slug }}')"
+                            title="View Resource">
+                      <i class="fas fa-eye"></i>
+                    </button>
+                    
+                    <button type="button" 
+                            class="btn btn-sm btn-outline-success" 
+                            onclick="confirmStatusUpdate('{{ resource.slug }}', '{{ resource.is_approved }}')"
+                            data-tooltip="{% if resource.is_approved %}Set to Pending{% else %}Approve Resource{% endif %}"
+                            style="padding: 6px 10px; border-radius: 6px; font-size: 12px; transition: all 0.3s ease;">
+                      <i class="fas {% if resource.is_approved %}fa-clock{% else %}fa-check{% endif %}"></i>
+                    </button>
+                    
+                    <button type="button" 
+                            class="btn btn-sm btn-outline-danger" 
+                            onclick="confirmDelete('{{ resource.slug }}')"
+                            data-tooltip="Delete Resource"
+                            style="padding: 6px 10px; border-radius: 6px; font-size: 12px; transition: all 0.3s ease;">
+                      <i class="fas fa-trash"></i>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            {% empty %}
+              <tr>
+                <td colspan="7" style="padding: 40px; text-align: center; border: none;">
+                  <div style="color: #6c757d;">
+                    <i class="fas fa-inbox" style="font-size: 48px; margin-bottom: 16px; opacity: 0.5;"></i>
+                    <div style="font-size: 16px; font-weight: 500; margin-bottom: 8px;">No resources found</div>
+                    <div style="font-size: 14px;">Try adjusting your filters or add a new resource to get started.</div>
+                  </div>
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  {% include 'modal/resources-post/add-resources.html' %}
+  {% include 'modal/resources-post/view-resources.html' %}
 {% endblock %}
 
 {% block script %}
@@ -406,6 +440,709 @@ function getCookie(name) {
     }
     return cookieValue;
 }
+
+function viewResource(slug) {
+  // Show loading state
+  document.getElementById('loadingState').classList.remove('d-none');
+  document.getElementById('resourceContent').classList.add('d-none');
+  
+  // Fetch resource data and open the modal
+  fetch(`/admin/view-resource-modal/${slug}/`)
+    .then(response => response.json())
+    .then(data => {
+      if (data.success !== false) {
+        // Hide loading, show content
+        document.getElementById('loadingState').classList.add('d-none');
+        document.getElementById('resourceContent').classList.remove('d-none');
+        
+        // Populate modal with data
+        populateResourceModal(data);
+        
+        // Show the modal
+        $('#viewResourceModal').modal('show');
+      } else {
+        Swal.fire({
+          title: 'Error!',
+          text: data.error || 'Failed to load resource details',
+          icon: 'error'
+        });
+      }
+    })
+    .catch(error => {
+      console.error('Error:', error);
+      Swal.fire({
+        title: 'Error!',
+        text: 'An error occurred while loading resource details',
+        icon: 'error'
+      });
+    });
+}
+
+function populateResourceModal(data) {
+  // Set basic resource information - these come from the backend processing
+  document.getElementById('resourceTitle').textContent = data.title || 'Untitled Resource';
+  document.getElementById('resourceDescription').textContent = data.description || 'No description available';
+  document.getElementById('resourceTypeText').textContent = data.resource_type_display || 'Unknown Type';
+  document.getElementById('createdDate').textContent = new Date(data.created_at).toLocaleDateString();
+  
+  if (data.updated_at) {
+    document.getElementById('updatedDate').textContent = ` | Updated: ${new Date(data.updated_at).toLocaleDateString()}`;
+  }
+  
+  // Set status badges
+  const approvalBadge = document.getElementById('approvalBadge');
+  const featuredBadge = document.getElementById('featuredBadge');
+  const resourceTypeBadge = document.getElementById('resourceTypeBadge');
+  
+  if (data.is_approved) {
+    approvalBadge.className = 'badge me-2 bg-success';
+    approvalBadge.innerHTML = '<i class="fas fa-check-circle me-1"></i>Approved';
+  } else {
+    approvalBadge.className = 'badge me-2 bg-warning';
+    approvalBadge.innerHTML = '<i class="fas fa-clock me-1"></i>Pending';
+  }
+  
+  if (data.is_featured) {
+    featuredBadge.className = 'badge me-2 bg-primary d-inline';
+    featuredBadge.innerHTML = '<i class="fas fa-star me-1"></i>Featured';
+  }
+  
+  resourceTypeBadge.textContent = data.resource_type_display || 'Unknown Type';
+  
+  // Set resource type icon
+  const resourceTypeIcon = document.getElementById('resourceTypeIcon');
+  const iconClass = getResourceTypeIcon(data.resource_type_display);
+  resourceTypeIcon.innerHTML = `<i class="${iconClass}"></i>`;
+  
+  // Populate keywords/tags
+  const keywordsTags = document.getElementById('keywordsTags');
+  keywordsTags.innerHTML = '';
+  
+  if (data.keywords) {
+    const keywords = data.keywords.split(',').map(k => k.trim());
+    keywords.forEach(keyword => {
+      if (keyword) {
+        const tag = document.createElement('span');
+        tag.className = 'badge bg-secondary me-1 mb-1';
+        tag.textContent = keyword;
+        keywordsTags.appendChild(tag);
+      }
+    });
+  }
+  
+  // Populate tags section
+  const allTags = document.getElementById('allTags');
+  allTags.innerHTML = '';
+  if (data.tags && data.tags.length > 0) {
+    data.tags.forEach(tag => {
+      const tagElement = document.createElement('span');
+      tagElement.className = 'badge bg-info me-1 mb-1';
+      tagElement.textContent = tag.name;
+      allTags.appendChild(tagElement);
+    });
+  }
+  
+  // Populate commodities section
+  const relatedCommodities = document.getElementById('relatedCommodities');
+  relatedCommodities.innerHTML = '';
+  if (data.commodities && data.commodities.length > 0) {
+    data.commodities.forEach(commodity => {
+      const commodityElement = document.createElement('span');
+      commodityElement.className = 'badge bg-success me-1 mb-1';
+      commodityElement.textContent = commodity.commodity_name;
+      relatedCommodities.appendChild(commodityElement);
+    });
+  }
+  
+  // Hide all resource type detail sections first
+  document.querySelectorAll('.resource-type-details').forEach(section => {
+    section.classList.add('d-none');
+  });
+  
+  // Populate resource-specific data based on type using machine name for exact matching
+  const resourceTypeMachineName = data.resource_type_machine_name;
+  console.log(resourceTypeMachineName);
+  
+  if (resourceTypeMachineName === "events" && data.event_data) {
+    populateEventDetails(data.event_data);
+  } else if (resourceTypeMachineName === "webinars" && data.webinar_data) {
+    populateWebinarDetails(data.webinar_data);
+  } else if (resourceTypeMachineName === "news" && data.news_data) {
+    populateNewsDetails(data.news_data);
+  } else if (resourceTypeMachineName === "publications" && data.publication_data) {
+    populatePublicationDetails(data.publication_data);
+  } else if (resourceTypeMachineName === "technologies" && data.technology_data) {
+    populateTechnologyDetails(data.technology_data);
+  } else if (resourceTypeMachineName === "projects" && data.project_data) {
+    populateProjectDetails(data.project_data);
+  } else if (resourceTypeMachineName === "policies" && data.policy_data) {
+    populatePolicyDetails(data.policy_data);
+  } else if (resourceTypeMachineName === "trainingseminars" && data.training_data) {
+    console.log('Training data received:', data.training_data);
+    console.log('Training venue:', data.training_data.venue);
+    populateTrainingDetails(data.training_data);
+  } else if (resourceTypeMachineName === "media" && data.media_data) {
+    populateMediaDetails(data.media_data);
+  } else if (resourceTypeMachineName === "products" && data.product_data) {
+    populateProductDetails(data.product_data);
+  } else if (resourceTypeMachineName === "information_systemswebsites" && data.info_system_data) {
+    populateInfoSystemDetails(data.info_system_data);
+  } else if (resourceTypeMachineName === "maps" && data.map_data) {
+    populateMapDetails(data.map_data);
+  }
+  
+  // Populate quick info
+  populateQuickInfo(data);
+}
+
+function getResourceTypeIcon(resourceType) {
+  const type = resourceType?.toLowerCase() || '';
+  if (type.includes('event')) return 'fas fa-calendar-alt text-warning';
+  if (type.includes('webinar')) return 'fas fa-video text-success';
+  if (type.includes('news')) return 'fas fa-newspaper text-primary';
+  if (type.includes('publication')) return 'fas fa-file-alt text-info';
+  if (type.includes('technology')) return 'fas fa-cog text-secondary';
+  if (type.includes('project')) return 'fas fa-project-diagram text-purple';
+  if (type.includes('policy')) return 'fas fa-gavel text-danger';
+  if (type.includes('training')) return 'fas fa-chalkboard-teacher text-orange';
+  if (type.includes('media')) return 'fas fa-photo-video text-pink';
+  if (type.includes('product')) return 'fas fa-box text-brown';
+  if (type.includes('information system')) return 'fas fa-desktop text-cyan';
+  if (type.includes('map')) return 'fas fa-map text-green';
+  return 'fas fa-file-alt text-muted';
+}
+
+function populateQuickInfo(data) {
+  const quickInfoContent = document.getElementById('quickInfoContent');
+  quickInfoContent.innerHTML = `
+    <div class="mb-2">
+      <small class="text-muted">Created by:</small><br>
+      <strong>${data.created_by || 'Unknown'}</strong>
+    </div>
+    <div class="mb-2">
+      <small class="text-muted">Resource Type:</small><br>
+      <strong>${data.resource_type_display || 'Unknown'}</strong>
+    </div>
+    <div class="mb-2">
+      <small class="text-muted">Status:</small><br>
+      <strong>${data.is_approved ? 'Approved' : 'Pending'}</strong>
+    </div>
+    ${data.is_featured ? `
+    <div class="mb-2">
+      <small class="text-muted">Featured:</small><br>
+      <strong>Yes</strong>
+    </div>
+    ` : ''}
+  `;
+}
+
+function populateEventDetails(eventData) {
+  document.getElementById('eventDetails').classList.remove('d-none');
+  
+  document.getElementById('viewEventVenue').textContent = eventData.venue || 'Not specified';
+  document.getElementById('viewEventOrganizer').textContent = eventData.organizer || 'Not specified';
+  document.getElementById('viewEventType').textContent = eventData.event_type || 'Not specified';
+  document.getElementById('viewEventStartDate').textContent = new Date(eventData.start_date).toLocaleDateString();
+  document.getElementById('viewEventEndDate').textContent = new Date(eventData.end_date).toLocaleDateString();
+  
+  if (eventData.documentation_link) {
+    document.getElementById('viewEventDocumentation').innerHTML = `<a href="${eventData.documentation_link}" target="_blank">View Documentation</a>`;
+    document.getElementById('viewEventDocumentationSection').style.display = 'block';
+  } else {
+    document.getElementById('viewEventDocumentationSection').style.display = 'none';
+  }
+  
+  if (eventData.pictures) {
+    document.getElementById('viewEventPictures').src = eventData.pictures;
+    document.getElementById('viewEventPicturesSection').style.display = 'block';
+  } else {
+    document.getElementById('viewEventPicturesSection').style.display = 'none';
+  }
+}
+
+function populateWebinarDetails(webinarData) {
+  document.getElementById('webinarDetails').classList.remove('d-none');
+  
+  document.getElementById('viewWebinarSpeaker').textContent = webinarData.speaker || 'Not specified';
+  document.getElementById('viewWebinarPlatform').textContent = webinarData.platform || 'Not specified';
+  document.getElementById('viewWebinarDuration').textContent = `${webinarData.duration} minutes`;
+  document.getElementById('viewWebinarDate').textContent = new Date(webinarData.date).toLocaleDateString();
+  
+  if (webinarData.attendance) {
+    document.getElementById('viewWebinarAttendance').textContent = webinarData.attendance;
+    document.getElementById('viewWebinarAttendanceSection').style.display = 'block';
+  } else {
+    document.getElementById('viewWebinarAttendanceSection').style.display = 'none';
+  }
+  
+  if (webinarData.documentation_link) {
+    document.getElementById('viewWebinarDocumentation').innerHTML = `<a href="${webinarData.documentation_link}" target="_blank">View Recording/Materials</a>`;
+    document.getElementById('viewWebinarDocumentationSection').style.display = 'block';
+  } else {
+    document.getElementById('viewWebinarDocumentationSection').style.display = 'none';
+  }
+  
+  if (webinarData.pictures) {
+    document.getElementById('viewWebinarPictures').src = webinarData.pictures;
+    document.getElementById('viewWebinarPicturesSection').style.display = 'block';
+  } else {
+    document.getElementById('viewWebinarPicturesSection').style.display = 'none';
+  }
+}
+
+function populateNewsDetails(newsData) {
+  document.getElementById('newsDetails').classList.remove('d-none');
+  
+  document.getElementById('viewNewsHeadline').textContent = newsData.headline || 'Not specified';
+  document.getElementById('viewNewsAuthor').textContent = newsData.author || 'Not specified';
+  document.getElementById('viewNewsContent').textContent = newsData.content || 'No content available';
+  
+  if (newsData.position) {
+    document.getElementById('viewNewsPosition').textContent = newsData.position;
+    document.getElementById('viewNewsPositionSection').style.display = 'block';
+  } else {
+    document.getElementById('viewNewsPositionSection').style.display = 'none';
+  }
+  
+  if (newsData.source) {
+    document.getElementById('viewNewsSource').innerHTML = `<a href="${newsData.source}" target="_blank">View Source</a>`;
+    document.getElementById('viewNewsSourceSection').style.display = 'block';
+  } else {
+    document.getElementById('viewNewsSourceSection').style.display = 'none';
+  }
+  
+  if (newsData.featured_image) {
+    document.getElementById('viewNewsFeaturedImage').src = newsData.featured_image;
+    document.getElementById('viewNewsFeaturedImageSection').style.display = 'block';
+  } else {
+    document.getElementById('viewNewsFeaturedImageSection').style.display = 'none';
+  }
+}
+
+function populatePublicationDetails(publicationData) {
+  document.getElementById('publicationDetails').classList.remove('d-none');
+  
+  document.getElementById('viewPublicationAuthor').textContent = publicationData.author || 'Not specified';
+  document.getElementById('viewPublicationDate').textContent = new Date(publicationData.date_published).toLocaleDateString();
+  document.getElementById('viewPublicationType').textContent = publicationData.publication_type_display || publicationData.publication_type || 'Not specified';
+  document.getElementById('viewPublicationDescription').textContent = publicationData.description || 'No description available';
+  
+  if (publicationData.publisher) {
+    document.getElementById('viewPublicationPublisher').textContent = publicationData.publisher;
+    document.getElementById('viewPublicationPublisherSection').style.display = 'block';
+  } else {
+    document.getElementById('viewPublicationPublisherSection').style.display = 'none';
+  }
+  
+  if (publicationData.doi) {
+    document.getElementById('viewPublicationDoi').textContent = publicationData.doi;
+    document.getElementById('viewPublicationDoiSection').style.display = 'block';
+  } else {
+    document.getElementById('viewPublicationDoiSection').style.display = 'none';
+  }
+  
+  if (publicationData.isbn) {
+    document.getElementById('viewPublicationIsbn').textContent = publicationData.isbn;
+    document.getElementById('viewPublicationIsbnSection').style.display = 'block';
+  } else {
+    document.getElementById('viewPublicationIsbnSection').style.display = 'none';
+  }
+  
+  if (publicationData.file) {
+    document.getElementById('viewPublicationFile').innerHTML = `<a href="${publicationData.file}" target="_blank">Download Publication</a>`;
+    document.getElementById('viewPublicationFileSection').style.display = 'block';
+  } else {
+    document.getElementById('viewPublicationFileSection').style.display = 'none';
+  }
+}
+
+function populateTechnologyDetails(technologyData) {
+  document.getElementById('technologyDetails').classList.remove('d-none');
+  
+  document.getElementById('viewTechnologyName').textContent = technologyData.technologies || 'Not specified';
+  document.getElementById('viewTechnologyProducts').textContent = technologyData.products || 'Not specified';
+  document.getElementById('viewTechnologyAdoptionStatus').textContent = technologyData.adoption_status_display || technologyData.adoption_status || 'Not specified';
+  document.getElementById('viewTechnologyYearIntroduced').textContent = technologyData.year_introduced || 'Not specified';
+  document.getElementById('viewTechnologyDescription').textContent = technologyData.brief_description || 'No description available';
+  
+  if (technologyData.ip_asset) {
+    document.getElementById('viewTechnologyIpAsset').textContent = technologyData.ip_asset;
+    document.getElementById('viewTechnologyIpAssetSection').style.display = 'block';
+  } else {
+    document.getElementById('viewTechnologyIpAssetSection').style.display = 'none';
+  }
+  
+  if (technologyData.funding_source) {
+    document.getElementById('viewTechnologyFundingSource').textContent = technologyData.funding_source_display || technologyData.funding_source;
+    document.getElementById('viewTechnologyFundingSection').style.display = 'block';
+  } else {
+    document.getElementById('viewTechnologyFundingSection').style.display = 'none';
+  }
+  
+  if (technologyData.experts_email) {
+    document.getElementById('viewTechnologyExpertEmail').textContent = technologyData.experts_email;
+    document.getElementById('viewTechnologyExpertSection').style.display = 'block';
+  } else {
+    document.getElementById('viewTechnologyExpertSection').style.display = 'none';
+  }
+  
+  if (technologyData.support_facilities) {
+    document.getElementById('viewTechnologySupportFacilities').textContent = technologyData.support_facilities;
+    document.getElementById('viewTechnologySupportSection').style.display = 'block';
+  } else {
+    document.getElementById('viewTechnologySupportSection').style.display = 'none';
+  }
+  
+  if (technologyData.available_experts) {
+    document.getElementById('viewTechnologyAvailableExperts').textContent = technologyData.available_experts;
+    document.getElementById('viewTechnologyExpertsSection').style.display = 'block';
+  } else {
+    document.getElementById('viewTechnologyExpertsSection').style.display = 'none';
+  }
+  
+  if (technologyData.pictures) {
+    document.getElementById('viewTechnologyPictures').src = technologyData.pictures;
+    document.getElementById('viewTechnologyPicturesSection').style.display = 'block';
+  } else {
+    document.getElementById('viewTechnologyPicturesSection').style.display = 'none';
+  }
+}
+
+function populateProjectDetails(projectData) {
+  document.getElementById('projectDetails').classList.remove('d-none');
+  
+  document.getElementById('viewProjectTitle').textContent = projectData.project_title || 'Not specified';
+  document.getElementById('viewProjectLeader').textContent = projectData.project_leader || 'Not specified';
+  document.getElementById('viewProjectStatus').textContent = projectData.status_display || projectData.status || 'Not specified';
+  document.getElementById('viewProjectStartDate').textContent = new Date(projectData.start_date).toLocaleDateString();
+  
+  if (projectData.program_title) {
+    document.getElementById('viewProjectProgramTitle').textContent = projectData.program_title;
+    document.getElementById('viewProjectProgramSection').style.display = 'block';
+  } else {
+    document.getElementById('viewProjectProgramSection').style.display = 'none';
+  }
+  
+  if (projectData.end_date) {
+    document.getElementById('viewProjectEndDate').textContent = new Date(projectData.end_date).toLocaleDateString();
+    document.getElementById('viewProjectEndDateSection').style.display = 'block';
+  } else {
+    document.getElementById('viewProjectEndDateSection').style.display = 'none';
+  }
+  
+  if (projectData.total_approved_budget) {
+    document.getElementById('viewProjectBudget').textContent = `₱${parseFloat(projectData.total_approved_budget).toLocaleString()}`;
+    document.getElementById('viewProjectBudgetSection').style.display = 'block';
+  } else {
+    document.getElementById('viewProjectBudgetSection').style.display = 'none';
+  }
+  
+  if (projectData.extension_months) {
+    document.getElementById('viewProjectExtension').textContent = `${projectData.extension_months} months`;
+    document.getElementById('viewProjectExtensionSection').style.display = 'block';
+  } else {
+    document.getElementById('viewProjectExtensionSection').style.display = 'none';
+  }
+  
+  if (projectData.source_of_fund) {
+    document.getElementById('viewProjectFundingSource').textContent = projectData.source_of_fund;
+    document.getElementById('viewProjectFundingSection').style.display = 'block';
+  } else {
+    document.getElementById('viewProjectFundingSection').style.display = 'none';
+  }
+  
+  if (projectData.implementing_agency) {
+    document.getElementById('viewProjectImplementingAgency').textContent = projectData.implementing_agency;
+    document.getElementById('viewProjectImplementingSection').style.display = 'block';
+  } else {
+    document.getElementById('viewProjectImplementingSection').style.display = 'none';
+  }
+  
+  if (projectData.cooperating_agency) {
+    document.getElementById('viewProjectCooperatingAgency').textContent = projectData.cooperating_agency;
+    document.getElementById('viewProjectCooperatingSection').style.display = 'block';
+  } else {
+    document.getElementById('viewProjectCooperatingSection').style.display = 'none';
+  }
+  
+  if (projectData.collaborating_agency) {
+    document.getElementById('viewProjectCollaboratingAgency').textContent = projectData.collaborating_agency;
+    document.getElementById('viewProjectCollaboratingSection').style.display = 'block';
+  } else {
+    document.getElementById('viewProjectCollaboratingSection').style.display = 'none';
+  }
+}
+
+function populatePolicyDetails(policyData) {
+  document.getElementById('policyDetails').classList.remove('d-none');
+  
+  document.getElementById('viewPolicyType').textContent = policyData.policy_type_display || policyData.policy_type || 'Not specified';
+  document.getElementById('viewPolicyAgency').textContent = policyData.agency || 'Not specified';
+  document.getElementById('viewPolicyYear').textContent = policyData.year || 'Not specified';
+  document.getElementById('viewPolicyDescription').textContent = policyData.description || 'No description available';
+  
+  if (policyData.author) {
+    document.getElementById('viewPolicyAuthor').textContent = policyData.author;
+    document.getElementById('viewPolicyAuthorSection').style.display = 'block';
+  } else {
+    document.getElementById('viewPolicyAuthorSection').style.display = 'none';
+  }
+  
+  if (policyData.advocacy_project) {
+    document.getElementById('viewPolicyAdvocacyProject').textContent = policyData.advocacy_project;
+    document.getElementById('viewPolicyAdvocacySection').style.display = 'block';
+  } else {
+    document.getElementById('viewPolicyAdvocacySection').style.display = 'none';
+  }
+  
+  if (policyData.findings) {
+    document.getElementById('viewPolicyFindings').textContent = policyData.findings;
+    document.getElementById('viewPolicyFindingsSection').style.display = 'block';
+  } else {
+    document.getElementById('viewPolicyFindingsSection').style.display = 'none';
+  }
+  
+  if (policyData.policy_text) {
+    document.getElementById('viewPolicyText').textContent = policyData.policy_text;
+    document.getElementById('viewPolicyTextSection').style.display = 'block';
+  } else {
+    document.getElementById('viewPolicyTextSection').style.display = 'none';
+  }
+}
+
+function populateTrainingDetails(trainingData) {
+  console.log('Training data received:', trainingData);
+  console.log('Venue value:', trainingData.venue);
+  console.log('Venue element:', document.getElementById('viewTrainingVenue'));
+  
+  document.getElementById('trainingDetails').classList.remove('d-none');
+  
+  // More detailed debugging for venue
+  const venueElement = document.getElementById('viewTrainingVenue');
+  const venueValue = trainingData.venue || 'Not specified';
+  console.log('Setting venue to:', venueValue);
+  console.log('Venue element before setting:', venueElement);
+  console.log('Venue element HTML before setting:', venueElement.innerHTML);
+  
+  venueElement.textContent = venueValue;
+  console.log('Venue element after setting textContent:', venueElement);
+  console.log('Venue element textContent after setting:', venueElement.textContent);
+  console.log('Venue element innerHTML after setting:', venueElement.innerHTML);
+  
+  // Try different methods to set the content
+  console.log('Trying innerHTML method...');
+  venueElement.innerHTML = venueValue;
+  console.log('After innerHTML - textContent:', venueElement.textContent);
+  
+  // Force a repaint
+  venueElement.style.display = 'none';
+  venueElement.offsetHeight; // Force reflow
+  venueElement.style.display = 'block';
+  
+  // Add a global function for manual testing
+  window.testVenue = function() {
+    const el = document.getElementById('viewTrainingVenue');
+    if (el) {
+      el.textContent = 'MANUAL TEST VENUE';
+      console.log('Manual test - venue set to:', el.textContent);
+    } else {
+      console.log('Manual test - venue element not found');
+    }
+  };
+  
+  console.log('You can test manually by running: testVenue() in console');
+  
+  
+  document.getElementById('viewTrainingOrganizer').textContent = trainingData.organizer || 'Not specified';
+  document.getElementById('viewTrainingDescription').textContent = trainingData.description || 'No description available';
+  
+  if (trainingData.start_date) {
+    document.getElementById('viewTrainingStartDate').textContent = new Date(trainingData.start_date).toLocaleDateString();
+  } else {
+    document.getElementById('viewTrainingStartDate').textContent = 'Not specified';
+  }
+  
+  if (trainingData.end_date) {
+    document.getElementById('viewTrainingEndDate').textContent = new Date(trainingData.end_date).toLocaleDateString();
+    document.getElementById('viewTrainingEndDateSection').style.display = 'block';
+  } else {
+    document.getElementById('viewTrainingEndDateSection').style.display = 'none';
+  }
+  
+  if (trainingData.speakers) {
+    document.getElementById('viewTrainingSpeakers').textContent = trainingData.speakers;
+    document.getElementById('viewTrainingSpeakersSection').style.display = 'block';
+  } else {
+    document.getElementById('viewTrainingSpeakersSection').style.display = 'none';
+  }
+  
+  if (trainingData.total_participants) {
+    document.getElementById('viewTrainingParticipants').textContent = trainingData.total_participants;
+    document.getElementById('viewTrainingParticipantsSection').style.display = 'block';
+  } else {
+    document.getElementById('viewTrainingParticipantsSection').style.display = 'none';
+  }
+  
+  if (trainingData.documentation_link) {
+    document.getElementById('viewTrainingDocumentation').innerHTML = `<a href="${trainingData.documentation_link}" target="_blank">View Documentation</a>`;
+    document.getElementById('viewTrainingDocumentationSection').style.display = 'block';
+  } else {
+    document.getElementById('viewTrainingDocumentationSection').style.display = 'none';
+  }
+  
+  if (trainingData.pictures) {
+    document.getElementById('viewTrainingPictures').src = trainingData.pictures;
+    document.getElementById('viewTrainingPicturesSection').style.display = 'block';
+  } else {
+    document.getElementById('viewTrainingPicturesSection').style.display = 'none';
+  }
+}
+
+function populateMediaDetails(mediaData) {
+  document.getElementById('mediaDetails').classList.remove('d-none');
+  
+  document.getElementById('viewMediaTitle').textContent = mediaData.title || 'Not specified';
+  
+  if (mediaData.link) {
+    document.getElementById('viewMediaLink').innerHTML = `<a href="${mediaData.link}" target="_blank">View Media</a>`;
+    document.getElementById('viewMediaLinkSection').style.display = 'block';
+  } else {
+    document.getElementById('viewMediaLinkSection').style.display = 'none';
+  }
+}
+
+function populateProductDetails(productData) {
+  document.getElementById('productDetails').classList.remove('d-none');
+  
+  document.getElementById('viewProductName').textContent = productData.products || 'Not specified';
+  document.getElementById('viewProductCompany').textContent = productData.company || 'Not specified';
+  document.getElementById('viewProductDescription').textContent = productData.description || 'No description available';
+  
+  if (productData.price) {
+    document.getElementById('viewProductPrice').textContent = `₱${parseFloat(productData.price).toLocaleString()}`;
+    document.getElementById('viewProductPriceSection').style.display = 'block';
+  } else {
+    document.getElementById('viewProductPriceSection').style.display = 'none';
+  }
+  
+  if (productData.contact_info) {
+    document.getElementById('viewProductContactInfo').textContent = productData.contact_info;
+    document.getElementById('viewProductContactSection').style.display = 'block';
+  } else {
+    document.getElementById('viewProductContactSection').style.display = 'none';
+  }
+  
+  if (productData.documentation_link) {
+    document.getElementById('viewProductDocumentation').innerHTML = `<a href="${productData.documentation_link}" target="_blank">View Documentation</a>`;
+    document.getElementById('viewProductDocumentationSection').style.display = 'block';
+  } else {
+    document.getElementById('viewProductDocumentationSection').style.display = 'none';
+  }
+  
+  if (productData.pictures) {
+    document.getElementById('viewProductPictures').src = productData.pictures;
+    document.getElementById('viewProductPicturesSection').style.display = 'block';
+  } else {
+    document.getElementById('viewProductPicturesSection').style.display = 'none';
+  }
+}
+
+function populateInfoSystemDetails(infoSystemData) {
+  document.getElementById('infoSystemDetails').classList.remove('d-none');
+  
+  document.getElementById('viewInfoSystemOwner').textContent = infoSystemData.organization_owner || 'Not specified';
+  
+  if (infoSystemData.agency) {
+    document.getElementById('viewInfoSystemAgency').textContent = infoSystemData.agency;
+    document.getElementById('viewInfoSystemAgencySection').style.display = 'block';
+  } else {
+    document.getElementById('viewInfoSystemAgencySection').style.display = 'none';
+  }
+  
+  if (infoSystemData.link) {
+    document.getElementById('viewInfoSystemLink').innerHTML = `<a href="${infoSystemData.link}" target="_blank">Access System</a>`;
+    document.getElementById('viewInfoSystemLinkSection').style.display = 'block';
+  } else {
+    document.getElementById('viewInfoSystemLinkSection').style.display = 'none';
+  }
+  
+  if (infoSystemData.brief_explanation) {
+    document.getElementById('viewInfoSystemExplanation').textContent = infoSystemData.brief_explanation;
+    document.getElementById('viewInfoSystemExplanationSection').style.display = 'block';
+  } else {
+    document.getElementById('viewInfoSystemExplanationSection').style.display = 'none';
+  }
+}
+
+function populateMapDetails(mapData) {
+  document.getElementById('mapDetails').classList.remove('d-none');
+  
+  if (mapData.latitude && mapData.longitude) {
+    document.getElementById('viewMapCoordinates').textContent = `${mapData.latitude}, ${mapData.longitude}`;
+    document.getElementById('viewMapCoordinatesSection').style.display = 'block';
+  } else {
+    document.getElementById('viewMapCoordinatesSection').style.display = 'none';
+  }
+  
+  if (mapData.map_url) {
+    document.getElementById('viewMapUrl').innerHTML = `<a href="${mapData.map_url}" target="_blank">View Map</a>`;
+    document.getElementById('viewMapUrlSection').style.display = 'block';
+  } else {
+    document.getElementById('viewMapUrlSection').style.display = 'none';
+  }
+  
+  if (mapData.map_file) {
+    document.getElementById('viewMapFile').innerHTML = `<a href="${mapData.map_file}" target="_blank">Download Map File</a>`;
+    document.getElementById('viewMapFileSection').style.display = 'block';
+  } else {
+    document.getElementById('viewMapFileSection').style.display = 'none';
+  }
+}
+
+function clearFilters() {
+  // Clear all checkboxes
+  document.querySelectorAll('.filter-checkbox').forEach(checkbox => {
+    checkbox.checked = false;
+  });
+  
+  // Clear radio buttons
+  document.querySelectorAll('input[type="radio"]').forEach(radio => {
+    radio.checked = false;
+  });
+  
+  // Set default radio to "all"
+  document.getElementById('filterAll').checked = true;
+  
+  // Submit the form to refresh the page
+  document.getElementById('resourceFilterForm').submit();
+}
+
+// Select all functionality
+document.addEventListener('DOMContentLoaded', function() {
+  const selectAllCheckbox = document.getElementById('selectAll');
+  const resourceCheckboxes = document.querySelectorAll('.resource-checkbox');
+  
+  if (selectAllCheckbox) {
+    selectAllCheckbox.addEventListener('change', function() {
+      resourceCheckboxes.forEach(checkbox => {
+        checkbox.checked = this.checked;
+      });
+    });
+  }
+  
+  // Update select all when individual checkboxes change
+  resourceCheckboxes.forEach(checkbox => {
+    checkbox.addEventListener('change', function() {
+      const allChecked = Array.from(resourceCheckboxes).every(cb => cb.checked);
+      const anyChecked = Array.from(resourceCheckboxes).some(cb => cb.checked);
+      
+      if (selectAllCheckbox) {
+        selectAllCheckbox.checked = allChecked;
+        selectAllCheckbox.indeterminate = anyChecked && !allChecked;
+      }
+    });
+  });
+});
 </script>
 
 {% if messages %}
@@ -431,5 +1168,4 @@ function getCookie(name) {
   {% endif %}
 {% endfor %}
 {% endif %}
-  
 {% endblock %}

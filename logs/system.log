@@ -5163,3 +5163,1362 @@ django.template.exceptions.TemplateSyntaxError: Invalid block tag on line 5: 'st
 [2025-05-30 15:38:57] Not Found: /api/placeholder/100/100
 [2025-05-30 16:07:16] Watching for file changes with StatReloader
 [2025-05-30 16:07:21] Not Found: /favicon.ico
+[2025-07-07 09:08:40] Watching for file changes with StatReloader
+[2025-07-07 09:17:30] Watching for file changes with StatReloader
+[2025-07-07 10:59:09] C:\Users\qiuqi\Desktop\km-system-v2\kmhub\appAdmin\models.py changed, reloading.
+[2025-07-07 10:59:11] Watching for file changes with StatReloader
+[2025-07-07 13:17:41] Watching for file changes with StatReloader
+[2025-07-07 13:25:42] Watching for file changes with StatReloader
+[2025-07-07 13:36:24] Internal Server Error: /admin/resources-post/
+Traceback (most recent call last):
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\kmhub\utils\user_control.py", line 45, in wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\kmhub\appAdmin\views\resources_post_view.py", line 71, in admin_resources_post
+    total_featured_resources = ResourceMetadata.objects.filter(is_featured=True).count()
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\db\models\query.py", line 1436, in filter
+    return self._filter_or_exclude(False, args, kwargs)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\db\models\query.py", line 1454, in _filter_or_exclude
+    clone._filter_or_exclude_inplace(negate, args, kwargs)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\db\models\query.py", line 1461, in _filter_or_exclude_inplace
+    self._query.add_q(Q(*args, **kwargs))
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\db\models\sql\query.py", line 1545, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\db\models\sql\query.py", line 1576, in _add_q
+    child_clause, needed_inner = self.build_filter(
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\db\models\sql\query.py", line 1426, in build_filter
+    lookups, parts, reffed_expression = self.solve_lookup_type(arg, summarize)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\db\models\sql\query.py", line 1236, in solve_lookup_type
+    _, field, _, lookup_parts = self.names_to_path(lookup_splitted, self.get_meta())
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\db\models\sql\query.py", line 1724, in names_to_path
+    raise FieldError(
+django.core.exceptions.FieldError: Cannot resolve keyword 'is_featured' into field. Choices are: bookmarks, commodities, created_at, created_by, created_by_id, event, id, information_system, is_approved, keywords, map, media, news, policy, product, project, publication, resource_type, slug, tags, technology, training_seminar, updated_at, views, webinar
+[2025-07-07 13:36:25] Not Found: /favicon.ico
+[2025-07-07 13:37:07] Internal Server Error: /admin/resources-post/
+Traceback (most recent call last):
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\kmhub\utils\user_control.py", line 45, in wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\kmhub\appAdmin\views\resources_post_view.py", line 71, in admin_resources_post
+    total_featured_resources = ResourceMetadata.objects.filter(is_featured=True).count()
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\db\models\query.py", line 1436, in filter
+    return self._filter_or_exclude(False, args, kwargs)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\db\models\query.py", line 1454, in _filter_or_exclude
+    clone._filter_or_exclude_inplace(negate, args, kwargs)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\db\models\query.py", line 1461, in _filter_or_exclude_inplace
+    self._query.add_q(Q(*args, **kwargs))
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\db\models\sql\query.py", line 1545, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\db\models\sql\query.py", line 1576, in _add_q
+    child_clause, needed_inner = self.build_filter(
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\db\models\sql\query.py", line 1426, in build_filter
+    lookups, parts, reffed_expression = self.solve_lookup_type(arg, summarize)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\db\models\sql\query.py", line 1236, in solve_lookup_type
+    _, field, _, lookup_parts = self.names_to_path(lookup_splitted, self.get_meta())
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\db\models\sql\query.py", line 1724, in names_to_path
+    raise FieldError(
+django.core.exceptions.FieldError: Cannot resolve keyword 'is_featured' into field. Choices are: bookmarks, commodities, created_at, created_by, created_by_id, event, id, information_system, is_approved, keywords, map, media, news, policy, product, project, publication, resource_type, slug, tags, technology, training_seminar, updated_at, views, webinar
+[2025-07-07 13:37:47] C:\Users\qiuqi\Desktop\km-system-v2\kmhub\appAdmin\views\resources_post_view.py changed, reloading.
+[2025-07-07 13:37:48] Watching for file changes with StatReloader
+[2025-07-07 13:37:52] Internal Server Error: /admin/resources-post/
+Traceback (most recent call last):
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\db\backends\utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\db\backends\mysql\base.py", line 75, in execute
+    return self.cursor.execute(query, args)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\MySQLdb\cursors.py", line 179, in execute
+    res = self._query(mogrified_query)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\MySQLdb\cursors.py", line 330, in _query
+    db.query(q)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\MySQLdb\connections.py", line 257, in query
+    _mysql.connection.query(self, query)
+MySQLdb.OperationalError: (1054, "Unknown column 'tbl_knowledge_resources_metadata.keywords' in 'field list'")
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\kmhub\utils\user_control.py", line 45, in wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\kmhub\appAdmin\views\resources_post_view.py", line 161, in admin_resources_post
+    return render(request, "pages/resources-post.html", context)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\backends\django.py", line 61, in render
+    return self.template.render(context)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\base.py", line 175, in render
+    return self._render(context)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\loader_tags.py", line 157, in render
+    return compiled_parent._render(context)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\loader_tags.py", line 63, in render
+    result = block.nodelist.render(context)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\defaulttags.py", line 194, in render
+    len_values = len(values)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\db\models\query.py", line 380, in __len__
+    self._fetch_all()
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\db\models\query.py", line 1881, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\db\models\query.py", line 91, in __iter__
+    results = compiler.execute_sql(
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\db\models\sql\compiler.py", line 1562, in execute_sql
+    cursor.execute(sql, params)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\db\backends\utils.py", line 102, in execute
+    return super().execute(sql, params)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\db\backends\utils.py", line 67, in execute
+    return self._execute_with_wrappers(
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\db\backends\utils.py", line 80, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\db\backends\utils.py", line 84, in _execute
+    with self.db.wrap_database_errors:
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\db\utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\db\backends\utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\db\backends\mysql\base.py", line 75, in execute
+    return self.cursor.execute(query, args)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\MySQLdb\cursors.py", line 179, in execute
+    res = self._query(mogrified_query)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\MySQLdb\cursors.py", line 330, in _query
+    db.query(q)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\MySQLdb\connections.py", line 257, in query
+    _mysql.connection.query(self, query)
+django.db.utils.OperationalError: (1054, "Unknown column 'tbl_knowledge_resources_metadata.keywords' in 'field list'")
+[2025-07-07 13:57:10] Watching for file changes with StatReloader
+[2025-07-07 14:09:33] C:\Users\qiuqi\Desktop\km-system-v2\kmhub\appAdmin\views\resources_post_view.py changed, reloading.
+[2025-07-07 14:09:35] Watching for file changes with StatReloader
+[2025-07-07 14:09:50] C:\Users\qiuqi\Desktop\km-system-v2\kmhub\appAdmin\views\resources_post_view.py changed, reloading.
+[2025-07-07 14:09:51] Watching for file changes with StatReloader
+[2025-07-07 14:11:51] C:\Users\qiuqi\Desktop\km-system-v2\kmhub\appAdmin\views\resources_post_view.py changed, reloading.
+[2025-07-07 14:11:52] Watching for file changes with StatReloader
+[2025-07-07 14:12:49] C:\Users\qiuqi\Desktop\km-system-v2\kmhub\appAdmin\views\resources_post_view.py changed, reloading.
+[2025-07-07 14:12:50] Watching for file changes with StatReloader
+[2025-07-07 14:19:55] C:\Users\qiuqi\Desktop\km-system-v2\kmhub\appAdmin\models.py changed, reloading.
+[2025-07-07 14:19:57] Watching for file changes with StatReloader
+[2025-07-07 14:21:03] C:\Users\qiuqi\Desktop\km-system-v2\kmhub\appAdmin\models.py changed, reloading.
+[2025-07-07 14:21:04] Watching for file changes with StatReloader
+[2025-07-07 14:21:27] C:\Users\qiuqi\Desktop\km-system-v2\kmhub\appAdmin\models.py changed, reloading.
+[2025-07-07 14:21:29] Watching for file changes with StatReloader
+[2025-07-07 14:50:47] Watching for file changes with StatReloader
+[2025-07-07 15:09:19] C:\Users\qiuqi\Desktop\km-system-v2\kmhub\appAdmin\views\resources_post_view.py changed, reloading.
+[2025-07-07 15:09:20] Watching for file changes with StatReloader
+[2025-07-07 15:12:05] C:\Users\qiuqi\Desktop\km-system-v2\kmhub\appAccounts\migrations\0001_initial.py changed, reloading.
+[2025-07-07 15:12:06] Watching for file changes with StatReloader
+[2025-07-07 16:40:11] C:\Users\qiuqi\Desktop\km-system-v2\kmhub\appAdmin\views\resources_post_view.py changed, reloading.
+[2025-07-07 16:40:13] Watching for file changes with StatReloader
+[2025-07-07 16:42:12] C:\Users\qiuqi\Desktop\km-system-v2\kmhub\appAdmin\views\resources_post_view.py changed, reloading.
+[2025-07-07 16:42:13] Watching for file changes with StatReloader
+[2025-07-07 16:42:24] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[2025-07-07 16:49:21] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[2025-07-08 08:58:35] Watching for file changes with StatReloader
+[2025-07-08 09:06:31] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[2025-07-08 09:06:41] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[2025-07-08 09:07:14] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[2025-07-08 09:08:06] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[2025-07-08 09:20:36] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[2025-07-08 09:22:19] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[2025-07-08 09:23:25] Not Found: /admin/resources/edit/9dCn1oR2hvdA/
+[2025-07-08 09:23:25] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[2025-07-08 09:23:26] Not Found: /favicon.ico
+[2025-07-08 09:23:28] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[2025-07-08 09:23:28] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[2025-07-08 09:25:12] C:\Users\qiuqi\Desktop\km-system-v2\kmhub\appAdmin\views\resources_post_view.py changed, reloading.
+[2025-07-08 09:25:13] Watching for file changes with StatReloader
+[2025-07-08 09:25:23] C:\Users\qiuqi\Desktop\km-system-v2\kmhub\appAdmin\views\resources_post_view.py changed, reloading.
+[2025-07-08 09:25:24] Watching for file changes with StatReloader
+[2025-07-08 09:25:34] C:\Users\qiuqi\Desktop\km-system-v2\kmhub\appAdmin\views\resources_post_view.py changed, reloading.
+[2025-07-08 09:25:35] Watching for file changes with StatReloader
+[2025-07-08 09:25:43] C:\Users\qiuqi\Desktop\km-system-v2\kmhub\appAdmin\views\resources_post_view.py changed, reloading.
+[2025-07-08 09:25:44] Watching for file changes with StatReloader
+[2025-07-08 09:25:55] C:\Users\qiuqi\Desktop\km-system-v2\kmhub\appAdmin\views\resources_post_view.py changed, reloading.
+[2025-07-08 09:25:56] Watching for file changes with StatReloader
+[2025-07-08 09:26:13] C:\Users\qiuqi\Desktop\km-system-v2\kmhub\appAdmin\views\resources_post_view.py changed, reloading.
+[2025-07-08 09:26:14] Watching for file changes with StatReloader
+[2025-07-08 09:26:28] C:\Users\qiuqi\Desktop\km-system-v2\kmhub\appAdmin\views\resources_post_view.py changed, reloading.
+[2025-07-08 09:26:29] Watching for file changes with StatReloader
+[2025-07-08 09:26:43] C:\Users\qiuqi\Desktop\km-system-v2\kmhub\appAdmin\views\resources_post_view.py changed, reloading.
+[2025-07-08 09:26:44] Watching for file changes with StatReloader
+[2025-07-08 09:26:54] C:\Users\qiuqi\Desktop\km-system-v2\kmhub\appAdmin\views\resources_post_view.py changed, reloading.
+[2025-07-08 09:26:55] Watching for file changes with StatReloader
+[2025-07-08 09:26:59] C:\Users\qiuqi\Desktop\km-system-v2\kmhub\appAdmin\views\resources_post_view.py changed, reloading.
+[2025-07-08 09:27:00] Watching for file changes with StatReloader
+[2025-07-08 09:27:21] C:\Users\qiuqi\Desktop\km-system-v2\kmhub\appAdmin\views\resources_post_view.py changed, reloading.
+[2025-07-08 09:27:22] Watching for file changes with StatReloader
+[2025-07-08 09:27:32] C:\Users\qiuqi\Desktop\km-system-v2\kmhub\appAdmin\views\resources_post_view.py changed, reloading.
+[2025-07-08 09:27:33] Watching for file changes with StatReloader
+[2025-07-08 09:27:43] C:\Users\qiuqi\Desktop\km-system-v2\kmhub\appAdmin\views\resources_post_view.py changed, reloading.
+[2025-07-08 09:27:44] Watching for file changes with StatReloader
+[2025-07-08 09:27:58] C:\Users\qiuqi\Desktop\km-system-v2\kmhub\appAdmin\views\resources_post_view.py changed, reloading.
+[2025-07-08 09:27:59] Watching for file changes with StatReloader
+[2025-07-08 09:28:22] C:\Users\qiuqi\Desktop\km-system-v2\kmhub\appAdmin\views\resources_post_view.py changed, reloading.
+[2025-07-08 09:28:24] Watching for file changes with StatReloader
+[2025-07-08 09:28:35] C:\Users\qiuqi\Desktop\km-system-v2\kmhub\appAdmin\views\resources_post_view.py changed, reloading.
+[2025-07-08 09:28:36] Watching for file changes with StatReloader
+[2025-07-08 10:08:35] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[2025-07-08 11:03:59] C:\Users\qiuqi\Desktop\km-system-v2\kmhub\appAdmin\views\resources_post_view.py changed, reloading.
+[2025-07-08 11:04:01] Watching for file changes with StatReloader
+[2025-07-08 11:08:58] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[2025-07-08 11:10:54] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[2025-07-08 11:12:39] C:\Users\qiuqi\Desktop\km-system-v2\kmhub\appAdmin\views\resources_post_view.py changed, reloading.
+[2025-07-08 11:12:41] Watching for file changes with StatReloader
+[2025-07-08 11:12:56] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[2025-07-08 11:16:54] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[2025-07-08 11:20:53] C:\Users\qiuqi\Desktop\km-system-v2\kmhub\appAdmin\views\resources_post_view.py changed, reloading.
+[2025-07-08 11:20:54] Watching for file changes with StatReloader
+[2025-07-08 13:03:57] C:\Users\qiuqi\Desktop\km-system-v2\kmhub\appAdmin\views\resources_post_view.py changed, reloading.
+[2025-07-08 13:03:58] Watching for file changes with StatReloader
+[2025-07-08 13:05:44] C:\Users\qiuqi\Desktop\km-system-v2\kmhub\appAdmin\views\resources_post_view.py changed, reloading.
+[2025-07-08 13:05:45] Watching for file changes with StatReloader
+[2025-07-08 13:05:48] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[2025-07-08 13:10:25] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[2025-07-08 13:10:32] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[2025-07-08 13:15:36] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[2025-07-08 13:17:25] C:\Users\qiuqi\Desktop\km-system-v2\kmhub\appAdmin\views\resources_post_view.py changed, reloading.
+[2025-07-08 13:17:27] Watching for file changes with StatReloader
+[2025-07-08 13:17:36] C:\Users\qiuqi\Desktop\km-system-v2\kmhub\appAdmin\views\resources_post_view.py changed, reloading.
+[2025-07-08 13:17:37] Watching for file changes with StatReloader
+[2025-07-08 13:18:34] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[2025-07-08 13:22:17] C:\Users\qiuqi\Desktop\km-system-v2\kmhub\appAdmin\views\resources_post_view.py changed, reloading.
+[2025-07-08 13:22:18] Watching for file changes with StatReloader
+[2025-07-08 13:23:10] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[2025-07-08 13:23:27] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[2025-07-08 13:23:36] Watching for file changes with StatReloader
+[2025-07-08 13:23:39] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[2025-07-08 13:29:54] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[2025-07-08 13:30:14] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[2025-07-08 13:32:07] C:\Users\qiuqi\Desktop\km-system-v2\kmhub\appAdmin\views\resources_post_view.py changed, reloading.
+[2025-07-08 13:32:08] Watching for file changes with StatReloader
+[2025-07-08 13:32:10] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[2025-07-08 13:36:05] C:\Users\qiuqi\Desktop\km-system-v2\kmhub\appAdmin\views\resources_post_view.py changed, reloading.
+[2025-07-08 13:36:06] Watching for file changes with StatReloader
+[2025-07-08 13:39:53] C:\Users\qiuqi\Desktop\km-system-v2\kmhub\appAdmin\views\resources_post_view.py changed, reloading.
+[2025-07-08 13:39:54] Watching for file changes with StatReloader
+[2025-07-08 13:50:08] C:\Users\qiuqi\Desktop\km-system-v2\kmhub\appAdmin\views\resources_post_view.py changed, reloading.
+[2025-07-08 13:50:09] Watching for file changes with StatReloader
+[2025-07-08 14:00:13] C:\Users\qiuqi\Desktop\km-system-v2\kmhub\appAdmin\views\resources_post_view.py changed, reloading.
+[2025-07-08 14:00:15] Watching for file changes with StatReloader
+[2025-07-08 14:00:59] C:\Users\qiuqi\Desktop\km-system-v2\kmhub\appAdmin\views\resources_post_view.py changed, reloading.
+[2025-07-08 14:01:00] Watching for file changes with StatReloader
+[2025-07-08 14:02:50] C:\Users\qiuqi\Desktop\km-system-v2\kmhub\appAdmin\views\resources_post_view.py changed, reloading.
+[2025-07-08 14:02:51] Watching for file changes with StatReloader
+[2025-07-08 14:04:29] C:\Users\qiuqi\Desktop\km-system-v2\kmhub\appAdmin\views\resources_post_view.py changed, reloading.
+[2025-07-08 14:04:29] Watching for file changes with StatReloader
+[2025-07-08 14:21:21] C:\Users\qiuqi\Desktop\km-system-v2\kmhub\appAdmin\views\resources_post_view.py changed, reloading.
+[2025-07-08 14:21:22] Watching for file changes with StatReloader
+[2025-07-08 14:22:29] C:\Users\qiuqi\Desktop\km-system-v2\kmhub\appAdmin\views\resources_post_view.py changed, reloading.
+[2025-07-08 14:22:30] Watching for file changes with StatReloader
+[2025-07-08 14:22:37] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[2025-07-08 14:22:40] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[2025-07-08 14:28:57] Not Found: /admin/resources/edit/CswFMJaWpT0J/
+[2025-07-08 14:28:58] Not Found: /favicon.ico
+[2025-07-08 14:29:31] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[2025-07-08 14:30:00] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[2025-07-08 14:30:17] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[2025-07-08 14:30:43] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[2025-07-09 10:15:18] Watching for file changes with StatReloader
+[2025-07-09 10:47:19] C:\Users\qiuqi\Desktop\km-system-v2\kmhub\appAdmin\views\resources_post_view.py changed, reloading.
+[2025-07-09 10:47:20] Watching for file changes with StatReloader
+[2025-07-09 10:47:24] Internal Server Error: /admin/resources-post/
+Traceback (most recent call last):
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\kmhub\utils\user_control.py", line 45, in wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\kmhub\appAdmin\views\resources_post_view.py", line 175, in admin_resources_post
+    now = datetime.now()
+NameError: name 'datetime' is not defined
+[2025-07-09 10:47:25] Not Found: /favicon.ico
+[2025-07-09 10:47:45] C:\Users\qiuqi\Desktop\km-system-v2\kmhub\appAdmin\views\resources_post_view.py changed, reloading.
+[2025-07-09 10:47:46] Watching for file changes with StatReloader
+[2025-07-09 10:48:37] Internal Server Error: /admin/resources-post/
+Traceback (most recent call last):
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\kmhub\utils\user_control.py", line 45, in wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\kmhub\appAdmin\views\resources_post_view.py", line 252, in admin_resources_post
+    Tag.objects.annotate(resource_count=Count("resourcemetadata"))
+NameError: name 'Count' is not defined
+[2025-07-09 10:49:02] C:\Users\qiuqi\Desktop\km-system-v2\kmhub\appAdmin\views\resources_post_view.py changed, reloading.
+[2025-07-09 10:49:03] Watching for file changes with StatReloader
+[2025-07-09 10:49:10] Internal Server Error: /admin/resources-post/
+Traceback (most recent call last):
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\kmhub\utils\user_control.py", line 45, in wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\kmhub\appAdmin\views\resources_post_view.py", line 340, in admin_resources_post
+    "html": render_to_string(
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\loader.py", line 19, in get_template
+    raise TemplateDoesNotExist(template_name, chain=chain)
+django.template.exceptions.TemplateDoesNotExist: partials/resources_table_partial.html
+[2025-07-09 10:49:16] Internal Server Error: /admin/resources-post/
+Traceback (most recent call last):
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\kmhub\utils\user_control.py", line 45, in wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\kmhub\appAdmin\views\resources_post_view.py", line 340, in admin_resources_post
+    "html": render_to_string(
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\loader.py", line 19, in get_template
+    raise TemplateDoesNotExist(template_name, chain=chain)
+django.template.exceptions.TemplateDoesNotExist: partials/resources_table_partial.html
+[2025-07-09 10:49:20] Internal Server Error: /admin/resources-post/
+Traceback (most recent call last):
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\kmhub\utils\user_control.py", line 45, in wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\kmhub\appAdmin\views\resources_post_view.py", line 340, in admin_resources_post
+    "html": render_to_string(
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\loader.py", line 19, in get_template
+    raise TemplateDoesNotExist(template_name, chain=chain)
+django.template.exceptions.TemplateDoesNotExist: partials/resources_table_partial.html
+[2025-07-09 10:49:31] Internal Server Error: /admin/resources-post/
+Traceback (most recent call last):
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\kmhub\utils\user_control.py", line 45, in wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\kmhub\appAdmin\views\resources_post_view.py", line 340, in admin_resources_post
+    "html": render_to_string(
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\loader.py", line 19, in get_template
+    raise TemplateDoesNotExist(template_name, chain=chain)
+django.template.exceptions.TemplateDoesNotExist: partials/resources_table_partial.html
+[2025-07-09 10:49:34] Internal Server Error: /admin/resources-post/
+Traceback (most recent call last):
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\kmhub\utils\user_control.py", line 45, in wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\kmhub\appAdmin\views\resources_post_view.py", line 340, in admin_resources_post
+    "html": render_to_string(
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\loader.py", line 19, in get_template
+    raise TemplateDoesNotExist(template_name, chain=chain)
+django.template.exceptions.TemplateDoesNotExist: partials/resources_table_partial.html
+[2025-07-09 10:49:39] Internal Server Error: /admin/resources-post/
+Traceback (most recent call last):
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\kmhub\utils\user_control.py", line 45, in wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\kmhub\appAdmin\views\resources_post_view.py", line 340, in admin_resources_post
+    "html": render_to_string(
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\loader.py", line 19, in get_template
+    raise TemplateDoesNotExist(template_name, chain=chain)
+django.template.exceptions.TemplateDoesNotExist: partials/resources_table_partial.html
+[2025-07-09 10:49:42] Internal Server Error: /admin/resources-post/
+Traceback (most recent call last):
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\kmhub\utils\user_control.py", line 45, in wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\kmhub\appAdmin\views\resources_post_view.py", line 340, in admin_resources_post
+    "html": render_to_string(
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\loader.py", line 19, in get_template
+    raise TemplateDoesNotExist(template_name, chain=chain)
+django.template.exceptions.TemplateDoesNotExist: partials/resources_table_partial.html
+[2025-07-09 10:49:47] Internal Server Error: /admin/resources-post/
+Traceback (most recent call last):
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\kmhub\utils\user_control.py", line 45, in wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\kmhub\appAdmin\views\resources_post_view.py", line 340, in admin_resources_post
+    "html": render_to_string(
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\loader.py", line 19, in get_template
+    raise TemplateDoesNotExist(template_name, chain=chain)
+django.template.exceptions.TemplateDoesNotExist: partials/resources_table_partial.html
+[2025-07-09 10:49:48] Internal Server Error: /admin/resources-post/
+Traceback (most recent call last):
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\kmhub\utils\user_control.py", line 45, in wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\kmhub\appAdmin\views\resources_post_view.py", line 340, in admin_resources_post
+    "html": render_to_string(
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\loader.py", line 19, in get_template
+    raise TemplateDoesNotExist(template_name, chain=chain)
+django.template.exceptions.TemplateDoesNotExist: partials/resources_table_partial.html
+[2025-07-09 10:49:52] Internal Server Error: /admin/resources-post/
+Traceback (most recent call last):
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\kmhub\utils\user_control.py", line 45, in wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\kmhub\appAdmin\views\resources_post_view.py", line 340, in admin_resources_post
+    "html": render_to_string(
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\loader.py", line 19, in get_template
+    raise TemplateDoesNotExist(template_name, chain=chain)
+django.template.exceptions.TemplateDoesNotExist: partials/resources_table_partial.html
+[2025-07-09 10:49:54] Internal Server Error: /admin/resources-post/
+Traceback (most recent call last):
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\kmhub\utils\user_control.py", line 45, in wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\kmhub\appAdmin\views\resources_post_view.py", line 340, in admin_resources_post
+    "html": render_to_string(
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\loader.py", line 19, in get_template
+    raise TemplateDoesNotExist(template_name, chain=chain)
+django.template.exceptions.TemplateDoesNotExist: partials/resources_table_partial.html
+[2025-07-09 10:50:00] Internal Server Error: /admin/resources-post/
+Traceback (most recent call last):
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\kmhub\utils\user_control.py", line 45, in wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\kmhub\appAdmin\views\resources_post_view.py", line 340, in admin_resources_post
+    "html": render_to_string(
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\loader.py", line 19, in get_template
+    raise TemplateDoesNotExist(template_name, chain=chain)
+django.template.exceptions.TemplateDoesNotExist: partials/resources_table_partial.html
+[2025-07-09 10:50:07] Internal Server Error: /admin/resources-post/
+Traceback (most recent call last):
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\kmhub\utils\user_control.py", line 45, in wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\kmhub\appAdmin\views\resources_post_view.py", line 340, in admin_resources_post
+    "html": render_to_string(
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\loader.py", line 19, in get_template
+    raise TemplateDoesNotExist(template_name, chain=chain)
+django.template.exceptions.TemplateDoesNotExist: partials/resources_table_partial.html
+[2025-07-09 10:50:12] Internal Server Error: /admin/resources-post/
+Traceback (most recent call last):
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\kmhub\utils\user_control.py", line 45, in wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\kmhub\appAdmin\views\resources_post_view.py", line 340, in admin_resources_post
+    "html": render_to_string(
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\loader.py", line 19, in get_template
+    raise TemplateDoesNotExist(template_name, chain=chain)
+django.template.exceptions.TemplateDoesNotExist: partials/resources_table_partial.html
+[2025-07-09 14:47:06] Internal Server Error: /admin/resources-post/
+Traceback (most recent call last):
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\kmhub\utils\user_control.py", line 45, in wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\kmhub\appAdmin\views\resources_post_view.py", line 340, in admin_resources_post
+    "html": render_to_string(
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\loader.py", line 19, in get_template
+    raise TemplateDoesNotExist(template_name, chain=chain)
+django.template.exceptions.TemplateDoesNotExist: partials/resources_table_partial.html
+[2025-07-09 14:47:15] Internal Server Error: /admin/resources-post/
+Traceback (most recent call last):
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\kmhub\utils\user_control.py", line 45, in wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\kmhub\appAdmin\views\resources_post_view.py", line 340, in admin_resources_post
+    "html": render_to_string(
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\loader.py", line 19, in get_template
+    raise TemplateDoesNotExist(template_name, chain=chain)
+django.template.exceptions.TemplateDoesNotExist: partials/resources_table_partial.html
+[2025-07-09 14:47:20] Internal Server Error: /admin/resources-post/
+Traceback (most recent call last):
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\kmhub\utils\user_control.py", line 45, in wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\kmhub\appAdmin\views\resources_post_view.py", line 340, in admin_resources_post
+    "html": render_to_string(
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\loader.py", line 19, in get_template
+    raise TemplateDoesNotExist(template_name, chain=chain)
+django.template.exceptions.TemplateDoesNotExist: partials/resources_table_partial.html
+[2025-07-09 14:50:17] C:\Users\qiuqi\Desktop\km-system-v2\kmhub\appAdmin\views\resources_post_view.py changed, reloading.
+[2025-07-09 14:50:18] Watching for file changes with StatReloader
+[2025-07-09 14:50:26] Internal Server Error: /admin/resources-post/
+Traceback (most recent call last):
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\kmhub\utils\user_control.py", line 45, in wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\kmhub\appAdmin\views\resources_post_view.py", line 339, in admin_resources_post
+    "html": render_to_string(
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\loader.py", line 19, in get_template
+    raise TemplateDoesNotExist(template_name, chain=chain)
+django.template.exceptions.TemplateDoesNotExist: admin/resources-post/
+[2025-07-09 14:52:00] C:\Users\qiuqi\Desktop\km-system-v2\kmhub\appAdmin\views\resources_post_view.py changed, reloading.
+[2025-07-09 14:52:02] Watching for file changes with StatReloader
+[2025-07-09 15:02:06] C:\Users\qiuqi\Desktop\km-system-v2\kmhub\appAdmin\views\resources_post_view.py changed, reloading.
+[2025-07-09 15:02:07] Watching for file changes with StatReloader
+[2025-07-09 15:49:45] Watching for file changes with StatReloader
+[2025-07-09 16:08:58] Internal Server Error: /admin/dashboard/
+Traceback (most recent call last):
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\base.py", line 505, in parse
+    compile_func = self.tags[command]
+KeyError: 'static'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\kmhub\utils\user_control.py", line 45, in wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\kmhub\appAdmin\views\dashboard_view.py", line 51, in dashboard
+    return render(request, "pages/dashboard.html", context)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\backends\django.py", line 61, in render
+    return self.template.render(context)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\base.py", line 175, in render
+    return self._render(context)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\loader_tags.py", line 132, in render
+    compiled_parent = self.get_parent(context)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\loader_tags.py", line 129, in get_parent
+    return self.find_template(parent, context)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\loader_tags.py", line 107, in find_template
+    template, origin = context.template.engine.find_template(
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\engine.py", line 157, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\loaders\cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\loaders\base.py", line 28, in get_template
+    return Template(
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\base.py", line 154, in __init__
+    self.nodelist = self.compile_nodelist()
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\base.py", line 200, in compile_nodelist
+    return parser.parse()
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\base.py", line 507, in parse
+    self.invalid_block_tag(token, command, parse_until)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\base.py", line 568, in invalid_block_tag
+    raise self.error(
+django.template.exceptions.TemplateSyntaxError: Invalid block tag on line 9: 'static'. Did you forget to register or load this tag?
+[2025-07-09 16:08:59] Not Found: /favicon.ico
+[2025-07-09 16:09:34] Not Found: /favicon.ico
+[2025-07-09 16:09:36] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[2025-07-09 16:09:58] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[2025-07-10 08:32:11] Watching for file changes with StatReloader
+[2025-07-10 08:32:21] Not Found: /favicon.ico
+[2025-07-10 08:32:27] Internal Server Error: /cmis/knowledge-resources/
+Traceback (most recent call last):
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\kmhub\utils\user_control.py", line 45, in wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\kmhub\appCmi\views\cmi_knowledge_resources_view.py", line 109, in cmi_knowledge_resources
+    featured_resources = ResourceMetadata.objects.filter(
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\db\models\query.py", line 1436, in filter
+    return self._filter_or_exclude(False, args, kwargs)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\db\models\query.py", line 1454, in _filter_or_exclude
+    clone._filter_or_exclude_inplace(negate, args, kwargs)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\db\models\query.py", line 1461, in _filter_or_exclude_inplace
+    self._query.add_q(Q(*args, **kwargs))
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\db\models\sql\query.py", line 1545, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\db\models\sql\query.py", line 1576, in _add_q
+    child_clause, needed_inner = self.build_filter(
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\db\models\sql\query.py", line 1426, in build_filter
+    lookups, parts, reffed_expression = self.solve_lookup_type(arg, summarize)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\db\models\sql\query.py", line 1236, in solve_lookup_type
+    _, field, _, lookup_parts = self.names_to_path(lookup_splitted, self.get_meta())
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\db\models\sql\query.py", line 1724, in names_to_path
+    raise FieldError(
+django.core.exceptions.FieldError: Cannot resolve keyword 'is_featured' into field. Choices are: bookmarks, commodities, created_at, created_by, created_by_id, event, id, information_system, is_approved, keywords, map, media, news, policy, product, project, publication, resource_type, slug, tags, technology, training_seminar, updated_at, views, webinar
+[2025-07-10 08:33:15] C:\Users\qiuqi\Desktop\km-system-v2\kmhub\appCmi\views\cmi_knowledge_resources_view.py changed, reloading.
+[2025-07-10 08:33:16] Watching for file changes with StatReloader
+[2025-07-10 10:33:14] Internal Server Error: /admin/admin-forum/
+Traceback (most recent call last):
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\kmhub\utils\user_control.py", line 45, in wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\kmhub\appAdmin\views\forum_view.py", line 64, in manage_forum
+    return render(request, "pages/admin-forum.html", context)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\loader.py", line 15, in get_template
+    return engine.get_template(template_name)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\backends\django.py", line 33, in get_template
+    return Template(self.engine.get_template(template_name), self)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\engine.py", line 175, in get_template
+    template, origin = self.find_template(template_name)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\engine.py", line 157, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\loaders\cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\loaders\base.py", line 28, in get_template
+    return Template(
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\base.py", line 154, in __init__
+    self.nodelist = self.compile_nodelist()
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\base.py", line 200, in compile_nodelist
+    return parser.parse()
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\base.py", line 513, in parse
+    raise self.error(token, e)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\base.py", line 511, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\loader_tags.py", line 293, in do_extends
+    nodelist = parser.parse()
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\base.py", line 513, in parse
+    raise self.error(token, e)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\base.py", line 511, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\loader_tags.py", line 232, in do_block
+    nodelist = parser.parse(("endblock",))
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\base.py", line 518, in parse
+    self.unclosed_block_tag(parse_until)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\base.py", line 581, in unclosed_block_tag
+    raise self.error(token, msg)
+django.template.exceptions.TemplateSyntaxError: Unclosed tag on line 248: 'block'. Looking for one of: endblock.
+[2025-07-10 10:34:05] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[2025-07-10 13:55:17] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[2025-07-10 13:55:33] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[2025-07-11 08:57:45] Watching for file changes with StatReloader
+[2025-07-11 08:58:02] Not Found: /favicon.ico
+[2025-07-11 11:26:46] Not Found: /favicon.ico
+[2025-07-11 11:27:08] Not Found: /favicon.ico
+[2025-07-11 11:27:33] Not Found: /favicon.ico
+[2025-07-11 11:27:41] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[2025-07-11 11:30:50] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[2025-07-11 11:31:12] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[2025-07-11 11:33:50] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[2025-07-11 11:34:08] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[2025-07-11 11:40:43] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[2025-07-11 11:48:16] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[2025-07-11 12:04:37] Internal Server Error: /admin/resources-post/
+Traceback (most recent call last):
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\kmhub\utils\user_control.py", line 45, in wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\kmhub\utils\user_control.py", line 45, in wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\kmhub\appAdmin\views\resources_post_view.py", line 339, in admin_resources_post
+    return render(request, "pages/resources-post.html", context)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\loader.py", line 15, in get_template
+    return engine.get_template(template_name)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\backends\django.py", line 33, in get_template
+    return Template(self.engine.get_template(template_name), self)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\engine.py", line 175, in get_template
+    template, origin = self.find_template(template_name)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\engine.py", line 157, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\loaders\cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\loaders\base.py", line 28, in get_template
+    return Template(
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\base.py", line 154, in __init__
+    self.nodelist = self.compile_nodelist()
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\base.py", line 200, in compile_nodelist
+    return parser.parse()
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\base.py", line 513, in parse
+    raise self.error(token, e)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\base.py", line 511, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\loader_tags.py", line 293, in do_extends
+    nodelist = parser.parse()
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\base.py", line 513, in parse
+    raise self.error(token, e)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\base.py", line 511, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\loader_tags.py", line 232, in do_block
+    nodelist = parser.parse(("endblock",))
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\base.py", line 513, in parse
+    raise self.error(token, e)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\base.py", line 511, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\defaulttags.py", line 853, in do_for
+    nodelist_loop = parser.parse(
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\base.py", line 484, in parse
+    raise self.error(token, e)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\base.py", line 482, in parse
+    filter_expression = self.compile_filter(token.contents)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\base.py", line 600, in compile_filter
+    return FilterExpression(token, self)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\base.py", line 699, in __init__
+    self.args_check(filter_name, filter_func, args)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\base.py", line 761, in args_check
+    raise TemplateSyntaxError(
+django.template.exceptions.TemplateSyntaxError: get_knowledge_title requires 1 arguments, 2 provided
+[2025-07-17 09:22:41] Watching for file changes with StatReloader
+[2025-07-17 10:30:38] C:\Users\qiuqi\Desktop\km-system-v2\kmhub\utils\forum_post_monthly_count.py changed, reloading.
+[2025-07-17 10:30:40] Watching for file changes with StatReloader
+[2025-07-21 08:33:11] Watching for file changes with StatReloader
+[2025-07-22 14:10:40] Watching for file changes with StatReloader
+[2025-07-22 14:10:54] Not Found: /favicon.ico
+[2025-07-23 09:10:18] Watching for file changes with StatReloader
+[2025-07-23 09:17:21] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[2025-07-23 09:17:24] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[2025-07-23 09:17:50] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[2025-07-23 09:18:14] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[2025-07-23 09:18:17] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[2025-07-23 09:26:13] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[2025-07-23 09:26:19] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[2025-07-23 09:52:20] Internal Server Error: /admin/users/
+Traceback (most recent call last):
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\kmhub\utils\user_control.py", line 34, in wrapper
+    return redirect("login")  # Redirect to login page if not authenticated
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\shortcuts.py", line 48, in redirect
+    return redirect_class(resolve_url(to, *args, **kwargs))
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\shortcuts.py", line 145, in resolve_url
+    return reverse(to, args=args, kwargs=kwargs)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\urls\base.py", line 88, in reverse
+    return resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\urls\resolvers.py", line 828, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'login' not found. 'login' is not a valid view function or pattern name.
+[2025-07-23 09:52:20] Not Found: /favicon.ico
+[2025-07-23 09:52:58] Not Found: /login
+[2025-07-23 10:04:30] C:\Users\qiuqi\Desktop\km-system-v2\kmhub\appAdmin\views\users_view.py changed, reloading.
+[2025-07-23 10:04:31] Watching for file changes with StatReloader
+[2025-07-23 10:06:27] C:\Users\qiuqi\Desktop\km-system-v2\kmhub\appAdmin\views\users_view.py changed, reloading.
+[2025-07-23 10:06:29] Watching for file changes with StatReloader
+[2025-07-23 10:07:31] C:\Users\qiuqi\Desktop\km-system-v2\kmhub\appAdmin\views\users_view.py changed, reloading.
+[2025-07-23 10:07:32] Watching for file changes with StatReloader
+[2025-07-23 10:09:21] C:\Users\qiuqi\Desktop\km-system-v2\kmhub\appAdmin\views\users_view.py changed, reloading.
+[2025-07-23 10:09:22] Watching for file changes with StatReloader
+[2025-07-23 10:09:35] C:\Users\qiuqi\Desktop\km-system-v2\kmhub\appAdmin\views\users_view.py changed, reloading.
+[2025-07-23 10:09:36] Watching for file changes with StatReloader
+[2025-07-23 10:09:46] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[2025-07-23 10:15:12] C:\Users\qiuqi\Desktop\km-system-v2\kmhub\appAdmin\views\users_view.py changed, reloading.
+[2025-07-23 10:15:13] Watching for file changes with StatReloader
+[2025-07-23 10:15:23] C:\Users\qiuqi\Desktop\km-system-v2\kmhub\appAdmin\views\users_view.py changed, reloading.
+[2025-07-23 10:15:24] Watching for file changes with StatReloader
+[2025-07-23 10:21:13] C:\Users\qiuqi\Desktop\km-system-v2\kmhub\appAccounts\models.py changed, reloading.
+[2025-07-23 10:21:14] Watching for file changes with StatReloader
+[2025-07-23 10:21:24] C:\Users\qiuqi\Desktop\km-system-v2\kmhub\appAccounts\views\registration_view.py changed, reloading.
+[2025-07-23 10:21:25] Watching for file changes with StatReloader
+[2025-07-23 10:25:16] C:\Users\qiuqi\Desktop\km-system-v2\kmhub\appAdmin\views\users_view.py changed, reloading.
+[2025-07-23 10:25:17] Watching for file changes with StatReloader
+[2025-07-23 10:25:41] C:\Users\qiuqi\Desktop\km-system-v2\kmhub\appAdmin\urls\users_url.py changed, reloading.
+[2025-07-23 10:25:42] Watching for file changes with StatReloader
+[2025-07-23 10:26:00] C:\Users\qiuqi\Desktop\km-system-v2\kmhub\appAdmin\views\__init__.py changed, reloading.
+[2025-07-23 10:26:01] Watching for file changes with StatReloader
+[2025-07-23 10:31:29] C:\Users\qiuqi\Desktop\km-system-v2\kmhub\appAccounts\forms.py changed, reloading.
+[2025-07-23 10:31:30] Watching for file changes with StatReloader
+[2025-07-23 10:31:37] Not Found: /admin/users
+[2025-07-23 10:31:44] Not Found: /admin/display-users
+[2025-07-23 10:31:56] Not Found: /admin/
+[2025-07-23 10:33:34] C:\Users\qiuqi\Desktop\km-system-v2\kmhub\appAdmin\views\users_view.py changed, reloading.
+[2025-07-23 10:33:35] Watching for file changes with StatReloader
+[2025-07-23 10:34:42] C:\Users\qiuqi\Desktop\km-system-v2\kmhub\appAdmin\views\users_view.py changed, reloading.
+[2025-07-23 10:34:43] Watching for file changes with StatReloader
+[2025-07-23 10:36:14] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[2025-07-23 10:38:37] C:\Users\qiuqi\Desktop\km-system-v2\kmhub\appAdmin\urls\users_url.py changed, reloading.
+[2025-07-23 10:38:38] Watching for file changes with StatReloader
+[2025-07-23 10:42:19] C:\Users\qiuqi\Desktop\km-system-v2\kmhub\appAdmin\views\users_view.py changed, reloading.
+[2025-07-23 10:42:20] Watching for file changes with StatReloader
+[2025-07-23 10:42:31] Not Found: /admin/users/add/
+[2025-07-23 10:42:31] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[2025-07-23 10:42:37] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[2025-07-23 10:47:42] C:\Users\qiuqi\Desktop\km-system-v2\kmhub\appAdmin\views\users_view.py changed, reloading.
+[2025-07-23 10:47:43] Watching for file changes with StatReloader
+[2025-07-23 10:51:13] C:\Users\qiuqi\Desktop\km-system-v2\kmhub\appAccounts\forms.py changed, reloading.
+[2025-07-23 10:51:14] Watching for file changes with StatReloader
+[2025-07-23 10:52:07] C:\Users\qiuqi\Desktop\km-system-v2\kmhub\appAdmin\views\users_view.py changed, reloading.
+[2025-07-23 10:52:08] Watching for file changes with StatReloader
+[2025-07-23 10:52:13] C:\Users\qiuqi\Desktop\km-system-v2\kmhub\appAdmin\views\users_view.py changed, reloading.
+[2025-07-23 10:52:14] Watching for file changes with StatReloader
+[2025-07-23 10:53:50] POST data received: <QueryDict: {'csrfmiddlewaretoken': ['uFse85YbueoZkD3BFpYTdWtwWWDXVyZ85ALp4IzUEFCWzqfuoVsVYmnjUfXtXYHP'], 'first_name': ['ronald'], 'middle_name': ['dale'], 'last_name': ['rdf'], 'sex': ['male'], 'gender': ['male'], 'date_birth': ['2025-06-17'], 'contact_num': ['09123456748'], 'email': ['ronaldxdale1999@gmail.com'], 'user_type': ['general'], 'password1': ['Ronald123'], 'password2': ['Ronald123'], 'institution': ['ZSCMST'], 'position': ['Science Communication'], 'highest_educ': ['doctoral'], 'specialization': ['Web Programming']}>
+[2025-07-23 10:53:50] Form validation failed: <ul class="errorlist"><li>user_type<ul class="errorlist"><li>Select a valid choice. general is not one of the available choices.</li></ul></li><li>password2<ul class="errorlist"><li>The password is too similar to the first name.</li></ul></li></ul>
+[2025-07-23 10:56:40] C:\Users\qiuqi\Desktop\km-system-v2\kmhub\appAdmin\views\users_view.py changed, reloading.
+[2025-07-23 10:56:41] Watching for file changes with StatReloader
+[2025-07-23 10:57:33] POST data received: <QueryDict: {'csrfmiddlewaretoken': ['YaKqr2oK9M35GOod8c6hBlX0fB5ukrwrz53BnFZtjdh2VBA6RIAjmLRNdUp0mRe8'], 'first_name': ['ronald'], 'middle_name': ['dale'], 'last_name': ['rdf'], 'sex': ['male'], 'gender': ['male'], 'date_birth': ['2025-06-17'], 'contact_num': ['09123456748'], 'email': ['ronaldxdale1999@gmail.com'], 'user_type': ['cmi'], 'password1': ['wsmrdc2023'], 'password2': ['wsmrdc2023'], 'institution': ['ZSCMST'], 'position': ['Science Communication'], 'highest_educ': ['doctoral'], 'specialization': ['Web Programming']}>
+[2025-07-23 10:57:33] Admin created user: ronaldxdale1999@gmail.com
+[2025-07-23 13:44:36] Internal Server Error: /cmis/knowledge-resources/
+Traceback (most recent call last):
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\kmhub\utils\user_control.py", line 45, in wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\kmhub\appCmi\views\cmi_knowledge_resources_view.py", line 268, in cmi_knowledge_resources
+    return render(request, "pages/cmi-knowledge-resources.html", context)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\backends\django.py", line 61, in render
+    return self.template.render(context)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\base.py", line 175, in render
+    return self._render(context)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\loader_tags.py", line 157, in render
+    return compiled_parent._render(context)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\loader_tags.py", line 208, in render
+    return template.render(context)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\base.py", line 177, in render
+    return self._render(context)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\defaulttags.py", line 471, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\urls\base.py", line 88, in reverse
+    return resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\urls\resolvers.py", line 828, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'faqs' not found. 'faqs' is not a valid view function or pattern name.
+[2025-07-23 13:44:37] Not Found: /favicon.ico
+[2025-07-23 13:46:16] C:\Users\qiuqi\Desktop\km-system-v2\kmhub\kmhub\urls.py changed, reloading.
+[2025-07-23 13:46:18] Watching for file changes with StatReloader
+[2025-07-23 13:46:31] C:\Users\qiuqi\Desktop\km-system-v2\kmhub\kmhub\urls.py changed, reloading.
+[2025-07-23 13:46:32] Watching for file changes with StatReloader
+[2025-07-23 13:46:37] Internal Server Error: /
+Traceback (most recent call last):
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\kmhub\utils\user_control.py", line 34, in wrapper
+    return redirect("login")  # Redirect to login page if not authenticated
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\shortcuts.py", line 48, in redirect
+    return redirect_class(resolve_url(to, *args, **kwargs))
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\shortcuts.py", line 145, in resolve_url
+    return reverse(to, args=args, kwargs=kwargs)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\urls\base.py", line 88, in reverse
+    return resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\urls\resolvers.py", line 828, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'login' not found. 'login' is not a valid view function or pattern name.
+[2025-07-23 13:46:55] C:\Users\qiuqi\Desktop\km-system-v2\kmhub\kmhub\urls.py changed, reloading.
+[2025-07-23 13:46:57] Watching for file changes with StatReloader
+[2025-07-23 13:47:13] C:\Users\qiuqi\Desktop\km-system-v2\kmhub\appCmi\views\home_view.py changed, reloading.
+[2025-07-23 13:47:14] Watching for file changes with StatReloader
+[2025-07-23 13:47:30] Internal Server Error: /cmis/about-km/
+Traceback (most recent call last):
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\kmhub\utils\user_control.py", line 34, in wrapper
+    return redirect("login")  # Redirect to login page if not authenticated
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\shortcuts.py", line 48, in redirect
+    return redirect_class(resolve_url(to, *args, **kwargs))
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\shortcuts.py", line 145, in resolve_url
+    return reverse(to, args=args, kwargs=kwargs)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\urls\base.py", line 88, in reverse
+    return resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\urls\resolvers.py", line 828, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'login' not found. 'login' is not a valid view function or pattern name.
+[2025-07-23 13:47:35] C:\Users\qiuqi\Desktop\km-system-v2\kmhub\appCmi\views\cmi_about_view.py changed, reloading.
+[2025-07-23 13:47:36] Watching for file changes with StatReloader
+[2025-07-23 13:47:40] C:\Users\qiuqi\Desktop\km-system-v2\kmhub\appCmi\views\cmi_display_post_view.py changed, reloading.
+[2025-07-23 13:47:42] Watching for file changes with StatReloader
+[2025-07-23 13:48:15] Internal Server Error: /cmis/forum/
+Traceback (most recent call last):
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\kmhub\utils\user_control.py", line 34, in wrapper
+    return redirect("login")  # Redirect to login page if not authenticated
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\shortcuts.py", line 48, in redirect
+    return redirect_class(resolve_url(to, *args, **kwargs))
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\shortcuts.py", line 145, in resolve_url
+    return reverse(to, args=args, kwargs=kwargs)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\urls\base.py", line 88, in reverse
+    return resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\urls\resolvers.py", line 828, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'login' not found. 'login' is not a valid view function or pattern name.
+[2025-07-23 13:48:27] Internal Server Error: /cmis/forum/
+Traceback (most recent call last):
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\kmhub\utils\user_control.py", line 34, in wrapper
+    return redirect("login")  # Redirect to login page if not authenticated
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\shortcuts.py", line 48, in redirect
+    return redirect_class(resolve_url(to, *args, **kwargs))
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\shortcuts.py", line 145, in resolve_url
+    return reverse(to, args=args, kwargs=kwargs)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\urls\base.py", line 88, in reverse
+    return resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\urls\resolvers.py", line 828, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'login' not found. 'login' is not a valid view function or pattern name.
+[2025-07-23 13:48:45] C:\Users\qiuqi\Desktop\km-system-v2\kmhub\appCmi\views\cmi_forum_view.py changed, reloading.
+[2025-07-23 13:48:46] Watching for file changes with StatReloader
+[2025-07-23 13:49:19] Internal Server Error: /cmis/forum/
+Traceback (most recent call last):
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\kmhub\utils\user_control.py", line 34, in wrapper
+    return redirect("login")  # Redirect to login page if not authenticated
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\shortcuts.py", line 48, in redirect
+    return redirect_class(resolve_url(to, *args, **kwargs))
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\shortcuts.py", line 145, in resolve_url
+    return reverse(to, args=args, kwargs=kwargs)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\urls\base.py", line 88, in reverse
+    return resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\urls\resolvers.py", line 828, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'login' not found. 'login' is not a valid view function or pattern name.
+[2025-07-23 13:49:31] Internal Server Error: /cmis/commodities/18u2q2XU28O4/
+Traceback (most recent call last):
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\kmhub\utils\user_control.py", line 34, in wrapper
+    return redirect("login")  # Redirect to login page if not authenticated
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\shortcuts.py", line 48, in redirect
+    return redirect_class(resolve_url(to, *args, **kwargs))
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\shortcuts.py", line 145, in resolve_url
+    return reverse(to, args=args, kwargs=kwargs)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\urls\base.py", line 88, in reverse
+    return resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\urls\resolvers.py", line 828, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'login' not found. 'login' is not a valid view function or pattern name.
+[2025-07-23 13:53:29] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[2025-07-23 13:53:32] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[2025-07-23 13:54:22] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[2025-07-24 09:18:23] Watching for file changes with StatReloader
+[2025-07-24 10:51:18] C:\Users\qiuqi\Desktop\km-system-v2\kmhub\appAdmin\urls\about_url.py changed, reloading.
+[2025-07-24 10:51:20] Watching for file changes with StatReloader
+[2025-07-24 13:30:53] Internal Server Error: /admin/about/
+Traceback (most recent call last):
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\kmhub\utils\user_control.py", line 45, in wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\kmhub\appAdmin\views\about_view.py", line 115, in admin_about_page
+    recent_changes = get_recent_changes()
+  File "C:\Users\qiuqi\Desktop\km-system-v2\kmhub\appAdmin\views\about_view.py", line 20, in get_recent_changes
+    About.objects.filter(date_updated__gte=timezone.now() - timedelta(days=30))
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\db\models\query.py", line 1436, in filter
+    return self._filter_or_exclude(False, args, kwargs)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\db\models\query.py", line 1454, in _filter_or_exclude
+    clone._filter_or_exclude_inplace(negate, args, kwargs)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\db\models\query.py", line 1461, in _filter_or_exclude_inplace
+    self._query.add_q(Q(*args, **kwargs))
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\db\models\sql\query.py", line 1545, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\db\models\sql\query.py", line 1576, in _add_q
+    child_clause, needed_inner = self.build_filter(
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\db\models\sql\query.py", line 1426, in build_filter
+    lookups, parts, reffed_expression = self.solve_lookup_type(arg, summarize)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\db\models\sql\query.py", line 1236, in solve_lookup_type
+    _, field, _, lookup_parts = self.names_to_path(lookup_splitted, self.get_meta())
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\db\models\sql\query.py", line 1724, in names_to_path
+    raise FieldError(
+django.core.exceptions.FieldError: Cannot resolve keyword 'date_updated' into field. Choices are: about_id, content, date_created
+[2025-07-24 13:30:54] Not Found: /favicon.ico
+[2025-07-24 13:31:36] C:\Users\qiuqi\Desktop\km-system-v2\kmhub\appAdmin\views\about_view.py changed, reloading.
+[2025-07-24 13:31:38] Watching for file changes with StatReloader
+[2025-07-24 13:55:04] Internal Server Error: /admin/about/
+Traceback (most recent call last):
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\base.py", line 505, in parse
+    compile_func = self.tags[command]
+KeyError: 'endblock'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\kmhub\utils\user_control.py", line 45, in wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\kmhub\appAdmin\views\about_view.py", line 159, in admin_about_page
+    return render(request, "pages/about.html", context)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\loader.py", line 15, in get_template
+    return engine.get_template(template_name)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\backends\django.py", line 33, in get_template
+    return Template(self.engine.get_template(template_name), self)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\engine.py", line 175, in get_template
+    template, origin = self.find_template(template_name)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\engine.py", line 157, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\loaders\cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\loaders\base.py", line 28, in get_template
+    return Template(
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\base.py", line 154, in __init__
+    self.nodelist = self.compile_nodelist()
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\base.py", line 200, in compile_nodelist
+    return parser.parse()
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\base.py", line 513, in parse
+    raise self.error(token, e)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\base.py", line 511, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\loader_tags.py", line 293, in do_extends
+    nodelist = parser.parse()
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\base.py", line 507, in parse
+    self.invalid_block_tag(token, command, parse_until)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\base.py", line 568, in invalid_block_tag
+    raise self.error(
+django.template.exceptions.TemplateSyntaxError: Invalid block tag on line 1583: 'endblock'. Did you forget to register or load this tag?
+[2025-07-24 14:05:44] C:\Users\qiuqi\Desktop\km-system-v2\kmhub\appAdmin\views\about_view.py changed, reloading.
+[2025-07-24 14:05:46] Watching for file changes with StatReloader
+[2025-07-24 14:05:47] Internal Server Error: /admin/about/
+Traceback (most recent call last):
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\kmhub\utils\user_control.py", line 45, in wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\kmhub\appAdmin\views\about_view.py", line 115, in admin_about_page
+    recent_changes = get_recent_changes()
+  File "C:\Users\qiuqi\Desktop\km-system-v2\kmhub\appAdmin\views\about_view.py", line 20, in get_recent_changes
+    About.objects.filter(date_updated__gte=timezone.now() - timedelta(days=30))
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\db\models\query.py", line 1436, in filter
+    return self._filter_or_exclude(False, args, kwargs)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\db\models\query.py", line 1454, in _filter_or_exclude
+    clone._filter_or_exclude_inplace(negate, args, kwargs)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\db\models\query.py", line 1461, in _filter_or_exclude_inplace
+    self._query.add_q(Q(*args, **kwargs))
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\db\models\sql\query.py", line 1545, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\db\models\sql\query.py", line 1576, in _add_q
+    child_clause, needed_inner = self.build_filter(
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\db\models\sql\query.py", line 1426, in build_filter
+    lookups, parts, reffed_expression = self.solve_lookup_type(arg, summarize)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\db\models\sql\query.py", line 1236, in solve_lookup_type
+    _, field, _, lookup_parts = self.names_to_path(lookup_splitted, self.get_meta())
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\db\models\sql\query.py", line 1724, in names_to_path
+    raise FieldError(
+django.core.exceptions.FieldError: Cannot resolve keyword 'date_updated' into field. Choices are: about_id, content, date_created
+[2025-07-24 14:05:48] Not Found: /favicon.ico
+[2025-07-24 14:05:54] C:\Users\qiuqi\Desktop\km-system-v2\kmhub\appAdmin\views\about_view.py changed, reloading.
+[2025-07-24 14:05:56] Watching for file changes with StatReloader
+[2025-07-24 14:14:36] Internal Server Error: /admin/useful-links/
+Traceback (most recent call last):
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\backends\django.py", line 61, in render
+    return self.template.render(context)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\base.py", line 175, in render
+    return self._render(context)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\loader_tags.py", line 157, in render
+    return compiled_parent._render(context)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\loader_tags.py", line 63, in render
+    result = block.nodelist.render(context)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\base.py", line 1005, in <listcomp>
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\loader_tags.py", line 197, in render
+    template = context.template.engine.select_template(template_name)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\engine.py", line 212, in select_template
+    raise TemplateDoesNotExist(", ".join(not_found))
+django.template.exceptions.TemplateDoesNotExist: modal/useful-link/view-link.html
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\kmhub\utils\user_control.py", line 45, in wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\kmhub\appAdmin\views\useful_link_view.py", line 18, in admin_useful_links
+    return render(request, "pages/useful-links.html", context)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\backends\django.py", line 63, in render
+    reraise(exc, self.backend)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\backends\django.py", line 84, in reraise
+    raise new from exc
+django.template.exceptions.TemplateDoesNotExist: modal/useful-link/view-link.html
+[2025-07-24 14:35:47] C:\Users\qiuqi\Desktop\km-system-v2\kmhub\appAdmin\views\useful_link_view.py changed, reloading.
+[2025-07-24 14:35:48] Watching for file changes with StatReloader
+[2025-07-24 14:37:47] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[2025-07-24 15:05:56] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[2025-07-24 15:06:03] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[2025-07-24 15:06:05] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[2025-07-24 15:06:19] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[2025-07-24 15:10:17] Internal Server Error: /admin/resources-post/
+Traceback (most recent call last):
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\kmhub\utils\user_control.py", line 45, in wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\kmhub\utils\user_control.py", line 45, in wrapper
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\kmhub\appAdmin\views\resources_post_view.py", line 339, in admin_resources_post
+    return render(request, "pages/resources-post.html", context)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\loader.py", line 15, in get_template
+    return engine.get_template(template_name)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\backends\django.py", line 33, in get_template
+    return Template(self.engine.get_template(template_name), self)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\engine.py", line 175, in get_template
+    template, origin = self.find_template(template_name)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\engine.py", line 157, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\loaders\cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\loaders\base.py", line 28, in get_template
+    return Template(
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\base.py", line 154, in __init__
+    self.nodelist = self.compile_nodelist()
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\base.py", line 200, in compile_nodelist
+    return parser.parse()
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\base.py", line 513, in parse
+    raise self.error(token, e)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\base.py", line 511, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\defaulttags.py", line 853, in do_for
+    nodelist_loop = parser.parse(
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\base.py", line 484, in parse
+    raise self.error(token, e)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\base.py", line 482, in parse
+    filter_expression = self.compile_filter(token.contents)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\base.py", line 600, in compile_filter
+    return FilterExpression(token, self)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\base.py", line 698, in __init__
+    filter_func = parser.find_filter(filter_name)
+  File "C:\Users\qiuqi\Desktop\km-system-v2\km-env\lib\site-packages\django\template\base.py", line 606, in find_filter
+    raise TemplateSyntaxError("Invalid filter: '%s'" % filter_name)
+django.template.exceptions.TemplateSyntaxError: Invalid filter: 'get_knowledge_title'
+[2025-07-24 15:10:17] Not Found: /favicon.ico
+[2025-07-24 15:13:45] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[2025-07-24 15:15:00] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[2025-07-24 15:15:07] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[2025-07-24 15:15:13] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[2025-07-24 15:15:22] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[2025-07-24 15:41:10] Not Found: /api/placeholder/100/100
+[2025-07-24 15:41:10] Not Found: /api/placeholder/100/100
+[2025-07-24 15:41:24] Not Found: /cmi/forum/uLMp5rpJu6oq/like/
+[2025-07-24 15:41:25] Not Found: /cmi/forum/uLMp5rpJu6oq/like/
+[2025-07-24 15:41:26] Not Found: /cmi/forum/uLMp5rpJu6oq/like/
+[2025-07-24 15:41:26] Not Found: /cmi/forum/uLMp5rpJu6oq/like/
+[2025-07-24 15:41:28] Not Found: /cmi/forum/kZSjMS62B8az/like/
+[2025-07-24 15:41:30] Not Found: /cmi/forum/kZSjMS62B8az/like/
+[2025-07-24 15:41:33] Not Found: /cmi/forum/hQmIoKBLmP62/like/
+[2025-07-25 13:41:45] Watching for file changes with StatReloader
+[2025-07-25 13:51:17] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[2025-07-25 13:51:45] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[2025-07-28 11:15:16] Watching for file changes with StatReloader
+[2025-07-29 09:16:09] Watching for file changes with StatReloader
+[2025-07-29 09:47:41] C:\Users\qiuqi\Desktop\km-system-v2\kmhub\appAdmin\views\resources_post_view.py changed, reloading.
+[2025-07-29 09:47:42] Watching for file changes with StatReloader
+[2025-07-29 10:52:13] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[2025-07-29 10:52:15] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[2025-07-29 10:53:13] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[2025-07-29 11:02:51] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[2025-07-29 11:03:06] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[2025-07-29 11:06:23] C:\Users\qiuqi\Desktop\km-system-v2\kmhub\appAdmin\views\resources_post_view.py changed, reloading.
+[2025-07-29 11:06:25] Watching for file changes with StatReloader
+[2025-07-29 11:06:49] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[2025-07-29 11:07:51] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[2025-07-29 11:07:56] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[2025-07-29 11:10:41] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[2025-07-29 11:10:46] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[2025-07-29 11:11:45] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[2025-07-29 11:12:01] C:\Users\qiuqi\Desktop\km-system-v2\kmhub\appAdmin\views\resources_post_view.py changed, reloading.
+[2025-07-29 11:12:02] Watching for file changes with StatReloader
+[2025-07-29 11:12:06] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[2025-07-29 11:12:26] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[2025-07-29 11:12:31] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[2025-07-29 11:14:09] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[2025-07-29 11:15:08] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[2025-07-29 11:15:12] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[2025-07-29 11:15:38] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[2025-07-29 11:15:52] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[2025-07-29 11:15:57] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[2025-07-29 11:17:06] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[2025-07-29 11:22:16] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[2025-07-29 11:25:33] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[2025-07-29 11:34:09] Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[2025-07-29 13:05:10] Not Found: /.well-known/appspecific/com.chrome.devtools.json

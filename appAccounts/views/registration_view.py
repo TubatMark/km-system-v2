@@ -4,7 +4,6 @@ from appAccounts.forms import CustomUserCreationForm
 from appAccounts.views import activation_code_view
 
 
-# Create your views here.
 def registration(request):
     if request.method == "POST":
         form = CustomUserCreationForm(request.POST)

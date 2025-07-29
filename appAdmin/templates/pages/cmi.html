@@ -3,149 +3,393 @@
 {% block title %}
   Admin CMI Management
 {% endblock %}
-{% block stylesheet %}
-<style>
-   /* Ensure the length menu and the dropdown are displayed inline */
-.dataTables_length {
-  display: flex;
-  align-items: center;
-}
-
-/* Adjust the margin and padding for better alignment */
-.dataTables_length label {
-  display: flex;
-  align-items: center;
-}
-
-/* Adjust the width and margin of the select box */
-.dataTables_length select {
-  margin-left: 5px;
-  margin-right: 5px;
-  width: 50px; /* Adjust the width as needed */
-}
-</style>
-{% endblock %}
 
 {% block content %}
-<div class="masonry-item w-100">
-  <div class="row gap-20">
-    <div class="col-md-3">
-      <div class="layers bd bgc-white p-20">
-        <div class="layer w-100 mB-10">
-          <h6 class="lh-1"><a href="#" style="color: gray;">CMI</a></h6>
+  <!-- Page Header -->
+  <div class="dashboard-header">
+    <h1 class="dashboard-title">CMI Management</h1>
+    <p class="dashboard-subtitle">Manage Consortium Member Institution locations and information</p>
+  </div>
+
+  <!-- Stats Grid -->
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-header">
+        <div class="stat-icon" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+          <i class="fas fa-building"></i>
         </div>
-        <div class="layer w-100">
-          <div class="peers ai-sb fxw-nw">
-            <div class="peer peer-greed">
-              <span id="sparklinedash"></span>
-            </div>
-            <div class="peer">
-              <span class="d-ib lh-0 va-m fw-600 bdrs-10em pX-15 pY-15 bgc-green-50 c-green-500">
-                {% if total_approved_cmi %}
-                            {{ total_approved_cmi }}
-                          {% else %}
-                            None
-                          {% endif %}
-              </span>
-            </div>
-          </div>
+      </div>
+      <div class="stat-content">
+        <div class="stat-value">
+          {% if total_approved_cmi %}
+            {{ total_approved_cmi }}
+          {% else %}
+            0
+          {% endif %}
+        </div>
+        <div class="stat-label">Total CMI's</div>
+        <div class="stat-change positive">
+          <i class="fas fa-arrow-up"></i>
+          <span>Active</span>
+        </div>
+      </div>
+    </div>
+    
+    <div class="stat-card">
+      <div class="stat-header">
+        <div class="stat-icon" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+          <i class="fas fa-map-marker-alt"></i>
+        </div>
+      </div>
+      <div class="stat-content">
+        <div class="stat-value">{{ total_approved_cmi }}</div>
+        <div class="stat-label">Mapped Locations</div>
+        <div class="stat-change positive">
+          <i class="fas fa-check"></i>
+          <span>Verified</span>
+        </div>
+      </div>
+    </div>
+    
+    <div class="stat-card">
+      <div class="stat-header">
+        <div class="stat-icon" style="background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);">
+          <i class="fas fa-graduation-cap"></i>
+        </div>
+      </div>
+      <div class="stat-content">
+        <div class="stat-value">23</div>
+        <div class="stat-label">Research Centers</div>
+        <div class="stat-change positive">
+          <i class="fas fa-star"></i>
+          <span>Excellence</span>
         </div>
       </div>
     </div>
   </div>
-</div>
 
-<div class="masonry-item col-12">
-  <div class="bd bgc-white">
-    <div class="peers fxw-nw@lg+ ai-s">
-      <div class="peer peer-greed w-70p@lg+ w-100@lg- p-20">
-        <div class="layers">
-          <div class="layer w-100 mB-10">
-            <h5 class="lh-1">Admin CMI</h5>
+  <!-- Main Content Grid -->
+  <div class="analytics-grid" style="display: grid;  gap: 2rem; margin-bottom: 2rem;">
+    <!-- CMI Management Panel -->
+    <div class="chart-card custom-card">
+      <div class="chart-header">
+        <h3 class="chart-title">CMI Overview</h3>
+        <div class="chart-controls">
+          <button type="button" class="btn btn-primary" onclick="addCmi()">
+            <i class="fas fa-plus"></i> Add CMI
+          </button>
+        </div>
+      </div>
+      
+      <!-- Real-time Search Form -->
+      <div class="search-container" style="margin-bottom: 20px;">
+        <div class="search-grid">
+          <div class="search-field">
+            <label for="search_cmi_id" class="search-label">CMI ID</label>
+            <div class="search-input-wrapper">
+              <i class="fas fa-search search-icon"></i>
+              <input type="text" id="search_cmi_id" name="search_cmi_id" class="search-input" placeholder="Search by CMI ID" />
+              <span class="search-clear" id="clear_cmi_id" style="display: none;"><i class="fas fa-times"></i></span>
+            </div>
           </div>
-          <div class="layer w-100">
-            <ul class="nav nav-tabs">
-              <li class="nav-item">
-                <a class="nav-link active" id="approvedcmi-tab" data-toggle="tab" href="#approvedcmi">Approved CMI Overview</a>
-              </li>
-            </ul>
+
+          <div class="search-field">
+            <label for="search_cmi_name" class="search-label">CMI Name</label>
+            <div class="search-input-wrapper">
+              <i class="fas fa-search search-icon"></i>
+              <input type="text" id="search_cmi_name" name="search_cmi_name" class="search-input" placeholder="Search by CMI Name" />
+              <span class="search-clear" id="clear_cmi_name" style="display: none;"><i class="fas fa-times"></i></span>
+            </div>
           </div>
-          <div class="layer w-100">
-            <!-- Tab Content -->
-            <div class="tab-content">
-              <br />
-              <!-- Resource Hub Tab -->
-              <div class="tab-pane fade show active" id="approvedcmi">
-                <div class="d-flex">
-                  <!-- Left side: Table -->
-                  <div class="flex-grow-1 p-20">
-                    <div class="table-container" style="max-height: 500px; overflow-y: auto;">
-                      <table id="cmiTable" class="cmi-table table table-bordered">
-                        <thead style="font-size: 13px; font-weight: bolder;">
-                          <tr>
-                            <th>No.</th>
-                            <th>Logo</th>
-                            <th>CMI</th>
-                            <th>Definition</th>
-                            <th>Coordinates</th>
-                            <th>Date Created</th>
-                            <th>Actions</th>
-                          </tr>
-                        </thead>
-                        <tbody style="font-size: 12px;">
-                          {% for cmi in cmis %}
-                            {% if cmi.status == 'Approved' %}
-                              <tr>
-                                <td style="border-bottom: 1px solid #ddd; ">{{ forloop.counter }}</td>
-                                <td style="border-bottom: 1px solid #ddd;">
-                                  {% if cmi.cmi_image %}
-                                    <img src="{{ cmi.cmi_image.url }}" alt="{{ cmi.cmi_name }} Image" style="max-width: 50px; max-height: 50px; display: block; margin: 0 auto;" />
-                                  {% else %}
-                                    No Image
-                                  {% endif %}
-                                </td>
-                                <td style="border-bottom: 1px solid #ddd;">{{ cmi.cmi_name|upper }}</td>
-                                <td style="border-bottom: 1px solid #ddd;">{{ cmi.cmi_meaning|capfirst }}</td>
-                                <td style="border-bottom: 1px solid #ddd;">
-                                  {% if cmi.latitude %}
-                                    {{ cmi.latitude }},{{ cmi.longitude }}
-                                  {% else %}
-                                    None
-                                  {% endif %}
-                                </td>
-                                <td style="border-bottom: 1px solid #ddd;">{{ cmi.date_created }}</td>
-                                <td style="border-bottom: 1px solid #ddd; width: 100px;">
-                                  <div style="display: flex; gap: 5px;">
-                                    <button type="button" style="background-color: #FF8F00; color: #FEFBF6;" class="btn btn-sm edit-btn" data-toggle="modal" data-target="#editCmiModal" data-slug="{{ cmi.slug }}" data-cminame="{{ cmi.cmi_name }}" data-cmimeaning="{{ cmi.cmi_meaning }}" data-cmidescription="{{ cmi.cmi_description|capfirst }}" data-cmiimage="{{ cmi.cmi_image.url }}" data-datecreated="{{ cmi.date_created|capfirst }}" data-address="{{ cmi.address|capfirst }}" data-contactnumber="{{ cmi.contact_num }}" data-email="{{ cmi.email }}" data-latitude="{{ cmi.latitude }}" data-longitude="{{ cmi.longitude }}">Update</button>
-                                    <button type="button" style="background-color: #0C356A; color: #FEFBF6; " class="btn btn-sm view-btn" data-toggle="modal" data-target="#viewCmiModal" data-cmiid="{{ cmi.cmi_id }}" data-cminame="{{ cmi.cmi_name }}" data-cmimeaning="{{ cmi.cmi_meaning }}" data-cmidescription="{{ cmi.cmi_description|capfirst }}" data-cmiimage="{{ cmi.cmi_image.url }}" data-datecreated="{{ cmi.date_created|capfirst }}" data-address="{{ cmi.address|capfirst }}" data-contactnumber="{{ cmi.contact_num }}" data-email="{{ cmi.email }}" data-coordinates="{{ cmi.latitude }}, {{ cmi.longitude }}">view</button>
-                                    <a data-placement="top"  style="background-color: #D71313; color: #FEFBF6;" data-toggle="tooltip" title="delete" href="{% url 'appAdmin:delete-cmi' cmi.slug %}" onclick="return confirmDeletion(this);" class="btn btn-sm">Delete</a>
-                                  </div>
-                                </td>
-                              </tr>
-                              {% include 'modal/cmi/edit-cmi.html' %}
-                            {% endif %}
-                          {% endfor %}
-                        </tbody>
-                      </table>
+
+          <div class="search-field">
+            <label for="search_location" class="search-label">Location</label>
+            <div class="search-input-wrapper">
+              <i class="fas fa-search search-icon"></i>
+              <input type="text" id="search_location" name="search_location" class="search-input" placeholder="Search by Location" />
+              <span class="search-clear" id="clear_location" style="display: none;"><i class="fas fa-times"></i></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Search Results Summary -->
+        <div class="search-results-summary" id="searchResultsSummary" style="display: none;">
+          <span class="results-text">Showing <span id="visibleCount">0</span> of <span id="totalCount">0</span> CMIs</span>
+          <button type="button" class="btn btn-sm btn-outline-secondary" id="clearAllFilters"><i class="fas fa-times"></i> Clear All</button>
+        </div>
+      </div>
+
+      <!-- CMI Table -->
+      <div class="table-container" style="max-height: 500px; overflow-y: auto; overflow-x: auto; width: 100%;">
+        <table id="cmiTable" class="accounts-table table table-bordered theme-header" style="width: 100%; min-width: 900px;">
+          <thead style="font-size: 13px; font-weight: bolder; background-color: #2C6E49; color: #fff;">
+            <tr>
+              <th style="width: 60px; min-width: 60px;">No.</th>
+              <th style="width: 80px; min-width: 80px;">Logo</th>
+              <th style="min-width: 200px;">CMI Name</th>
+              <th style="min-width: 180px;">Definition</th>
+              <th style="min-width: 150px;">Coordinates</th>
+              <th style="min-width: 120px;">Date Created</th>
+              <th style="width: 180px; min-width: 180px;">Actions</th>
+            </tr>
+          </thead>
+          <tbody style="font-size: 12px;" id="cmiTableBody">
+            {% for cmi in cmis %}
+              {% if cmi.status == 'active' %}
+                <tr class="cmi-row" 
+                    data-cmi-id="{{ cmi.cmi_id }}" 
+                    data-cmi-name="{{ cmi.cmi_name }}" 
+                    data-cmi-location="{{ cmi.address }}"
+                    style="border-bottom: 1px solid #ddd;">
+                  <td style="border-bottom: 1px solid #ddd; text-align: center;">{{ forloop.counter }}</td>
+                  <td style="border-bottom: 1px solid #ddd; text-align: center;">
+                    {% if cmi.cmi_image %}
+                      <img src="{{ cmi.cmi_image.url }}" 
+                           alt="{{ cmi.cmi_name }} Image" 
+                           style="width: 50px; height: 50px; border-radius: 8px; object-fit: cover; box-shadow: 0 2px 4px rgba(0,0,0,0.1);" />
+                    {% else %}
+                      <div style="width: 50px; height: 50px; background: #e9ecef; border-radius: 8px; display: flex; align-items: center; justify-content: center; margin: 0 auto;">
+                        <i class="fas fa-building" style="color: #6c757d;"></i>
+                      </div>
+                    {% endif %}
+                  </td>
+                  <td style="border-bottom: 1px solid #ddd;" class="cmi-name-cell">
+                    <strong style="color: var(--primary-color);">{{ cmi.cmi_name|upper }}</strong>
+                  </td>
+                  <td style="border-bottom: 1px solid #ddd;" class="cmi-definition-cell">
+                    {{ cmi.cmi_meaning|capfirst|truncatewords:8 }}
+                  </td>
+                  <td style="border-bottom: 1px solid #ddd;" class="cmi-location-cell">
+                    {% if cmi.latitude %}
+                      <span style="background: #e3f2fd; padding: 4px 8px; border-radius: 12px; font-family: monospace; font-size: 11px;">
+                        {{ cmi.latitude }},{{ cmi.longitude }}
+                      </span>
+                    {% else %}
+                      <span style="color: #dc3545; font-size: 12px;">No coordinates</span>
+                    {% endif %}
+                  </td>
+                  <td style="border-bottom: 1px solid #ddd;">{{ cmi.date_created|date:"M d, Y" }}</td>
+                  <td style="border-bottom: 1px solid #ddd;">
+                    <div class="action-buttons" style="display: flex; justify-content: center; gap: 5px; flex-wrap: wrap;">
+                      <button type="button" 
+                              class="btn btn-sm btn-warning edit-btn" 
+                              data-toggle="modal" 
+                              data-target="#editCmiModal" 
+                              data-slug="{{ cmi.slug }}" 
+                              data-cminame="{{ cmi.cmi_name }}" 
+                              data-cmimeaning="{{ cmi.cmi_meaning }}" 
+                              data-cmidescription="{{ cmi.cmi_description|capfirst }}" 
+                              data-cmiimage="{{ cmi.cmi_image.url }}" 
+                              data-datecreated="{{ cmi.date_created|capfirst }}" 
+                              data-address="{{ cmi.address|capfirst }}" 
+                              data-contactnumber="{{ cmi.contact_num }}" 
+                              data-email="{{ cmi.email }}" 
+                              data-latitude="{{ cmi.latitude }}" 
+                              data-longitude="{{ cmi.longitude }}"
+                              title="Edit CMI">
+                        <i class="fas fa-edit"></i>
+                      </button>
+                      
+                      <button type="button" 
+                              class="btn btn-sm btn-info view-btn" 
+                              data-toggle="modal" 
+                              data-target="#viewCmiModal" 
+                              data-cmiid="{{ cmi.cmi_id }}" 
+                              data-cminame="{{ cmi.cmi_name }}" 
+                              data-cmimeaning="{{ cmi.cmi_meaning }}" 
+                              data-cmidescription="{{ cmi.cmi_description|capfirst }}" 
+                              data-cmiimage="{{ cmi.cmi_image.url }}" 
+                              data-datecreated="{{ cmi.date_created|capfirst }}" 
+                              data-address="{{ cmi.address|capfirst }}" 
+                              data-contactnumber="{{ cmi.contact_num }}" 
+                              data-email="{{ cmi.email }}" 
+                              data-coordinates="{{ cmi.latitude }}, {{ cmi.longitude }}"
+                              title="View CMI">
+                        <i class="fas fa-eye"></i>
+                      </button>
+                      
+                      <button type="button" 
+                              class="btn btn-sm btn-danger delete-btn" 
+                              data-toggle="tooltip" 
+                              title="Delete CMI" 
+                              onclick="confirmDeleteCmi('{{ cmi.slug }}', '{{ cmi.cmi_name }}')">
+                        <i class="fas fa-trash"></i>
+                      </button>
                     </div>
-                  </div>
-                </div>
-            </div>
+                  </td>
+                </tr>
+              {% endif %}
+            {% endfor %}
+          </tbody>
+        </table>
+
+        <!-- No Results Message -->
+        <div id="noResultsMessage" style="display: none; text-align: center; padding: 40px; color: #6c757d;">
+          <i class="fas fa-search fa-3x" style="margin-bottom: 20px; opacity: 0.5;"></i>
+          <h5>No CMIs found</h5>
+          <p>Try adjusting your search criteria or clear filters to view all CMIs.</p>
         </div>
       </div>
     </div>
   </div>
-</div>  
 
-
-  
   {% include 'modal/cmi/add-cmi.html' %}
   {% include 'modal/cmi/view-cmi.html' %}
+  {% include 'modal/cmi/edit-cmi.html' %}
 {% endblock %}
 
 {% block script %}
   <script>
-    $(document).ready(function () {
+    document.addEventListener('DOMContentLoaded', function () {
+      // Initialize search functionality similar to users.html
+      initializeCmiSearch();
+      
+      // Initialize modal handlers
+      initializeCmiModals();
+    });
+
+    function initializeCmiSearch() {
+      const searchFields = {
+        cmi_id: document.getElementById('search_cmi_id'),
+        cmi_name: document.getElementById('search_cmi_name'),
+        location: document.getElementById('search_location')
+      };
+      
+      const clearButtons = {
+        cmi_id: document.getElementById('clear_cmi_id'),
+        cmi_name: document.getElementById('clear_cmi_name'),
+        location: document.getElementById('clear_location')
+      };
+      
+      const searchResultsSummary = document.getElementById('searchResultsSummary');
+      const clearAllFiltersBtn = document.getElementById('clearAllFilters');
+      const visibleCountSpan = document.getElementById('visibleCount');
+      const totalCountSpan = document.getElementById('totalCount');
+      const tableBody = document.getElementById('cmiTableBody');
+      const noResultsMessage = document.getElementById('noResultsMessage');
+      
+      // Set total count
+      const totalCmis = document.querySelectorAll('#cmiTableBody .cmi-row').length;
+      if (totalCountSpan) totalCountSpan.textContent = totalCmis;
+      
+      // Add event listeners for search inputs
+      Object.keys(searchFields).forEach(key => {
+        const input = searchFields[key];
+        const clearBtn = clearButtons[key];
+        
+        if (input && clearBtn) {
+          input.addEventListener('input', performCmiSearch);
+          
+          // Show/hide clear button
+          input.addEventListener('input', function() {
+            clearBtn.style.display = this.value ? 'block' : 'none';
+          });
+          
+          // Clear button functionality
+          clearBtn.addEventListener('click', function() {
+            input.value = '';
+            this.style.display = 'none';
+            performCmiSearch();
+          });
+        }
+      });
+      
+      // Clear all filters
+      if (clearAllFiltersBtn) {
+        clearAllFiltersBtn.addEventListener('click', function() {
+          Object.values(searchFields).forEach(input => {
+            if (input) input.value = '';
+          });
+          Object.values(clearButtons).forEach(btn => {
+            if (btn) btn.style.display = 'none';
+          });
+          performCmiSearch();
+        });
+      }
+      
+      function performCmiSearch() {
+        const cmiIdValue = searchFields.cmi_id?.value.toLowerCase() || '';
+        const cmiNameValue = searchFields.cmi_name?.value.toLowerCase() || '';
+        const locationValue = searchFields.location?.value.toLowerCase() || '';
+        
+        const rows = document.querySelectorAll('#cmiTableBody .cmi-row');
+        let visibleCount = 0;
+        
+        const hasActiveSearch = cmiIdValue || cmiNameValue || locationValue;
+        
+        rows.forEach(row => {
+          const cmiId = row.getAttribute('data-cmi-id')?.toLowerCase() || '';
+          const cmiName = row.getAttribute('data-cmi-name')?.toLowerCase() || '';
+          const location = row.getAttribute('data-cmi-location')?.toLowerCase() || '';
+          
+          const showRow = 
+            (!cmiIdValue || cmiId.includes(cmiIdValue)) &&
+            (!cmiNameValue || cmiName.includes(cmiNameValue)) &&
+            (!locationValue || location.includes(locationValue));
+          
+          if (showRow) {
+            row.style.display = '';
+            visibleCount++;
+            highlightMatchingCmiText(row, cmiIdValue, cmiNameValue, locationValue);
+          } else {
+            row.style.display = 'none';
+          }
+        });
+        
+        if (visibleCountSpan) visibleCountSpan.textContent = visibleCount;
+        
+        if (hasActiveSearch) {
+          if (searchResultsSummary) searchResultsSummary.style.display = 'flex';
+        } else {
+          if (searchResultsSummary) searchResultsSummary.style.display = 'none';
+        }
+        
+        if (visibleCount === 0 && hasActiveSearch) {
+          if (noResultsMessage) noResultsMessage.style.display = 'block';
+          if (tableBody) tableBody.style.display = 'none';
+        } else {
+          if (noResultsMessage) noResultsMessage.style.display = 'none';
+          if (tableBody) tableBody.style.display = '';
+        }
+      }
+      
+      function highlightMatchingCmiText(row, cmiIdValue, cmiNameValue, locationValue) {
+        const cells = row.querySelectorAll('td');
+        cells.forEach(cell => {
+          if (!cell.querySelector('button')) {
+            const originalText = cell.getAttribute('data-original-text') || cell.textContent;
+            cell.setAttribute('data-original-text', originalText);
+            cell.innerHTML = originalText;
+          }
+        });
+        
+        if (cmiNameValue) {
+          const nameCell = row.querySelector('.cmi-name-cell');
+          highlightText(nameCell, cmiNameValue);
+        }
+        
+        if (locationValue) {
+          const locationCell = row.querySelector('.cmi-location-cell');
+          highlightText(locationCell, locationValue);
+        }
+      }
+      
+      function highlightText(element, searchTerm) {
+        if (!element || !searchTerm) return;
+        
+        const originalText = element.getAttribute('data-original-text') || element.textContent;
+        const regex = new RegExp(`(${escapeRegExp(searchTerm)})`, 'gi');
+        const highlightedText = originalText.replace(regex, '<mark style="background-color: #fff3cd; padding: 2px 4px; border-radius: 3px;">$1</mark>');
+        element.innerHTML = highlightedText;
+      }
+      
+      function escapeRegExp(string) {
+        return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      }
+    }
+
+    function initializeCmiModals() {
+      // View button functionality
       $('.view-btn').on('click', function () {
         var cmiId = $(this).data('cmiid')
         var cmiName = $(this).data('cminame')
@@ -169,12 +413,9 @@
         $('#viewCmiModal').find('#viewEmail').text(email)
         $('#viewCmiModal').find('#viewCoordinates').text(coordinates)
       })
-    })
-    
-    $(document).ready(function () {
-      // Event listener for the edit button
+
+      // Edit button functionality
       $('.edit-btn').on('click', function () {
-        // Retrieve CMI details from the data attributes
         var cmiSlug = $(this).data('slug');
         var cmiName = $(this).data('cminame');
         var cmiMeaning = $(this).data('cmimeaning');
@@ -195,17 +436,18 @@
         $('#editCmiModal').find('#editLatitude').val(cmilatitude);
         $('#editCmiModal').find('#editLongitude').val(cmilongitude);
     
-        // Ensure we are replacing 'SLUG_PLACEHOLDER' in the URL
+        // Set form action URL
         var editUrlTemplate = $('#editCmiModal').data('edit-url-template');
         var editUrl = editUrlTemplate.replace('SLUG_PLACEHOLDER', cmiSlug);
         $('#editCmiForm').attr('action', editUrl);
       });
-    });
+    }
 
-    function confirmDeletion(element) {
+    // Delete confirmation function
+    function confirmDeleteCmi(slug, cmiName) {
       Swal.fire({
         title: 'Are you sure?',
-        text: 'This action cannot be undone!',
+        text: `This will permanently delete "${cmiName}". This action cannot be undone!`,
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#d33',
@@ -214,16 +456,14 @@
         cancelButtonText: 'Cancel',
       }).then((result) => {
         if (result.isConfirmed) {
-          // Redirect to the URL if confirmed
-          window.location.href = element.getAttribute('href');
+          window.location.href = "{% url 'appAdmin:delete-cmi' 'SLUG_PLACEHOLDER' %}".replace('SLUG_PLACEHOLDER', slug);
         }
       });
-      return false; // Prevent default link behavior until confirmed
     }
 
-    //add account modal
+    // Add CMI function
     function addCmi() {
-      console.log('Add Data button clicked');
+      console.log('Add CMI button clicked');
   
       Swal.fire({
           title: 'Do you want to add new CMI?',
@@ -232,63 +472,262 @@
           cancelButtonText: 'No',
           icon: 'question',
           preConfirm: () => {
-              // Logic to handle "Yes" goes here
-              // For example, redirecting the user
-              console.log('User confirm the operation so redirect!!!');
-              window.location.href = '{% url "appAdmin:map" name="cmi" %}'; // Adjust the URL as needed
+              console.log('User confirmed the operation so redirect!!!');
+              window.location.href = '{% url "appAdmin:map" name="cmi" %}';
           }
       }).then((result) => {
           if (result.isDismissed) {
-              // Logic to handle "No" goes here
               console.log('User cancelled the operation');
           }
       });
     }
-  
-    
-    $(document).ready(function () {
-      let table = $('#cmiTable').DataTable({
-        language: {
-          lengthMenu: '_MENU_',
-          search: '',
-          searchPlaceholder: 'Search...'
-        },
-        lengthMenu: [
-          [7, 10, 25, -1],
-          [7, 10, 25, 'All']
-        ],
-        paging: true,
-        lengthChange: true,
-        autoWidth: false,
-        bInfo: true,
-        bSort: true,
-        responsive: true,
-        buttons: [
-          {
-            text: 'CSV',
-            extend: 'csv'
-          },
-          {
-            text: 'PDF',
-            extend: 'pdf'
-          },
-          {
-            text: 'ADD',
-            className: 'btn btn-primary',
-            action: function () {
-              addCmi()
-            }
-          }
-        ],
-        dom: '<"row"<"col-md-1"l><"col-md-8"B><"col-md-3"f>>' + '<"row"<"col-md-12"tr>>' + '<"row"<"col-md-5"i><"col-md-7"p>>'
-      })
-    })
   </script>
+
+  <!-- Enhanced styles to match users.html -->
+  <style>
+    /* Search Container Styles */
+    .search-container {
+      background: #f8f9fa;
+      padding: 20px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+    }
+
+    .search-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .search-field {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .search-label {
+      font-weight: 600;
+      color: var(--text-color);
+      margin-bottom: 8px;
+      font-size: 13px;
+    }
+
+    .search-input-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 12px;
+      color: #6c757d;
+      font-size: 14px;
+      z-index: 2;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 10px 12px 10px 35px;
+      border: 1px solid #e9ecef;
+      border-radius: 6px;
+      font-size: 13px;
+      transition: all 0.3s ease;
+    }
+
+    .search-input:focus {
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 3px rgba(44, 110, 73, 0.1);
+      outline: none;
+    }
+
+    .search-clear {
+      position: absolute;
+      right: 12px;
+      color: #6c757d;
+      cursor: pointer;
+      font-size: 12px;
+      padding: 4px;
+      border-radius: 50%;
+      transition: all 0.3s ease;
+    }
+
+    .search-clear:hover {
+      background: #e9ecef;
+      color: var(--danger-color);
+    }
+
+    .search-results-summary {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 16px;
+      background: white;
+      border-radius: 6px;
+      border: 1px solid #e9ecef;
+      margin-top: 1rem;
+    }
+
+    .results-text {
+      font-size: 13px;
+      color: var(--text-color);
+      font-weight: 500;
+    }
+
+    /* Enhanced table styles matching users.html */
+    .accounts-table {
+      background: white;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .accounts-table thead th {
+      background-color: #2C6E49 !important;
+      color: #fff !important;
+      border: none;
+      padding: 15px;
+      font-weight: 600;
+      text-align: left;
+      font-size: 13px;
+    }
+
+    .accounts-table tbody tr {
+      transition: all 0.3s ease;
+    }
+
+    .accounts-table tbody tr:hover {
+      background-color: #f8f9fa;
+    }
+
+    .accounts-table tbody td {
+      padding: 12px 15px;
+      vertical-align: middle;
+      font-size: 12px;
+    }
+
+    /* Action button styles */
+    .action-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 5px;
+      flex-wrap: wrap;
+    }
+
+    .btn-sm {
+      padding: 6px 10px;
+      font-size: 11px;
+      border-radius: 4px;
+      transition: all 0.3s ease;
+    }
+
+    .btn-warning {
+      background-color: #ffc107;
+      border-color: #ffc107;
+      color: #000;
+    }
+
+    .btn-warning:hover {
+      background-color: #e0a800;
+      border-color: #d39e00;
+      transform: translateY(-1px);
+    }
+
+    .btn-info {
+      background-color: #17a2b8;
+      border-color: #17a2b8;
+      color: #fff;
+    }
+
+    .btn-info:hover {
+      background-color: #138496;
+      border-color: #117a8b;
+      transform: translateY(-1px);
+    }
+
+    .btn-danger {
+      background-color: #dc3545;
+      border-color: #dc3545;
+      color: #fff;
+    }
+
+    .btn-danger:hover {
+      background-color: #c82333;
+      border-color: #bd2130;
+      transform: translateY(-1px);
+    }
+
+    /* Custom card styling */
+    .custom-card {
+      box-shadow: 0 6px 24px rgba(44, 110, 73, 0.15);
+      border: 1.5px solid #2C6E49;
+      border-radius: var(--border-radius);
+    }
+
+    /* Highlight animation for search results */
+    @keyframes highlight {
+      0% { background-color: transparent; }
+      50% { background-color: #fff3cd; }
+      100% { background-color: transparent; }
+    }
+
+    .cmi-row.highlight {
+      animation: highlight 1s ease-in-out;
+    }
+
+    /* Custom scrollbar */
+    .table-container::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+
+    .table-container::-webkit-scrollbar-track {
+      background: #f1f1f1;
+      border-radius: 4px;
+    }
+
+    .table-container::-webkit-scrollbar-thumb {
+      background: #c1c1c1;
+      border-radius: 4px;
+    }
+
+    .table-container::-webkit-scrollbar-thumb:hover {
+      background: #a8a8a8;
+    }
+
+    /* Loading states */
+    .loading-skeleton {
+      background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+      background-size: 200% 100%;
+      animation: loading 1.5s infinite;
+    }
+
+    @keyframes loading {
+      0% { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+
+    /* Responsive design */
+    @media (max-width: 768px) {
+      .search-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .action-buttons {
+        flex-direction: column;
+        gap: 3px;
+      }
+      
+      .table-container {
+        font-size: 11px;
+      }
+    }
+  </style>
+
   {% if messages %}
     {% for message in messages %}
       {% if message.tags == 'success' %}
         <script>
-          // Display SweetAlert success message
           Swal.fire({
             icon: 'success',
             title: 'Success!',
@@ -297,7 +736,6 @@
         </script>
       {% else %}
         <script>
-          // Display SweetAlert success message
           Swal.fire({
             icon: 'error',
             title: 'Error!',

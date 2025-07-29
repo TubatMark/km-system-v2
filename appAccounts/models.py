@@ -89,6 +89,7 @@ class CustomUser(AbstractUser):
 
     # Override default username handling
     username = models.CharField(max_length=150, unique=True, blank=True, null=True)
+    note = models.CharField(max_length=100, blank=True, null=True)
 
     objects = CustomUserManager()
 

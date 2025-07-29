@@ -3,498 +3,513 @@
 {% block title %}
   Admin Commodities
 {% endblock %}
+
 {% block stylesheet %}
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <style>
-    /* Ensure the length menu and the dropdown are displayed inline */
-    .dataTables_length {
-      display: flex;
-      align-items: center;
+<style>
+  /* Search Container Styles */
+  .search-container {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+  }
+
+  .search-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .search-field {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .search-label {
+    font-weight: 600;
+    color: var(--text-color);
+    margin-bottom: 8px;
+    font-size: 13px;
+  }
+
+  .search-input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+
+  .search-icon {
+    position: absolute;
+    left: 12px;
+    color: #6c757d;
+    font-size: 14px;
+    z-index: 2;
+  }
+
+  .search-input {
+    width: 100%;
+    padding: 10px 12px 10px 35px;
+    border: 1px solid #e9ecef;
+    border-radius: 6px;
+    font-size: 13px;
+    transition: all 0.3s ease;
+  }
+
+  .search-input:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(44, 110, 73, 0.1);
+    outline: none;
+  }
+
+  .search-clear {
+    position: absolute;
+    right: 12px;
+    color: #6c757d;
+    cursor: pointer;
+    font-size: 12px;
+    padding: 4px;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+  }
+
+  .search-clear:hover {
+    background: #e9ecef;
+    color: var(--danger-color);
+  }
+
+  .search-results-summary {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 16px;
+    background: white;
+    border-radius: 6px;
+    border: 1px solid #e9ecef;
+    margin-top: 1rem;
+  }
+
+  .results-text {
+    font-size: 13px;
+    color: var(--text-color);
+    font-weight: 500;
+  }
+
+  /* Enhanced table styles matching users.html */
+  .accounts-table {
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+
+  .accounts-table thead th {
+    background-color: #2C6E49 !important;
+    color: #fff !important;
+    border: none;
+    padding: 15px;
+    font-weight: 600;
+    text-align: left;
+    font-size: 13px;
+  }
+
+  .accounts-table tbody tr {
+    transition: all 0.3s ease;
+  }
+
+  .accounts-table tbody tr:hover {
+    background-color: #f8f9fa;
+  }
+
+  .accounts-table tbody td {
+    padding: 12px 15px;
+    vertical-align: middle;
+    font-size: 12px;
+  }
+
+  /* Action button styles */
+  .action-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+    flex-wrap: wrap;
+  }
+
+  .btn-sm {
+    padding: 6px 10px;
+    font-size: 11px;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+  }
+
+  .btn-warning {
+    background-color: #ffc107;
+    border-color: #ffc107;
+    color: #000;
+  }
+
+  .btn-warning:hover {
+    background-color: #e0a800;
+    border-color: #d39e00;
+    transform: translateY(-1px);
+  }
+
+  .btn-info {
+    background-color: #17a2b8;
+    border-color: #17a2b8;
+    color: #fff;
+  }
+
+  .btn-info:hover {
+    background-color: #138496;
+    border-color: #117a8b;
+    transform: translateY(-1px);
+  }
+
+  .btn-danger {
+    background-color: #dc3545;
+    border-color: #dc3545;
+    color: #fff;
+  }
+
+  .btn-danger:hover {
+    background-color: #c82333;
+    border-color: #bd2130;
+    transform: translateY(-1px);
+  }
+
+  /* Custom card styling */
+  .custom-card {
+    box-shadow: 0 6px 24px rgba(44, 110, 73, 0.15);
+    border: 1.5px solid #2C6E49;
+    border-radius: var(--border-radius);
+  }
+
+  /* Resource type badges */
+  .resource-type-badge {
+    background: #e3f2fd !important;
+    color: #1976d2 !important;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 500;
+  }
+
+  .filter-count {
+    background: #e8f5e8 !important;
+    color: #2e7d32 !important;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 600;
+  }
+
+  .tag-count {
+    background: #fff3e0 !important;
+    color: #f57c00 !important;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 600;
+  }
+
+  /* Highlight animation for search results */
+  @keyframes highlight {
+    0% { background-color: transparent; }
+    50% { background-color: #fff3cd; }
+    100% { background-color: transparent; }
+  }
+
+  .commodity-row.highlight {
+    animation: highlight 1s ease-in-out;
+  }
+
+  /* Custom scrollbar */
+  .table-container::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  .table-container::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+  }
+
+  .table-container::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 4px;
+  }
+
+  .table-container::-webkit-scrollbar-thumb:hover {
+    background: #a8a8a8;
+  }
+
+  /* Loading states */
+  .loading-skeleton {
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: loading 1.5s infinite;
+  }
+
+  @keyframes loading {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+  }
+
+  /* Enhanced stats cards */
+  .stat-card .stat-icon.commodities {
+    background: linear-gradient(135deg, #9c27b0, #ba68c8);
+  }
+
+  /* Responsive design */
+  @media (max-width: 768px) {
+    .search-grid {
+      grid-template-columns: 1fr;
     }
     
-    /* Adjust the margin and padding for better alignment */
-    .dataTables_length label {
-      display: flex;
-      align-items: center;
-    }
-    
-    /* Adjust the width and margin of the select box */
-    .dataTables_length select {
-      margin-left: 5px;
-      margin-right: 5px;
-      width: 50px; /* Adjust the width as needed */
-    }
-
-    /* Analytics Card Styling */
-    .analytics-card {
-      background-color: white;
-      border-radius: 10px;
-      box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
-      overflow: hidden;
-      height: 100%;
-    }
-
-    .analytics-header {
-      padding: 18px 20px;
-      border-bottom: 1px solid #f1f1f1;
-    }
-
-    .analytics-title {
-      margin: 0;
-      font-size: 16px;
-      font-weight: 600;
-      color: #464E5F;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .analytics-title::before {
-      content: "\f200";
-      font-family: "Font Awesome 5 Free";
-      font-weight: 900;
-      color: #3699FF;
-    }
-
-    .analytics-body {
-      padding: 20px;
-    }
-
-    /* Chart Container */
-    .chart-container {
-      height: 220px;
-    }
-
-    #resourcesChart {
-      max-width: 100%;
-    }
-
-    /* Total Resources */
-    .total-resources {
-      text-align: center;
-    }
-
-    .total-number {
-      font-size: 36px;
-      font-weight: 700;
-      color: #181C32;
-      line-height: 1;
-    }
-
-    .total-label {
-      font-size: 13px;
-      color: #7E8299;
-      margin-top: 5px;
-    }
-
-    /* Resource Breakdown */
-    .resource-stats {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
-
-    .resource-stat-item {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 10px 0;
-      border-bottom: 1px solid #f1f1f1;
-    }
-
-    .resource-stat-item:last-child {
-      border-bottom: none;
-    }
-
-    .stat-label {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 13px;
-      color: #464E5F;
-    }
-
-    .color-dot {
-      width: 12px;
-      height: 12px;
-      border-radius: 50%;
-      display: inline-block;
-    }
-
-    .stat-info {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .stat-count {
-      font-weight: 600;
-      color: #464E5F;
-      font-size: 13px;
-    }
-
-    .stat-percentage {
-      font-size: 12px;
-      color: #7E8299;
-      background-color: #F3F6F9;
-      padding: 4px 8px;
-      border-radius: 4px;
-    }
-
-    /* Top Resources */
-    .section-title {
-      font-size: 14px;
-      font-weight: 600;
-      color: #464E5F;
-      margin-bottom: 15px;
-      position: relative;
-      padding-bottom: 8px;
-    }
-
-    .section-title::after {
-      content: "";
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 30px;
-      height: 2px;
-      background-color: #3699FF;
-    }
-
-    .top-resources-list {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
-
-    .top-resource-item {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 12px 0;
-      border-bottom: 1px solid #f1f1f1;
-    }
-
-    .top-resource-item:last-child {
-      border-bottom: none;
-    }
-
-    .rank-info {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .rank-number {
-      width: 24px;
-      height: 24px;
-      border-radius: 6px;
-      background-color: #F3F6F9;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 12px;
-      font-weight: 600;
-      color: #3699FF;
-    }
-
-    .rank-details {
-      display: flex;
+    .action-buttons {
       flex-direction: column;
+      gap: 3px;
     }
-
-    .rank-name {
-      font-size: 13px;
-      font-weight: 500;
-      color: #464E5F;
-      line-height: 1.4;
+    
+    .table-container {
+      font-size: 11px;
     }
-
-    .rank-category {
-      font-size: 12px;
-      color: #7E8299;
-    }
-
-    .rank-views {
-      padding: 4px 10px;
-      background-color: rgba(54, 153, 255, 0.1);
-      color: #3699FF;
-      border-radius: 4px;
-      font-size: 12px;
-      font-weight: 600;
-    }
-
-    /* Responsive Styles */
-    @media (max-width: 1400px) {
-      .chart-container {
-        height: 180px;
-      }
-      
-      .top-resource-item {
-        padding: 10px 0;
-      }
-    }
-
-    @media (max-width: 991px) {
-      .analytics-card {
-        margin-top: 20px;
-      }
-    }
-  </style>
-{% endblock %}
-
+  }
+</style>
+{% endblock stylesheet %}
 {% block content %}
-  <div class="masonry-item w-100">
-    <div class="row gap-20">
-      <div class="col-md-3">
-        <div class="layers bd bgc-white p-20">
-          <div class="layer w-100 mB-10">
-            <h6 class="lh-1"><a href="#" style="color: gray;">Total Commodities</a></h6>
-          </div>
-          <div class="layer w-100">
-            <div class="peers ai-sb fxw-nw">
-              <div class="peer peer-greed">
-                <span id="sparklinedash3"></span>
-              </div>
-              <div class="peer">
-                <span class="d-ib lh-0 va-m fw-600 bdrs-10em pX-15 pY-15 bgc-purple-50 c-purple-500">
-                  {% if total_commodities %}
-                    {{ total_commodities }}
-                  {% else %}
-                    0
-                  {% endif %}
-                </span>
-              </div>
-            </div>
-          </div>
+  <!-- Page Header -->
+  <div class="dashboard-header">
+    <h1 class="dashboard-title">Commodities Management</h1>
+    <p class="dashboard-subtitle">Manage agricultural commodities and their resources</p>
+  </div>
+
+  <!-- Stats Grid -->
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-header">
+        <div class="stat-icon commodities">
+          <i class="fas fa-seedling"></i>
+        </div>
+      </div>
+      <div class="stat-content">
+        <div class="stat-value" id="commodityCount">
+          {% if total_commodities %}
+            {{ total_commodities }}
+          {% else %}
+            0
+          {% endif %}
+        </div>
+        <div class="stat-label">Total Commodities</div>
+        <div class="stat-change positive">
+          <i class="fas fa-arrow-up"></i>
+          <span>Active</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-header">
+        <div class="stat-icon" style="background: linear-gradient(135deg, #1BC5BD 0%, #17a2b8 100%);">
+          <i class="fas fa-filter"></i>
+        </div>
+      </div>
+      <div class="stat-content">
+        <div class="stat-value">
+          {% if frequency_sum %}
+            {{ frequency_sum|length }}
+          {% else %}
+            0
+          {% endif %}
+        </div>
+        <div class="stat-label">Filtered Resources</div>
+        <div class="stat-change positive">
+          <i class="fas fa-check"></i>
+          <span>Processed</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-header">
+        <div class="stat-icon" style="background: linear-gradient(135deg, #FFA800 0%, #ff9800 100%);">
+          <i class="fas fa-tags"></i>
+        </div>
+      </div>
+      <div class="stat-content">
+        <div class="stat-value">
+          {% if tagged_counts %}
+            {{ tagged_counts|length }}
+          {% else %}
+            0
+          {% endif %}
+        </div>
+        <div class="stat-label">Tagged Posts</div>
+        <div class="stat-change positive">
+          <i class="fas fa-tag"></i>
+          <span>Active</span>
         </div>
       </div>
     </div>
   </div>
 
-  <div class="masonry-item col-12">
-    <div class="bd bgc-white">
-      <div class="peers fxw-nw@lg+ ai-s">
-        <div class="peer peer-greed w-70p@lg+ w-100@lg- p-20">
-          <div class="layers">
-            <div class="layer w-100 mB-10">
-              <h5 class="lh-1">Admin Commodities</h5>
-            </div>
-            <div class="layer w-100">
-              <ul class="nav nav-tabs">
-                <li class="nav-item">
-                  <a class="nav-link active" id="approvedCommodities-tab" data-toggle="tab" href="#approvedCommodities">Commodities Overview</a>
-                </li>
-              </ul>
-            </div>
-            <div class="layer w-100">
-              <!-- Tab Content -->
-              <div class="tab-content">
-                <br />
-                <!-- Resource Hub Tab -->
-                <div class="tab-pane fade show active" id="approvedCommodities">
-                  <div class="d-flex">
-                    <!-- Left side: Table -->
-                    <div class="flex-grow-1 p-20">
-                      <div class="table-container" style="max-height: 500px; overflow-y: auto;">
-                        <table id="commoditiesTable" class="commodities-table table table-bordered">
-                          <thead style="font-size: 13px; font-weight: bolder;">
-                            <tr>
-                              <th style="width: 8px;">ID</th>
-                              <th>Commodity Name</th>
-                              <th>Resources Type</th>
-                              <th>Total Filter</th>
-                              <th style="width: 100px;">Total Posts (Tagged)</th>
-                              <th>Actions</th>
-                            </tr>
-                          </thead>
-                          <tbody style="font-size: 12px;">
-                            {% if approvedcommodities %}
-                            {% for commodity in approvedcommodities %}
-                              <tr>
-                                <td style="border-bottom: 1px solid #ddd;">{{ commodity.commodity_id }}</td>
-                                <td style="border-bottom: 1px solid #ddd;">{{ commodity.commodity_name|capfirst }}</td>
-                                <td style="border-bottom: 1px solid #ddd;">{{ commodity.resources_type|capfirst }}</td>
-                                <td style="border-bottom: 1px solid #ddd;">
-                                  {% if frequency_sum %}
-                                    {% for freq in frequency_sum %}
-                                      {% if freq.commodity_id == commodity.commodity_id %}
-                                        {{ freq.total_frequency }}
-                                      {% endif %}
-                                    {% endfor %}
-                                  {% else %}
-                                    Not Filtered Yet
-                                  {% endif %}
-                                </td>
-                                <td style="border-bottom: 1px solid #ddd;">
-                                  {% if tagged_counts %}
-                                    {% for tag_count in tagged_counts %}
-                                      {% if tag_count.commodity_id == commodity.commodity_id %}
-                                        {{ tag_count.total_tags }}
-                                      {% endif %}
-                                    {% endfor %}
-                                  {% else %}
-                                    Not Tagged Yet
-                                  {% endif %}
-                                </td>
-                                <td style="border-bottom: 1px solid #ddd; width: 100px;">
-                                  <div style="display: flex; gap: 5px;">
-                                    <button type="button" style="background-color: #FF8F00; color: #FEFBF6;" class="btn btn-sm edit-btn" data-toggle="modal" data-target="#editCommodityModal" data-commodityid="{{ commodity.commodity_id }}" data-commodityname="{{ commodity.commodity_name|upper }}" data-commoditydescription="{{ commodity.description }}" data-resourcestype="{{ commodity.resources_type|capfirst }}">Update</button>
-                                    <button type="button" style="background-color: #0C356A; color: #FEFBF6;" class="btn btn-sm view-btn" data-toggle="modal" data-target="#viewCommodityModal" data-commodityid="{{ commodity.commodity_id }}" data-commodityname="{{ commodity.commodity_name }}" data-commoditydescription="{{ commodity.description }}" data-commodityImg="{{ commodity.commodity_img.url }}" data-resourcestype="{{ commodity.resources_type|capfirst }}" data-lat="{{commodity.latitude}}" data-long="{{commodity.longitude}}">View</button>
-                                    <a data-placement="top" style="background-color: #D71313; color: #FEFBF6;" data-toggle="tooltip" title="delete" data-url="{% url 'appAdmin:delete-commodity' commodity.slug  %}" class="btn btn-sm delete-btn">Delete</a>
-                                </div>
-                                </td>
-                              </tr>
-                            {% endfor %}
-                            {% endif %}
-                          </tbody>
-                        </table>
-                      </div>
-                    </div>
-
-                    <!-- Right side: Analytics -->
-                    <div class="p-20 peer bdL p-20 w-30p@lg+ w-100p@lg-" style="width: 350px;">
-                      <!-- Resource Analytics Component -->
-                      <div class="analytics-card">
-                        <div class="analytics-header">
-                          <h5 class="analytics-title">Resources Distribution</h5>
-                        </div>
-                        <div class="analytics-body">
-                          <!-- Donut Chart -->
-                          <div class="chart-container mb-4">
-                            <div id="resourcesChart"></div>
-                          </div>
-                          
-                          <!-- Legend & Stats -->
-                          <div class="d-flex justify-content-center mb-4">
-                            <div class="total-resources">
-                              <div class="total-number">
-                                <span id="totalCount">167</span>
-                              </div>
-                              <div class="total-label">Total Resources</div>
-                            </div>
-                          </div>
-                          
-                          <!-- Resource Type Breakdown -->
-                          <div class="resource-breakdown mb-4">
-                            <ul class="resource-stats">
-                              <li class="resource-stat-item">
-                                <div class="stat-label">
-                                  <span class="color-dot" style="background-color: #3699FF;"></span>
-                                  <span>Rice</span>
-                                </div>
-                                <div class="stat-info">
-                                  <div class="stat-count">52</div>
-                                  <div class="stat-percentage">31.1%</div>
-                                </div>
-                              </li>
-                              <li class="resource-stat-item">
-                                <div class="stat-label">
-                                  <span class="color-dot" style="background-color: #1BC5BD;"></span>
-                                  <span>Corn</span>
-                                </div>
-                                <div class="stat-info">
-                                  <div class="stat-count">38</div>
-                                  <div class="stat-percentage">22.8%</div>
-                                </div>
-                              </li>
-                              <li class="resource-stat-item">
-                                <div class="stat-label">
-                                  <span class="color-dot" style="background-color: #FFA800;"></span>
-                                  <span>Coconut</span>
-                                </div>
-                                <div class="stat-info">
-                                  <div class="stat-count">33</div>
-                                  <div class="stat-percentage">19.8%</div>
-                                </div>
-                              </li>
-                              <li class="resource-stat-item">
-                                <div class="stat-label">
-                                  <span class="color-dot" style="background-color: #F64E60;"></span>
-                                  <span>Aquaculture</span>
-                                </div>
-                                <div class="stat-info">
-                                  <div class="stat-count">24</div>
-                                  <div class="stat-percentage">14.4%</div>
-                                </div>
-                              </li>
-                              <li class="resource-stat-item">
-                                <div class="stat-label">
-                                  <span class="color-dot" style="background-color: #8950FC;"></span>
-                                  <span>Other</span>
-                                </div>
-                                <div class="stat-info">
-                                  <div class="stat-count">20</div>
-                                  <div class="stat-percentage">12.0%</div>
-                                </div>
-                              </li>
-                            </ul>
-                          </div>
-                          
-                          <!-- Top Resources -->
-                          <div class="top-resources">
-                            <h6 class="section-title">Top Viewed Resources</h6>
-                            <ul class="top-resources-list">
-                              <li class="top-resource-item">
-                                <div class="rank-info">
-                                  <div class="rank-number">1</div>
-                                  <div class="rank-details">
-                                    <div class="rank-name">Rice Farming Techniques</div>
-                                    <div class="rank-category">Rice</div>
-                                  </div>
-                                </div>
-                                <div class="rank-views">105</div>
-                              </li>
-                              <li class="top-resource-item">
-                                <div class="rank-info">
-                                  <div class="rank-number">2</div>
-                                  <div class="rank-details">
-                                    <div class="rank-name">Organic Corn Production</div>
-                                    <div class="rank-category">Corn</div>
-                                  </div>
-                                </div>
-                                <div class="rank-views">93</div>
-                              </li>
-                              <li class="top-resource-item">
-                                <div class="rank-info">
-                                  <div class="rank-number">3</div>
-                                  <div class="rank-details">
-                                    <div class="rank-name">Coconut Pest Management</div>
-                                    <div class="rank-category">Coconut</div>
-                                  </div>
-                                </div>
-                                <div class="rank-views">87</div>
-                              </li>
-                              <li class="top-resource-item">
-                                <div class="rank-info">
-                                  <div class="rank-number">4</div>
-                                  <div class="rank-details">
-                                    <div class="rank-name">Tilapia Farming Guide</div>
-                                    <div class="rank-category">Aquaculture</div>
-                                  </div>
-                                </div>
-                                <div class="rank-views">74</div>
-                              </li>
-                              <li class="top-resource-item">
-                                <div class="rank-info">
-                                  <div class="rank-number">5</div>
-                                  <div class="rank-details">
-                                    <div class="rank-name">Sustainable Farming Methods</div>
-                                    <div class="rank-category">Other</div>
-                                  </div>
-                                </div>
-                                <div class="rank-views">68</div>
-                              </li>
-                            </ul>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+  <!-- Main Content Grid -->
+  <div class="analytics-grid" style="display: grid;  gap: 2rem; margin-bottom: 2rem;">
+    <!-- Commodities Management Panel -->
+    <div class="chart-card custom-card">
+      <div class="chart-header">
+        <h3 class="chart-title">Commodities Overview</h3>
+        <div class="chart-controls">
+          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addCommodityModal">
+            <i class="fas fa-plus"></i> Add Commodity
+          </button>
+        </div>
+      </div>
+      
+      <!-- Real-time Search Form -->
+      <div class="search-container" style="margin-bottom: 20px;">
+        <div class="search-grid">
+          <div class="search-field">
+            <label for="search_commodity_id" class="search-label">Commodity ID</label>
+            <div class="search-input-wrapper">
+              <i class="fas fa-search search-icon"></i>
+              <input type="text" id="search_commodity_id" name="search_commodity_id" class="search-input" placeholder="Search by ID" />
+              <span class="search-clear" id="clear_commodity_id" style="display: none;"><i class="fas fa-times"></i></span>
             </div>
           </div>
+
+          <div class="search-field">
+            <label for="search_commodity_name" class="search-label">Commodity Name</label>
+            <div class="search-input-wrapper">
+              <i class="fas fa-search search-icon"></i>
+              <input type="text" id="search_commodity_name" name="search_commodity_name" class="search-input" placeholder="Search by Name" />
+              <span class="search-clear" id="clear_commodity_name" style="display: none;"><i class="fas fa-times"></i></span>
+            </div>
+          </div>
+
+          <div class="search-field">
+            <label for="search_resource_type" class="search-label">Resource Type</label>
+            <div class="search-input-wrapper">
+              <i class="fas fa-search search-icon"></i>
+              <input type="text" id="search_resource_type" name="search_resource_type" class="search-input" placeholder="Search by Type" />
+              <span class="search-clear" id="clear_resource_type" style="display: none;"><i class="fas fa-times"></i></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Search Results Summary -->
+        <div class="search-results-summary" id="searchResultsSummary" style="display: none;">
+          <span class="results-text">Showing <span id="visibleCount">0</span> of <span id="totalCount">0</span> commodities</span>
+          <button type="button" class="btn btn-sm btn-outline-secondary" id="clearAllFilters"><i class="fas fa-times"></i> Clear All</button>
+        </div>
+      </div>
+      
+      <!-- Commodities Table -->
+      <div class="table-container" style="max-height: 500px; overflow-y: auto; overflow-x: auto; width: 100%;">
+        <table id="commoditiesTable" class="accounts-table table table-bordered theme-header" style="width: 100%; min-width: 900px;">
+          <thead style="font-size: 13px; font-weight: bolder; background-color: #2C6E49; color: #fff;">
+            <tr>
+              <th style="width: 60px; min-width: 60px;">ID</th>
+              <th style="min-width: 180px;">Commodity Name</th>
+              <th style="min-width: 150px;">Resources Type</th>
+              <th style="min-width: 120px;">Total Filter</th>
+              <th style="min-width: 140px;">Total Posts (Tagged)</th>
+              <th style="width: 200px; min-width: 200px;">Actions</th>
+            </tr>
+          </thead>
+          <tbody style="font-size: 12px;" id="commoditiesTableBody">
+            {% if approvedcommodities %}
+            {% for commodity in approvedcommodities %}
+              <tr class="commodity-row" 
+                  data-commodity-id="{{ commodity.commodity_id }}" 
+                  data-commodity-name="{{ commodity.commodity_name }}" 
+                  data-resource-type="{{ commodity.resources_type }}"
+                  style="border-bottom: 1px solid #ddd;">
+                <td style="border-bottom: 1px solid #ddd; text-align: center;">{{ commodity.commodity_id }}</td>
+                <td style="border-bottom: 1px solid #ddd;" class="commodity-name-cell">
+                  <strong style="color: var(--primary-color);">{{ commodity.commodity_name|capfirst }}</strong>
+                </td>
+                <td style="border-bottom: 1px solid #ddd;" class="resource-type-cell">
+                  <span class="resource-type-badge" style="background: #e3f2fd; color: #1976d2; padding: 4px 8px; border-radius: 12px; font-size: 11px; font-weight: 500;">
+                    {{ commodity.resources_type|capfirst }}
+                  </span>
+                </td>
+                <td style="border-bottom: 1px solid #ddd; text-align: center;">
+                  {% if frequency_sum %}
+                    {% for freq in frequency_sum %}
+                      {% if freq.commodity_id == commodity.commodity_id %}
+                        <span class="filter-count" style="background: #e8f5e8; color: #2e7d32; padding: 4px 8px; border-radius: 12px; font-size: 11px; font-weight: 600;">
+                          {{ freq.total_frequency }}
+                        </span>
+                      {% endif %}
+                    {% endfor %}
+                  {% else %}
+                    <span style="color: #dc3545; font-size: 11px;">Not Filtered Yet</span>
+                  {% endif %}
+                </td>
+                <td style="border-bottom: 1px solid #ddd; text-align: center;">
+                  {% if tagged_counts %}
+                    {% for tag_count in tagged_counts %}
+                      {% if tag_count.commodity_id == commodity.commodity_id %}
+                        <span class="tag-count" style="background: #fff3e0; color: #f57c00; padding: 4px 8px; border-radius: 12px; font-size: 11px; font-weight: 600;">
+                          {{ tag_count.total_tags }}
+                        </span>
+                      {% endif %}
+                    {% endfor %}
+                  {% else %}
+                    <span style="color: #dc3545; font-size: 11px;">Not Tagged Yet</span>
+                  {% endif %}
+                </td>
+                <td style="border-bottom: 1px solid #ddd;">
+                  <div class="action-buttons" style="display: flex; justify-content: center; gap: 5px; flex-wrap: wrap;">
+                    <button type="button" 
+                            class="btn btn-sm btn-warning edit-btn" 
+                            data-toggle="modal" 
+                            data-target="#editCommodityModal" 
+                            data-commodityid="{{ commodity.commodity_id }}" 
+                            data-commodityname="{{ commodity.commodity_name|upper }}" 
+                            data-commoditydescription="{{ commodity.description }}" 
+                            data-resourcestype="{{ commodity.resources_type|capfirst }}"
+                            title="Edit Commodity">
+                      <i class="fas fa-edit"></i>
+                    </button>
+                    
+                    <button type="button" 
+                            class="btn btn-sm btn-info view-btn" 
+                            data-toggle="modal" 
+                            data-target="#viewCommodityModal" 
+                            data-commodityid="{{ commodity.commodity_id }}" 
+                            data-commodityname="{{ commodity.commodity_name }}" 
+                            data-commoditydescription="{{ commodity.description }}" 
+                            data-commodityImg="{{ commodity.commodity_img.url }}" 
+                            data-resourcestype="{{ commodity.resources_type|capfirst }}" 
+                            data-lat="{{commodity.latitude}}" 
+                            data-long="{{commodity.longitude}}"
+                            title="View Commodity">
+                      <i class="fas fa-eye"></i>
+                    </button>
+                    
+                    <button type="button" 
+                            class="btn btn-sm btn-danger delete-btn" 
+                            data-toggle="tooltip" 
+                            title="Delete Commodity" 
+                            onclick="confirmDeleteCommodity('{{ commodity.slug }}', '{{ commodity.commodity_name }}')">
+                      <i class="fas fa-trash"></i>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            {% endfor %}
+            {% endif %}
+          </tbody>
+        </table>
+
+        <!-- No Results Message -->
+        <div id="noResultsMessage" style="display: none; text-align: center; padding: 40px; color: #6c757d;">
+          <i class="fas fa-search fa-3x" style="margin-bottom: 20px; opacity: 0.5;"></i>
+          <h5>No commodities found</h5>
+          <p>Try adjusting your search criteria or clear filters to view all commodities.</p>
         </div>
       </div>
     </div>
@@ -510,6 +525,214 @@
   <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
   
   <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      // Initialize charts
+      initResourcesChart();
+      
+      // Initialize search functionality
+      initializeCommoditySearch();
+      
+      // Initialize modal handlers
+      initializeCommodityModals();
+    });
+
+    function initializeCommoditySearch() {
+      const searchFields = {
+        commodity_id: document.getElementById('search_commodity_id'),
+        commodity_name: document.getElementById('search_commodity_name'),
+        resource_type: document.getElementById('search_resource_type')
+      };
+      
+      const clearButtons = {
+        commodity_id: document.getElementById('clear_commodity_id'),
+        commodity_name: document.getElementById('clear_commodity_name'),
+        resource_type: document.getElementById('clear_resource_type')
+      };
+      
+      const searchResultsSummary = document.getElementById('searchResultsSummary');
+      const clearAllFiltersBtn = document.getElementById('clearAllFilters');
+      const visibleCountSpan = document.getElementById('visibleCount');
+      const totalCountSpan = document.getElementById('totalCount');
+      const tableBody = document.getElementById('commoditiesTableBody');
+      const noResultsMessage = document.getElementById('noResultsMessage');
+      
+      // Set total count
+      const totalCommodities = document.querySelectorAll('#commoditiesTableBody .commodity-row').length;
+      if (totalCountSpan) totalCountSpan.textContent = totalCommodities;
+      
+      // Add event listeners for search inputs
+      Object.keys(searchFields).forEach(key => {
+        const input = searchFields[key];
+        const clearBtn = clearButtons[key];
+        
+        if (input && clearBtn) {
+          input.addEventListener('input', performCommoditySearch);
+          
+          // Show/hide clear button
+          input.addEventListener('input', function() {
+            clearBtn.style.display = this.value ? 'block' : 'none';
+          });
+          
+          // Clear button functionality
+          clearBtn.addEventListener('click', function() {
+            input.value = '';
+            this.style.display = 'none';
+            performCommoditySearch();
+          });
+        }
+      });
+      
+      // Clear all filters
+      if (clearAllFiltersBtn) {
+        clearAllFiltersBtn.addEventListener('click', function() {
+          Object.values(searchFields).forEach(input => {
+            if (input) input.value = '';
+          });
+          Object.values(clearButtons).forEach(btn => {
+            if (btn) btn.style.display = 'none';
+          });
+          performCommoditySearch();
+        });
+      }
+      
+      function performCommoditySearch() {
+        const commodityIdValue = searchFields.commodity_id?.value.toLowerCase() || '';
+        const commodityNameValue = searchFields.commodity_name?.value.toLowerCase() || '';
+        const resourceTypeValue = searchFields.resource_type?.value.toLowerCase() || '';
+        
+        const rows = document.querySelectorAll('#commoditiesTableBody .commodity-row');
+        let visibleCount = 0;
+        
+        const hasActiveSearch = commodityIdValue || commodityNameValue || resourceTypeValue;
+        
+        rows.forEach(row => {
+          const commodityId = row.getAttribute('data-commodity-id')?.toLowerCase() || '';
+          const commodityName = row.getAttribute('data-commodity-name')?.toLowerCase() || '';
+          const resourceType = row.getAttribute('data-resource-type')?.toLowerCase() || '';
+          
+          const showRow = 
+            (!commodityIdValue || commodityId.includes(commodityIdValue)) &&
+            (!commodityNameValue || commodityName.includes(commodityNameValue)) &&
+            (!resourceTypeValue || resourceType.includes(resourceTypeValue));
+          
+          if (showRow) {
+            row.style.display = '';
+            visibleCount++;
+            highlightMatchingCommodityText(row, commodityIdValue, commodityNameValue, resourceTypeValue);
+          } else {
+            row.style.display = 'none';
+          }
+        });
+        
+        if (visibleCountSpan) visibleCountSpan.textContent = visibleCount;
+        
+        if (hasActiveSearch) {
+          if (searchResultsSummary) searchResultsSummary.style.display = 'flex';
+        } else {
+          if (searchResultsSummary) searchResultsSummary.style.display = 'none';
+        }
+        
+        if (visibleCount === 0 && hasActiveSearch) {
+          if (noResultsMessage) noResultsMessage.style.display = 'block';
+          if (tableBody) tableBody.style.display = 'none';
+        } else {
+          if (noResultsMessage) noResultsMessage.style.display = 'none';
+          if (tableBody) tableBody.style.display = '';
+        }
+      }
+      
+      function highlightMatchingCommodityText(row, commodityIdValue, commodityNameValue, resourceTypeValue) {
+        const cells = row.querySelectorAll('td');
+        cells.forEach(cell => {
+          if (!cell.querySelector('button')) {
+            const originalText = cell.getAttribute('data-original-text') || cell.textContent;
+            cell.setAttribute('data-original-text', originalText);
+            cell.innerHTML = originalText;
+          }
+        });
+        
+        if (commodityNameValue) {
+          const nameCell = row.querySelector('.commodity-name-cell');
+          highlightText(nameCell, commodityNameValue);
+        }
+        
+        if (resourceTypeValue) {
+          const typeCell = row.querySelector('.resource-type-cell');
+          highlightText(typeCell, resourceTypeValue);
+        }
+      }
+      
+      function highlightText(element, searchTerm) {
+        if (!element || !searchTerm) return;
+        
+        const originalText = element.getAttribute('data-original-text') || element.textContent;
+        const regex = new RegExp(`(${escapeRegExp(searchTerm)})`, 'gi');
+        const highlightedText = originalText.replace(regex, '<mark style="background-color: #fff3cd; padding: 2px 4px; border-radius: 3px;">$1</mark>');
+        element.innerHTML = highlightedText;
+      }
+      
+      function escapeRegExp(string) {
+        return string.replace(/[.*+?^${}()|[\]\\]/g, '\\        if (hasActiveSearch) {
+          if (searchResultsSummary) searchResultsSummary.style.display = 'flex';
+        } else {
+          if (searchResultsS');
+      }
+    }
+
+    function initializeCommodityModals() {
+      // View button functionality
+      $('.view-btn').on('click', function () {
+        var commodityId = $(this).data('commodityid');
+        var commodityName = $(this).data('commodityname');
+        var commodityDescription = $(this).data('commoditydescription');
+        var commodityImg = $(this).data('commodityimg');
+        var resourcesType = $(this).data('resourcestype');
+        var latitude = $(this).data('lat');
+        var longitude = $(this).data('long');
+    
+        // Populate view modal (adjust selectors based on your modal structure)
+        $('#viewCommodityModal').find('#viewCommodityId').text(commodityId);
+        $('#viewCommodityModal').find('#viewCommodityName').text(commodityName);
+        $('#viewCommodityModal').find('#viewCommodityDescription').text(commodityDescription);
+        $('#viewCommodityModal').find('#viewCommodityImg').attr('src', commodityImg);
+        $('#viewCommodityModal').find('#viewResourcesType').text(resourcesType);
+        $('#viewCommodityModal').find('#viewLatitude').text(latitude);
+        $('#viewCommodityModal').find('#viewLongitude').text(longitude);
+      });
+
+      // Edit button functionality
+      $('.edit-btn').on('click', function () {
+        var commodityId = $(this).data('commodityid');
+        var commodityName = $(this).data('commodityname');
+        var commodityDescription = $(this).data('commoditydescription');
+        var resourcesType = $(this).data('resourcestype');
+    
+        // Populate edit modal (adjust selectors based on your modal structure)
+        $('#editCommodityModal').find('#editCommodityId').val(commodityId);
+        $('#editCommodityModal').find('#editCommodityName').val(commodityName);
+        $('#editCommodityModal').find('#editCommodityDescription').val(commodityDescription);
+        $('#editCommodityModal').find('#editResourcesType').val(resourcesType);
+      });
+    }
+
+    // Delete confirmation function
+    function confirmDeleteCommodity(slug, commodityName) {
+      Swal.fire({
+        title: 'Are you sure?',
+        text: `This will permanently delete "${commodityName}". This action cannot be undone!`,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Yes, delete it!',
+        cancelButtonText: 'Cancel',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          window.location.href = "{% url 'appAdmin:delete-commodity' 'SLUG_PLACEHOLDER' %}".replace('SLUG_PLACEHOLDER', slug);
+        }
+      });
+    }
+
     // Resource Analytics Chart Initialization
     function initResourcesChart() {
       // Chart configuration options
@@ -598,225 +821,16 @@
           options: {
             chart: {
               height: 180
-            },
-            plotOptions: {
-              pie: {
-                donut: {
-                  labels: {
-                    value: {
-                      fontSize: '18px'
-                    }
-                  }
-                }
-              }
             }
           }
-        }],
-        stroke: {
-          width: 0
-        }
+        }]
       };
 
-      // Initialize chart
+      // Initialize the chart
       const chart = new ApexCharts(document.querySelector("#resourcesChart"), options);
       chart.render();
-      
-      // Update total count
-      document.getElementById("totalCount").textContent = options.series.reduce((a, b) => a + b, 0);
     }
-
-    document.addEventListener('DOMContentLoaded', function () {
-      // Initialize Analytics Chart
-      initResourcesChart();
-      
-      // Attach click event listener to all delete buttons
-      document.querySelectorAll('.delete-btn').forEach(button => {
-        button.addEventListener('click', function (event) {
-          event.preventDefault(); // Prevent default link behavior
-    
-          const deleteUrl = this.getAttribute('data-url'); // Get the URL from the data-url attribute
-    
-          // Show SweetAlert confirmation dialog
-          Swal.fire({
-            title: 'Are you sure?',
-            text: "This action cannot be undone!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#d33',
-            cancelButtonColor: '#3085d6',
-            confirmButtonText: 'Yes, delete it!',
-            cancelButtonText: 'Cancel'
-          }).then((result) => {
-            if (result.isConfirmed) {
-              // Redirect to the delete URL if confirmed
-              window.location.href = deleteUrl;
-            }
-          });
-        });
-      });
-    });
-    
-    
-    //view commodity modal
-    $(document).ready(function () {
-      $('.view-btn').on('click', function () {
-        var commodityId = $(this).data('commodityid')
-        var commodityName = $(this).data('commodityname')
-        var commodityDescription = $(this).data('commoditydescription')
-        var commodityImg = $(this).data('commodityimg')
-        var resourcesType = $(this).data('resourcestype')
-        var lat = $(this).data('lat')
-        var long = $(this).data('long')
-    
-        $('#viewCommodityModal').find('#viewCommodityId').text(commodityId)
-        $('#viewCommodityModal').find('#viewCommodityName').text(commodityName)
-        $('#viewCommodityModal').find('#viewResourcesType').text(resourcesType)
-        $('#viewCommodityModal').find('#viewCommodityDescription').text(commodityDescription)
-        $('#viewCommodityModal').find('#viewCommodityImg').attr('src', commodityImg)
-        $('#viewCommodityModal').find('#viewLat').text(lat)
-        $('#viewCommodityModal').find('#viewLong').text(long)
-      })
-    })
-    
-    //edit commodity modal
-    $(document).ready(function () {
-      // Event listener for the edit button
-      $('.edit-btn').on('click', function () {
-        var commodityId = $(this).data('commodityid');
-        var commodityName = $(this).data('commodityname');
-        var commodityDescription = $(this).data('commoditydescription');
-        var resourcesType = $(this).data('resourcestype');
-    
-        // Populate modal fields with commodity-specific data
-        $('#editCommodityModal').find('#commodity_name').val(commodityName);
-        $('#editCommodityModal').find('#description').val(commodityDescription);
-        $('#editCommodityModal').find('#defaultResources').text(resourcesType);
-    
-        // Dynamically set the form action URL
-        const editUrl = $('#editCommodityModal').data('editUrlTemplate').replace('0', commodityId);
-        $('#editCommodityForm').attr('action', editUrl);
-      });
-    });
-    
-    
-    
-    //add commodity modal
-    function addCommodity() {
-      // Logic to handle adding data goes here
-      console.log('Add Data button clicked')
-      // Add your logic here for adding data
-      Swal.fire({
-        title: 'Do you want to add new commodity?',
-        showCancelButton: true,
-        confirmButtonText: 'Yes',
-        cancelButtonText: 'No',
-        icon: 'question',
-        preConfirm: () => {
-          // Logic to handle "Yes" goes here
-          // For example, redirecting the user
-          console.log('User confirm the operation so redirect!!!')
-          window.location.href = '{% url "appAdmin:map" name="commodity" %}' // Adjust the URL as needed
-        }
-      }).then((result) => {
-        if (result.isDismissed) {
-          // Logic to handle "No" goes here
-          console.log('User cancelled the operation')
-        }
-      })
-    }
-    
-    $(document).ready(function () {
-      let table = $('#commoditiesTable').DataTable({
-        language: {
-          lengthMenu: '_MENU_',
-          search: '',
-          searchPlaceholder: 'Search...'
-        },
-        lengthMenu: [
-          [7, 10, 25, -1],
-          [7, 10, 25, 'All']
-        ],
-        paging: true,
-        lengthChange: true,
-        autoWidth: false,
-        bInfo: true,
-        bSort: true,
-        responsive: true,
-        buttons: [
-          {
-            text: 'CSV',
-            extend: 'csv'
-          },
-          {
-            text: 'PDF',
-            extend: 'pdf'
-          },
-          {
-            text: 'ADD',
-            className: 'btn btn-primary',
-            action: function () {
-              addCommodity()
-            }
-          }
-        ],
-        dom: '<"row"<"col-md-1"l><"col-md-8"B><"col-md-3"f>>' + '<"row"<"col-md-12"tr>>' + '<"row"<"col-md-5"i><"col-md-7"p>>'
-      })
-    })
-    
-    $(document).ready(function () {
-      let table = $('#pendingcommoditiesTable').DataTable({
-        language: {
-          lengthMenu: '_MENU_',
-          search: '',
-          searchPlaceholder: 'Search...'
-        },
-        lengthMenu: [
-          [7, 10, 25, -1],
-          [7, 10, 25, 'All']
-        ],
-        paging: true,
-        lengthChange: true,
-        autoWidth: false,
-        bInfo: true,
-        bSort: true,
-        responsive: true,
-        buttons: [
-          {
-            text: 'CSV',
-            extend: 'csv'
-          },
-          {
-            text: 'PDF',
-            extend: 'pdf'
-          },
-        ],
-        dom: '<"row"<"col-md-1"l><"col-md-8"B><"col-md-3"f>>' + '<"row"<"col-md-12"tr>>' + '<"row"<"col-md-5"i><"col-md-7"p>>'
-      })
-    })
-  
   </script>
 
-  {% if messages %}
-    {% for message in messages %}
-      {% if message.tags == 'success' %}
-        <script>
-          // Display SweetAlert success message
-          Swal.fire({
-            icon: 'success',
-            title: 'Success!',
-            text: '{{ message }}'
-          })
-        </script>
-      {% else %}
-        <script>
-          // Display SweetAlert success message
-          Swal.fire({
-            icon: 'error',
-            title: 'Error!',
-            text: '{{ message }}'
-          })
-        </script>
-      {% endif %}
-    {% endfor %}
-  {% endif %}
+
 {% endblock %}

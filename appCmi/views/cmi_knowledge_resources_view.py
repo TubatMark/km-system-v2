@@ -105,11 +105,6 @@ def cmi_knowledge_resources(request):
         .order_by("-created_at")
     )
 
-    # Get featured resources
-    featured_resources = ResourceMetadata.objects.filter(
-        is_approved=True, is_featured=True
-    ).order_by("-created_at")
-
     # Get all tags for filtering
     all_tags = Tag.objects.all()
 
@@ -192,10 +187,6 @@ def cmi_knowledge_resources(request):
     for resource in all_resources:
         resource.is_bookmarked = resource.id in user_bookmarked_resources
 
-    # For featured resources
-    for resource in featured_resources:
-        resource.is_bookmarked = resource.id in user_bookmarked_resources
-
     # For each resource type
     for resource in events:
         resource.is_bookmarked = resource.id in user_bookmarked_resources
@@ -254,7 +245,6 @@ def cmi_knowledge_resources(request):
         "webinars": webinars,
         "products": products,
         # Additional context
-        "featured_resources": featured_resources,
         "all_tags": all_tags,
         "current_tag": tag_filter,
         "search_query": search_query,

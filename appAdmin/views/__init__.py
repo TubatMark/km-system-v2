@@ -1,5 +1,5 @@
 from .dashboard_view import dashboard
-from .users_view import display_users
+from .users_view import display_users, admin_add_user
 from .display_map_view import (
     display_map,
     map_add_cmi_commodity,
@@ -43,6 +43,7 @@ from .resources_post_view import (
     admin_add_resources_post,
     admin_edit_resources_post,
     admin_delete_resources_post,
+    view_resource_modal,
 )
 
 from .message_view import message_from_cmi

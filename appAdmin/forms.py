@@ -114,23 +114,19 @@ class ResourceMetadataForm(forms.ModelForm):
 
     class Meta:
         model = ResourceMetadata
-        fields = ["title", "description", "resource_type", "is_approved", "is_featured"]
+        fields = ["resource_type", "keywords", "is_approved"]
         widgets = {
-            "title": forms.TextInput(
-                attrs={"class": "form-control", "placeholder": "Enter resource title"}
-            ),
-            "description": forms.Textarea(
-                attrs={
-                    "class": "form-control",
-                    "rows": 4,
-                    "placeholder": "Provide a detailed description",
-                }
-            ),
             "resource_type": forms.Select(
                 attrs={"class": "form-select", "onchange": "showResourceFields()"}
             ),
+            "keywords": forms.Textarea(
+                attrs={
+                    "class": "form-control",
+                    "rows": 3,
+                    "placeholder": "Enter comma-separated keywords for search and categorization",
+                }
+            ),
             "is_approved": forms.CheckboxInput(attrs={"class": "form-check-input"}),
-            "is_featured": forms.CheckboxInput(attrs={"class": "form-check-input"}),
         }
 
 
@@ -138,44 +134,67 @@ class EventForm(forms.ModelForm):
     class Meta:
         model = Event
         fields = [
+            "title",
+            "venue",
+            "organizer",
             "start_date",
             "end_date",
-            "location",
-            "organizer",
-            "event_file",
-            "is_virtual",
+            "event_type",
+            "documentation_link",
+            "pictures",
         ]
         widgets = {
+            "title": forms.TextInput(
+                attrs={"class": "form-control", "placeholder": "Enter event title"}
+            ),
+            "venue": forms.TextInput(
+                attrs={"class": "form-control", "placeholder": "Enter event venue"}
+            ),
+            "organizer": forms.TextInput(
+                attrs={"class": "form-control", "placeholder": "Enter organizer name"}
+            ),
             "start_date": forms.DateTimeInput(
                 attrs={"class": "form-control", "type": "datetime-local"}
             ),
             "end_date": forms.DateTimeInput(
                 attrs={"class": "form-control", "type": "datetime-local"}
             ),
-            "location": forms.TextInput(
-                attrs={"class": "form-control", "placeholder": "Enter event location"}
+            "event_type": forms.TextInput(
+                attrs={"class": "form-control", "placeholder": "Enter event type"}
             ),
-            "organizer": forms.TextInput(
-                attrs={"class": "form-control", "placeholder": "Enter organizer name"}
+            "documentation_link": forms.URLInput(
+                attrs={
+                    "class": "form-control",
+                    "placeholder": "https://example.com/documentation",
+                }
             ),
-            "event_file": forms.FileInput(attrs={"class": "form-control"}),
-            "is_virtual": forms.CheckboxInput(attrs={"class": "form-check-input"}),
+            "pictures": forms.FileInput(attrs={"class": "form-control"}),
         }
 
 
 class InformationSystemForm(forms.ModelForm):
     class Meta:
         model = InformationSystem
-        fields = ["website_url", "system_owner", "last_updated"]
+        fields = ["link", "organization_owner", "agency", "brief_explanation"]
         widgets = {
-            "website_url": forms.URLInput(
+            "link": forms.URLInput(
                 attrs={"class": "form-control", "placeholder": "https://example.com"}
             ),
-            "system_owner": forms.TextInput(
-                attrs={"class": "form-control", "placeholder": "Enter system owner"}
+            "organization_owner": forms.TextInput(
+                attrs={
+                    "class": "form-control",
+                    "placeholder": "Enter organization/owner",
+                }
             ),
-            "last_updated": forms.DateInput(
-                attrs={"class": "form-control", "type": "date"}
+            "agency": forms.TextInput(
+                attrs={"class": "form-control", "placeholder": "Enter agency name"}
+            ),
+            "brief_explanation": forms.Textarea(
+                attrs={
+                    "class": "form-control",
+                    "rows": 4,
+                    "placeholder": "Provide a brief explanation of the system",
+                }
             ),
         }
 
@@ -204,20 +223,15 @@ class MapForm(forms.ModelForm):
 class MediaForm(forms.ModelForm):
     class Meta:
         model = Media
-        fields = ["media_type", "media_file", "media_url", "author"]
+        fields = ["title", "link"]
         widgets = {
-            "media_type": forms.Select(attrs={"class": "form-select"}),
-            "media_file": forms.FileInput(attrs={"class": "form-control"}),
-            "media_url": forms.URLInput(
+            "title": forms.TextInput(
+                attrs={"class": "form-control", "placeholder": "Enter media title"}
+            ),
+            "link": forms.URLInput(
                 attrs={
                     "class": "form-control",
                     "placeholder": "https://example.com/media",
-                }
-            ),
-            "author": forms.TextInput(
-                attrs={
-                    "class": "form-control",
-                    "placeholder": "Enter media author/creator",
                 }
             ),
         }
@@ -227,26 +241,39 @@ class NewsForm(forms.ModelForm):
     class Meta:
         model = News
         fields = [
-            "publication_date",
-            "source",
-            "external_url",
+            "headline",
+            "author",
+            "position",
             "content",
+            "source",
             "featured_image",
         ]
         widgets = {
-            "publication_date": forms.DateInput(
-                attrs={"class": "form-control", "type": "date"}
+            "headline": forms.TextInput(
+                attrs={"class": "form-control", "placeholder": "Enter news headline"}
             ),
-            "source": forms.TextInput(
-                attrs={"class": "form-control", "placeholder": "Enter news source"}
+            "author": forms.TextInput(
+                attrs={"class": "form-control", "placeholder": "Enter author name"}
             ),
-            "external_url": forms.URLInput(
+            "position": forms.TextInput(
                 attrs={
                     "class": "form-control",
-                    "placeholder": "https://example.com/news",
+                    "placeholder": "Enter author's position/title",
                 }
             ),
-            "content": forms.Textarea(attrs={"class": "form-control", "rows": 5}),
+            "content": forms.Textarea(
+                attrs={
+                    "class": "form-control",
+                    "rows": 6,
+                    "placeholder": "Enter news content",
+                }
+            ),
+            "source": forms.URLInput(
+                attrs={
+                    "class": "form-control",
+                    "placeholder": "https://example.com/news-source",
+                }
+            ),
             "featured_image": forms.FileInput(attrs={"class": "form-control"}),
         }
 
@@ -255,37 +282,55 @@ class PolicyForm(forms.ModelForm):
     class Meta:
         model = Policy
         fields = [
-            "policy_number",
-            "effective_date",
-            "issuing_body",
-            "policy_file",
-            "policy_url",
-            "status",
+            "policy_type",
+            "advocacy_project",
+            "agency",
+            "author",
+            "description",
+            "findings",
+            "year",
+            "policy",
         ]
         widgets = {
-            "policy_number": forms.TextInput(
+            "policy_type": forms.Select(
+                attrs={"class": "form-select", "onchange": "togglePolicyFields()"}
+            ),
+            "advocacy_project": forms.TextInput(
                 attrs={
                     "class": "form-control",
-                    "placeholder": "Enter policy reference number",
+                    "placeholder": "Enter advocacy project name",
                 }
             ),
-            "effective_date": forms.DateInput(
-                attrs={"class": "form-control", "type": "date"}
+            "agency": forms.TextInput(
+                attrs={"class": "form-control", "placeholder": "Enter agency name"}
             ),
-            "issuing_body": forms.TextInput(
+            "author": forms.TextInput(
+                attrs={"class": "form-control", "placeholder": "Enter author name"}
+            ),
+            "description": forms.Textarea(
                 attrs={
                     "class": "form-control",
-                    "placeholder": "Enter issuing authority",
+                    "rows": 4,
+                    "placeholder": "Provide policy description",
                 }
             ),
-            "policy_file": forms.FileInput(attrs={"class": "form-control"}),
-            "policy_url": forms.URLInput(
+            "findings": forms.Textarea(
                 attrs={
                     "class": "form-control",
-                    "placeholder": "https://example.com/policy",
+                    "rows": 4,
+                    "placeholder": "Enter research findings (for policy research)",
                 }
             ),
-            "status": forms.Select(attrs={"class": "form-select"}),
+            "year": forms.NumberInput(
+                attrs={"class": "form-control", "min": "1900", "max": "2100"}
+            ),
+            "policy": forms.Textarea(
+                attrs={
+                    "class": "form-control",
+                    "rows": 4,
+                    "placeholder": "Enter policy",
+                }
+            ),
         }
 
 
@@ -293,32 +338,72 @@ class ProjectForm(forms.ModelForm):
     class Meta:
         model = Project
         fields = [
+            "program_title",
+            "project_title",
+            "project_leader",
+            "source_of_fund",
+            "cooperating_agency",
+            "collaborating_agency",
+            "implementing_agency",
+            "total_approved_budget",
+            "implementing_agency_counterpart",
             "start_date",
             "end_date",
-            "budget",
-            "funding_source",
-            "project_lead",
+            "extension_months",
             "contact_email",
             "status",
         ]
         widgets = {
+            "program_title": forms.TextInput(
+                attrs={
+                    "class": "form-control",
+                    "placeholder": "Enter program title (optional)",
+                }
+            ),
+            "project_title": forms.TextInput(
+                attrs={"class": "form-control", "placeholder": "Enter project title"}
+            ),
+            "project_leader": forms.TextInput(
+                attrs={
+                    "class": "form-control",
+                    "placeholder": "Enter project leader name",
+                }
+            ),
+            "source_of_fund": forms.TextInput(
+                attrs={"class": "form-control", "placeholder": "Enter funding source"}
+            ),
+            "cooperating_agency": forms.TextInput(
+                attrs={
+                    "class": "form-control",
+                    "placeholder": "Enter cooperating agency",
+                }
+            ),
+            "collaborating_agency": forms.TextInput(
+                attrs={
+                    "class": "form-control",
+                    "placeholder": "Enter collaborating agency",
+                }
+            ),
+            "implementing_agency": forms.TextInput(
+                attrs={
+                    "class": "form-control",
+                    "placeholder": "Enter implementing agency",
+                }
+            ),
+            "total_approved_budget": forms.NumberInput(
+                attrs={"class": "form-control", "step": "0.01"}
+            ),
+            "implementing_agency_counterpart": forms.NumberInput(
+                attrs={"class": "form-control", "step": "0.01"}
+            ),
             "start_date": forms.DateInput(
                 attrs={"class": "form-control", "type": "date"}
             ),
             "end_date": forms.DateInput(
                 attrs={"class": "form-control", "type": "date"}
             ),
-            "budget": forms.NumberInput(
-                attrs={"class": "form-control", "step": "0.01"}
-            ),
-            "funding_source": forms.TextInput(
-                attrs={"class": "form-control", "placeholder": "Enter funding source"}
-            ),
-            "project_lead": forms.TextInput(
-                attrs={
-                    "class": "form-control",
-                    "placeholder": "Enter project lead name",
-                }
+            "extension_months": forms.NumberInput(
+                attrs={"class": "form-control", "min": "0"}
             ),
             "contact_email": forms.EmailInput(
                 attrs={"class": "form-control", "placeholder": "Enter contact email"}
@@ -331,22 +416,38 @@ class PublicationForm(forms.ModelForm):
     class Meta:
         model = Publication
         fields = [
-            "authors",
-            "publication_date",
+            "title",
+            "description",
+            "author",
+            "file",
+            "date_published",
             "publisher",
             "doi",
             "isbn",
             "publication_type",
-            "publication_file",
         ]
         widgets = {
-            "authors": forms.TextInput(
+            "title": forms.TextInput(
                 attrs={
                     "class": "form-control",
-                    "placeholder": "Comma-separated list of authors",
+                    "placeholder": "Enter publication title",
                 }
             ),
-            "publication_date": forms.DateInput(
+            "description": forms.Textarea(
+                attrs={
+                    "class": "form-control",
+                    "rows": 4,
+                    "placeholder": "Provide publication description",
+                }
+            ),
+            "author": forms.TextInput(
+                attrs={
+                    "class": "form-control",
+                    "placeholder": "Enter author name(s)",
+                }
+            ),
+            "file": forms.FileInput(attrs={"class": "form-control"}),
+            "date_published": forms.DateInput(
                 attrs={"class": "form-control", "type": "date"}
             ),
             "publisher": forms.TextInput(
@@ -362,76 +463,198 @@ class PublicationForm(forms.ModelForm):
                 }
             ),
             "publication_type": forms.Select(attrs={"class": "form-select"}),
-            "publication_file": forms.FileInput(attrs={"class": "form-control"}),
         }
 
 
 class TechnologyForm(forms.ModelForm):
     class Meta:
         model = Technology
-        fields = ["developer", "release_date", "patent_number", "license_type"]
+        fields = [
+            "commodity",
+            "technologies",
+            "products",
+            "adoption_status",
+            "year_introduced",
+            "ip_asset",
+            "brief_description",
+            "support_facilities",
+            "available_experts",
+            "experts_email",
+            "experts_phone",
+            "funding_source",
+            "technologies_offered_for",
+            "technology_transfer_pathway",
+            "google_link_photos",
+            "pictures",
+        ]
         widgets = {
-            "developer": forms.TextInput(
+            "commodity": forms.Select(attrs={"class": "form-select"}),
+            "technologies": forms.TextInput(
+                attrs={"class": "form-control", "placeholder": "Enter technology name"}
+            ),
+            "products": forms.TextInput(
+                attrs={"class": "form-control", "placeholder": "Enter products"}
+            ),
+            "adoption_status": forms.Select(attrs={"class": "form-select"}),
+            "year_introduced": forms.NumberInput(
+                attrs={"class": "form-control", "min": "1900", "max": "2100"}
+            ),
+            "ip_asset": forms.TextInput(
                 attrs={
                     "class": "form-control",
-                    "placeholder": "Enter technology developer",
+                    "placeholder": "Enter IP asset information",
                 }
             ),
-            "release_date": forms.DateInput(
-                attrs={"class": "form-control", "type": "date"}
-            ),
-            "patent_number": forms.TextInput(
+            "brief_description": forms.Textarea(
                 attrs={
                     "class": "form-control",
-                    "placeholder": "Enter patent number if applicable",
+                    "rows": 4,
+                    "placeholder": "Brief description of technology & product",
                 }
             ),
-            "license_type": forms.TextInput(
-                attrs={"class": "form-control", "placeholder": "Enter license type"}
+            "support_facilities": forms.Textarea(
+                attrs={
+                    "class": "form-control",
+                    "rows": 3,
+                    "placeholder": "Enter support facilities",
+                }
             ),
+            "available_experts": forms.Textarea(
+                attrs={
+                    "class": "form-control",
+                    "rows": 3,
+                    "placeholder": "List available experts",
+                }
+            ),
+            "experts_email": forms.EmailInput(
+                attrs={"class": "form-control", "placeholder": "Enter expert email"}
+            ),
+            "experts_phone": forms.TextInput(
+                attrs={
+                    "class": "form-control",
+                    "placeholder": "Enter expert phone number",
+                }
+            ),
+            "funding_source": forms.Select(attrs={"class": "form-select"}),
+            "technologies_offered_for": forms.TextInput(
+                attrs={
+                    "class": "form-control",
+                    "placeholder": "Technologies offered for...",
+                }
+            ),
+            "technology_transfer_pathway": forms.Textarea(
+                attrs={
+                    "class": "form-control",
+                    "rows": 3,
+                    "placeholder": "Describe technology transfer pathway",
+                }
+            ),
+            "google_link_photos": forms.URLInput(
+                attrs={
+                    "class": "form-control",
+                    "placeholder": "https://photos.google.com/...",
+                }
+            ),
+            "pictures": forms.FileInput(attrs={"class": "form-control"}),
         }
 
 
 class TrainingSeminarForm(forms.ModelForm):
     class Meta:
         model = TrainingSeminar
-        fields = ["start_date", "end_date", "location", "trainers", "target_audience"]
+        fields = [
+            "title",
+            "description",
+            "start_date",
+            "end_date",
+            "venue",
+            "organizer",
+            "speakers",
+            "total_participants",
+            "documentation_link",
+            "pictures",
+        ]
         widgets = {
+            "title": forms.TextInput(
+                attrs={
+                    "class": "form-control",
+                    "placeholder": "Enter training/seminar title",
+                }
+            ),
+            "description": forms.Textarea(
+                attrs={
+                    "class": "form-control",
+                    "rows": 4,
+                    "placeholder": "Provide training description",
+                }
+            ),
             "start_date": forms.DateTimeInput(
                 attrs={"class": "form-control", "type": "datetime-local"}
             ),
             "end_date": forms.DateTimeInput(
                 attrs={"class": "form-control", "type": "datetime-local"}
             ),
-            "location": forms.TextInput(
+            "venue": forms.TextInput(
                 attrs={
                     "class": "form-control",
-                    "placeholder": "Enter training location",
+                    "placeholder": "Enter venue",
                 }
             ),
-            "trainers": forms.Textarea(
+            "venue": forms.TextInput(
+                attrs={"class": "form-control", "placeholder": "Enter venue"}
+            ),
+            "organizer": forms.TextInput(
+                attrs={"class": "form-control", "placeholder": "Enter organizer"}
+            ),
+            "speakers": forms.Textarea(
                 attrs={
                     "class": "form-control",
                     "rows": 3,
-                    "placeholder": "List of trainers/instructors",
+                    "placeholder": "List speakers/trainers",
                 }
             ),
-            "target_audience": forms.TextInput(
-                attrs={"class": "form-control", "placeholder": "Enter target audience"}
+            "total_participants": forms.NumberInput(
+                attrs={"class": "form-control", "min": "0"}
             ),
+            "documentation_link": forms.URLInput(
+                attrs={
+                    "class": "form-control",
+                    "placeholder": "https://example.com/documentation",
+                }
+            ),
+            "pictures": forms.FileInput(attrs={"class": "form-control"}),
         }
 
 
 class WebinarForm(forms.ModelForm):
     class Meta:
         model = Webinar
-        fields = ["webinar_date", "duration_minutes", "platform", "presenters"]
+        fields = [
+            "title",
+            "duration",
+            "date",
+            "speaker",
+            "platform",
+            "attendance",
+            "documentation_link",
+            "pictures",
+        ]
         widgets = {
-            "webinar_date": forms.DateTimeInput(
+            "title": forms.TextInput(
+                attrs={"class": "form-control", "placeholder": "Enter webinar title"}
+            ),
+            "duration": forms.NumberInput(
+                attrs={
+                    "class": "form-control",
+                    "min": "1",
+                    "placeholder": "Duration in minutes",
+                }
+            ),
+            "date": forms.DateTimeInput(
                 attrs={"class": "form-control", "type": "datetime-local"}
             ),
-            "duration_minutes": forms.NumberInput(
-                attrs={"class": "form-control", "min": 1}
+            "speaker": forms.TextInput(
+                attrs={"class": "form-control", "placeholder": "Enter speaker name"}
             ),
             "platform": forms.TextInput(
                 attrs={
@@ -439,40 +662,44 @@ class WebinarForm(forms.ModelForm):
                     "placeholder": "e.g., Zoom, Teams, etc.",
                 }
             ),
-            "presenters": forms.Textarea(
+            "attendance": forms.NumberInput(
+                attrs={"class": "form-control", "min": "0"}
+            ),
+            "documentation_link": forms.URLInput(
                 attrs={
                     "class": "form-control",
-                    "rows": 3,
-                    "placeholder": "List of presenters",
+                    "placeholder": "https://example.com/documentation",
                 }
             ),
+            "pictures": forms.FileInput(attrs={"class": "form-control"}),
         }
 
 
 class ProductForm(forms.ModelForm):
     class Meta:
         model = Product
-        fields = ["manufacturer", "features", "technical_specifications", "price"]
+        fields = [
+            "products",
+            "description",
+            "company",
+            "price",
+            "contact_info",
+            "documentation_link",
+            "pictures",
+        ]
         widgets = {
-            "manufacturer": forms.TextInput(
+            "products": forms.TextInput(
+                attrs={"class": "form-control", "placeholder": "Enter product name"}
+            ),
+            "description": forms.Textarea(
                 attrs={
                     "class": "form-control",
-                    "placeholder": "Enter product manufacturer",
+                    "rows": 4,
+                    "placeholder": "Provide product description",
                 }
             ),
-            "features": forms.Textarea(
-                attrs={
-                    "class": "form-control",
-                    "rows": 3,
-                    "placeholder": "Key features of the product",
-                }
-            ),
-            "technical_specifications": forms.Textarea(
-                attrs={
-                    "class": "form-control",
-                    "rows": 3,
-                    "placeholder": "Technical details",
-                }
+            "company": forms.TextInput(
+                attrs={"class": "form-control", "placeholder": "Enter company name"}
             ),
             "price": forms.NumberInput(
                 attrs={
@@ -481,6 +708,20 @@ class ProductForm(forms.ModelForm):
                     "placeholder": "Price in PHP",
                 }
             ),
+            "contact_info": forms.Textarea(
+                attrs={
+                    "class": "form-control",
+                    "rows": 3,
+                    "placeholder": "Enter contact information",
+                }
+            ),
+            "documentation_link": forms.URLInput(
+                attrs={
+                    "class": "form-control",
+                    "placeholder": "https://example.com/documentation",
+                }
+            ),
+            "pictures": forms.FileInput(attrs={"class": "form-control"}),
         }
 
 

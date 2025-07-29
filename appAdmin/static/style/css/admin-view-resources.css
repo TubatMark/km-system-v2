@@ -1,0 +1,230 @@
+/* View Resource Modal Styles */
+.resource-header {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    border-bottom: 1px solid #dee2e6;
+}
+
+.resource-icon {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+    font-size: 1.5rem;
+}
+
+.resource-type-badge {
+    font-size: 0.75rem;
+    padding: 0.375rem 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 600;
+}
+
+.keywords-tag {
+    background: #e3f2fd;
+    color: #1976d2;
+    border: 1px solid #bbdefb;
+    font-size: 0.75rem;
+    padding: 0.25rem 0.5rem;
+    border-radius: 15px;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.keywords-tag:hover {
+    background: #bbdefb;
+    color: #0d47a1;
+    transform: translateY(-1px);
+}
+
+.commodity-tag {
+    background: #f3e5f5;
+    color: #7b1fa2;
+    border: 1px solid #ce93d8;
+    font-size: 0.75rem;
+    padding: 0.25rem 0.5rem;
+    border-radius: 15px;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.commodity-tag:hover {
+    background: #ce93d8;
+    color: #4a148c;
+    transform: translateY(-1px);
+}
+
+.detail-item {
+    padding: 0.75rem 0;
+    border-bottom: 1px solid #f1f3f4;
+}
+
+.detail-item:last-child {
+    border-bottom: none;
+}
+
+.detail-label {
+    font-weight: 600;
+    color: #495057;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 0.25rem;
+}
+
+.detail-value {
+    color: #212529;
+    margin-bottom: 0;
+}
+
+.status-indicator {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 0.5rem;
+}
+
+.status-approved {
+    background-color: #28a745;
+}
+
+.status-pending {
+    background-color: #ffc107;
+}
+
+.status-featured {
+    background-color: #dc3545;
+}
+
+/* File/Media Preview Styles */
+.file-preview {
+    background: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    padding: 1rem;
+    text-align: center;
+    margin: 1rem 0;
+}
+
+.file-preview i {
+    font-size: 3rem;
+    color: #6c757d;
+    margin-bottom: 0.5rem;
+}
+
+.image-preview {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Resource Type Icons */
+.type-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+}
+
+.event-icon { background: #ff9800; }
+.webinar-icon { background: #4caf50; }
+.news-icon { background: #2196f3; }
+.policy-icon { background: #f44336; }
+.publication-icon { background: #9c27b0; }
+.technology-icon { background: #607d8b; }
+.project-icon { background: #ff5722; }
+.training-icon { background: #795548; }
+.media-icon { background: #e91e63; }
+.map-icon { background: #00bcd4; }
+.info-system-icon { background: #3f51b5; }
+.product-icon { background: #8bc34a; }
+
+/* Mobile Responsive Adjustments */
+@media (max-width: 768px) {
+    .modal-xl {
+        margin: 0.5rem;
+    }
+    
+    .resource-header .container-fluid {
+        padding: 1rem;
+    }
+    
+    .modal-footer {
+        flex-direction: column;
+        gap: 0.75rem;
+        align-items: stretch !important;
+    }
+    
+    .modal-footer .text-muted {
+        text-align: center;
+        order: 2;
+    }
+    
+    .modal-footer > div:last-child {
+        order: 1;
+        text-align: center;
+    }
+    
+    .keywords-tag, .commodity-tag {
+        margin-bottom: 0.25rem;
+    }
+    
+    .resource-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 1.25rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .modal-xl {
+        margin: 0.25rem;
+    }
+    
+    .modal-header h5 {
+        font-size: 1rem;
+    }
+    
+    .modal-body {
+        padding: 0;
+    }
+    
+    .container-fluid {
+        padding: 0.75rem !important;
+    }
+    
+    .btn {
+        font-size: 0.875rem;
+        padding: 0.375rem 0.75rem;
+    }
+}
+
+/* Animation Enhancements */
+.modal.fade .modal-dialog {
+    transition: transform 0.3s ease-out;
+    transform: translate(0, -50px);
+}
+
+.modal.show .modal-dialog {
+    transform: none;
+}
+
+/* Loading Animation */
+.loading-shimmer {
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+}

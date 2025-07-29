@@ -3,276 +3,1269 @@
 {% block title %}
   Admin Forum Management
 {% endblock %}
-{% block stylesheet %}
-  <link rel="stylesheet" href="{% static 'style/css/admin.forum.css' %}" />
-  <style>
-    /* Additional styles for the view modal */
-    .modal-content {
-      border-radius: 8px;
-      border: none;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-    }
-    
-    .modal-header {
-      background-color: #f8f9fa;
-      border-bottom: 1px solid #e9ecef;
-      padding: 15px 20px;
-    }
-    
-    .view-forum-title {
-      font-size: 1.5rem;
-      color: #0C356A;
-      font-weight: 600;
-      margin-bottom: 10px;
-    }
-    
-    .forum-meta {
-      display: flex;
-      flex-wrap: wrap;
-      font-size: 14px;
-      color: #6c757d;
-      margin-bottom: 15px;
-    }
-    
-    .forum-meta-item {
-      margin-right: 20px;
-      display: flex;
-      align-items: center;
-    }
-    
-    .forum-meta-item i {
-      margin-right: 6px;
-      color: #0C356A;
-    }
-    
-    .forum-commodity {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 5px;
-      margin-bottom: 15px;
-    }
-    
-    .commodity-tag {
-      background-color: #e8f5e9;
-      color: #2e7d32;
-      padding: 4px 12px;
-      border-radius: 20px;
-      font-size: 13px;
-      font-weight: 500;
-    }
-    
-    .forum-content {
-      background-color: #f8f9fa;
-      padding: 20px;
-      border-radius: 5px;
-      margin-bottom: 20px;
-      line-height: 1.6;
-    }
-  </style>
-{% endblock %}
 
 {% block content %}
-<div class="masonry-item w-100">
-  <div class="row gap-20">
-    <div class="col-md-3">
-      <div class="layers bd bgc-white p-20">
-        <div class="layer w-100 mB-10">
-          <h6 class="lh-1"><a href="#" style="color: gray;">Total Forum Posts</a></h6>
+  <!-- Page Header -->
+  <div class="dashboard-header">
+    <h1 class="dashboard-title">Forum Management</h1>
+    <p class="dashboard-subtitle">Manage discussions, comments, and content</p>
+  </div>
+
+  <!-- Stats Grid -->
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-header">
+        <div class="stat-icon" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+          <i class="fas fa-comments"></i>
         </div>
-        <div class="layer w-100">
-          <div class="peers ai-sb fxw-nw">
-            <div class="peer peer-greed">
-              <span id="sparklinedash"></span>
-            </div>
-            <div class="peer">
-              <span class="d-ib lh-0 va-m fw-600 bdrs-10em pX-15 pY-15 bgc-green-50 c-green-500">
-                {% if total_discussions %}
-                  {{ total_discussions }}
-                {% else %}
-                  0
-                {% endif %}
-              </span>
-            </div>
-          </div>
+      </div>
+      <div class="stat-content">
+        <div class="stat-value" id="forumCount">
+          {% if total_discussions %}
+            {{ total_discussions }}
+          {% else %}
+            0
+          {% endif %}
+        </div>
+        <div class="stat-label">Total Forum Posts</div>
+        <div class="stat-change positive">
+          <i class="fas fa-arrow-up"></i>
+          <span>Active</span>
         </div>
       </div>
     </div>
     
-    <div class="col-md-3">
-      <div class="layers bd bgc-white p-20">
-        <div class="layer w-100 mB-10">
-          <h6 class="lh-1"><a href="#" style="color: gray;">Total Comments</a></h6>
+    <div class="stat-card">
+      <div class="stat-header">
+        <div class="stat-icon" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+          <i class="fas fa-reply"></i>
         </div>
-        <div class="layer w-100">
-          <div class="peers ai-sb fxw-nw">
-            <div class="peer peer-greed">
-              <span id="sparklinedash3"></span>
+      </div>
+      <div class="stat-content">
+        <div class="stat-value" id="commentCount">
+          {% if total_comments %}
+            {{ total_comments }}
+          {% else %}
+            0
+          {% endif %}
+        </div>
+        <div class="stat-label">Total Comments</div>
+        <div class="stat-change positive">
+          <i class="fas fa-arrow-up"></i>
+          <span>Engaged</span>
+        </div>
+      </div>
+    </div>
+    
+    <div class="stat-card">
+      <div class="stat-header">
+        <div class="stat-icon" style="background: linear-gradient(135deg, #ffa726 0%, #ff9800 100%);">
+          <i class="fas fa-flag"></i>
+        </div>
+      </div>
+      <div class="stat-content">
+        <div class="stat-value">3</div>
+        <div class="stat-label">Pending Reports</div>
+        <div class="stat-change warning">
+          <i class="fas fa-exclamation-triangle"></i>
+          <span>Needs Review</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Forum Analytics Panel - Moved to Top -->
+  <div class="analytics-overview" style="margin-bottom: 2rem;">
+    <div class="analytics-cards-grid">
+      <!-- Recent Activity Card -->
+      <div class="analytics-card">
+        <div class="analytics-header">
+          <h4 class="analytics-title">
+            <i class="fas fa-clock" style="margin-right: 8px; color: var(--primary-color);"></i>
+            Recent Activity
+          </h4>
+        </div>
+        <div class="activity-list">
+          <div class="activity-item">
+            <div class="activity-icon" style="background-color: var(--primary-color);">
+              <i class="fas fa-comment"></i>
             </div>
-            <div class="peer">
-              <span class="d-ib lh-0 va-m fw-600 bdrs-10em pX-15 pY-15 bgc-purple-50 c-purple-500">
-                {% if total_comments %}
-                  {{ total_comments }}
-                {% else %}
-                  0
-                {% endif %}
-              </span>
+            <div class="activity-content">
+              <div class="activity-title">New discussion posted</div>
+              <div class="activity-time">2 minutes ago</div>
+            </div>
+          </div>
+          
+          <div class="activity-item">
+            <div class="activity-icon" style="background-color: #4caf50;">
+              <i class="fas fa-reply"></i>
+            </div>
+            <div class="activity-content">
+              <div class="activity-title">Comment added</div>
+              <div class="activity-time">15 minutes ago</div>
+            </div>
+          </div>
+          
+          <div class="activity-item">
+            <div class="activity-icon" style="background-color: #9c27b0;">
+              <i class="fas fa-user-plus"></i>
+            </div>
+            <div class="activity-content">
+              <div class="activity-title">New member joined</div>
+              <div class="activity-time">2 hours ago</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Top Categories Card -->
+      <div class="analytics-card">
+        <div class="analytics-header">
+          <h4 class="analytics-title">
+            <i class="fas fa-tags" style="margin-right: 8px; color: var(--primary-color);"></i>
+            Top Categories
+          </h4>
+        </div>
+        <div class="category-list">
+          <div class="category-card">
+            <span class="category-name">Rice Farming</span>
+            <span class="category-count rice">45 posts</span>
+          </div>
+          <div class="category-card">
+            <span class="category-name">Corn Production</span>
+            <span class="category-count corn">32 posts</span>
+          </div>
+          <div class="category-card">
+            <span class="category-name">Aquaculture</span>
+            <span class="category-count aqua">28 posts</span>
+          </div>
+          <div class="category-card">
+            <span class="category-name">Coconut Farming</span>
+            <span class="category-count coconut">21 posts</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Forum Management Panel -->
+  <div class="forum-management-panel">
+    <div class="chart-card custom-card">
+      <div class="chart-header">
+        <h3 class="chart-title">Forum Management</h3>
+        <div class="chart-controls">
+          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addDiscussionModal">
+            <i class="fas fa-plus"></i> New Discussion
+          </button>
+        </div>
+      </div>
+      
+      <!-- Real-time Search Form -->
+      <div class="search-container" style="margin-bottom: 20px;">
+        <div class="search-grid">
+          <div class="search-field">
+            <label for="search_discussion_id" class="search-label">Discussion ID</label>
+            <div class="search-input-wrapper">
+              <i class="fas fa-search search-icon"></i>
+              <input type="text" id="search_discussion_id" name="search_discussion_id" class="search-input" placeholder="Search by ID" />
+              <span class="search-clear" id="clear_discussion_id" style="display: none;"><i class="fas fa-times"></i></span>
+            </div>
+          </div>
+
+          <div class="search-field">
+            <label for="search_discussion_title" class="search-label">Title</label>
+            <div class="search-input-wrapper">
+              <i class="fas fa-search search-icon"></i>
+              <input type="text" id="search_discussion_title" name="search_discussion_title" class="search-input" placeholder="Search by Title" />
+              <span class="search-clear" id="clear_discussion_title" style="display: none;"><i class="fas fa-times"></i></span>
+            </div>
+          </div>
+
+          <div class="search-field">
+            <label for="search_discussion_author" class="search-label">Author</label>
+            <div class="search-input-wrapper">
+              <i class="fas fa-search search-icon"></i>
+              <input type="text" id="search_discussion_author" name="search_discussion_author" class="search-input" placeholder="Search by Author" />
+              <span class="search-clear" id="clear_discussion_author" style="display: none;"><i class="fas fa-times"></i></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Search Results Summary -->
+        <div class="search-results-summary" id="searchResultsSummary" style="display: none;">
+          <span class="results-text">Showing <span id="visibleCount">0</span> of <span id="totalCount">0</span> discussions</span>
+          <button type="button" class="btn btn-sm btn-outline-secondary" id="clearAllFilters"><i class="fas fa-times"></i> Clear All</button>
+        </div>
+      </div>
+      
+      <!-- Forum Tabs -->
+      <div class="forum-tabs" style="margin-bottom: 20px;">
+        <ul class="nav nav-tabs custom-tabs" role="tablist">
+          <li class="nav-item">
+            <a class="nav-link active" id="dashboard-tab" data-toggle="tab" href="#dashboard" role="tab">
+              <i class="fas fa-chart-line"></i> Analytics Dashboard
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" id="discussions-tab" data-toggle="tab" href="#discussions" role="tab">
+              <i class="fas fa-comments"></i> Discussions Forum
+            </a>
+          </li>
+        </ul>
+        
+        <div class="tab-content custom-tab-content">
+          <!-- Dashboard Tab -->
+          <div class="tab-pane fade show active" id="dashboard" role="tabpanel">
+            <div class="dashboard-content">
+              <h5 style="color: var(--text-color); margin-bottom: 15px;">Forum Dashboard</h5>
+              <p style="color: var(--text-muted); margin-bottom: 20px;">Monitor forum activity and engagement metrics.</p>
+              
+              <!-- Sample Table for Dashboard -->
+              <div class="table-container" style="max-height: 400px; overflow-y: auto; overflow-x: auto; width: 100%;">
+                <table class="accounts-table table table-bordered theme-header" style="width: 100%; min-width: 800px;">
+                  <thead style="font-size: 13px; font-weight: bolder; background-color: #2C6E49; color: #fff;">
+                    <tr>
+                      <th style="width: 60px; min-width: 60px;">ID</th>
+                      <th style="min-width: 200px;">Discussion Title</th>
+                      <th style="min-width: 120px;">Author</th>
+                      <th style="min-width: 100px;">Comments</th>
+                      <th style="min-width: 120px;">Last Activity</th>
+                      <th style="width: 100px; min-width: 100px;">Status</th>
+                    </tr>
+                  </thead>
+                  <tbody style="font-size: 12px;">
+                    <tr style="border-bottom: 1px solid #ddd;">
+                      <td style="border-bottom: 1px solid #ddd; text-align: center;">001</td>
+                      <td style="border-bottom: 1px solid #ddd;">
+                        <div style="font-weight: 600; color: var(--primary-color);">Rice Farming Best Practices</div>
+                        <div style="font-size: 11px; color: var(--text-muted);">General Discussion</div>
+                      </td>
+                      <td style="border-bottom: 1px solid #ddd;">John Farmer</td>
+                      <td style="border-bottom: 1px solid #ddd; text-align: center;">
+                        <span style="background: #e3f2fd; color: #1976d2; padding: 4px 8px; border-radius: 12px; font-size: 11px;">23</span>
+                      </td>
+                      <td style="border-bottom: 1px solid #ddd;">2 hours ago</td>
+                      <td style="border-bottom: 1px solid #ddd; text-align: center;">
+                        <span style="background: #e8f5e8; color: #2e7d32; padding: 4px 8px; border-radius: 12px; font-size: 11px;">Active</span>
+                      </td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid #ddd;">
+                      <td style="border-bottom: 1px solid #ddd; text-align: center;">002</td>
+                      <td style="border-bottom: 1px solid #ddd;">
+                        <div style="font-weight: 600; color: var(--primary-color);">Corn Pest Management</div>
+                        <div style="font-size: 11px; color: var(--text-muted);">Technical Support</div>
+                      </td>
+                      <td style="border-bottom: 1px solid #ddd;">Maria Santos</td>
+                      <td style="border-bottom: 1px solid #ddd; text-align: center;">
+                        <span style="background: #e3f2fd; color: #1976d2; padding: 4px 8px; border-radius: 12px; font-size: 11px;">15</span>
+                      </td>
+                      <td style="border-bottom: 1px solid #ddd;">4 hours ago</td>
+                      <td style="border-bottom: 1px solid #ddd; text-align: center;">
+                        <span style="background: #e8f5e8; color: #2e7d32; padding: 4px 8px; border-radius: 12px; font-size: 11px;">Active</span>
+                      </td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid #ddd;">
+                      <td style="border-bottom: 1px solid #ddd; text-align: center;">003</td>
+                      <td style="border-bottom: 1px solid #ddd;">
+                        <div style="font-weight: 600; color: var(--primary-color);">Aquaculture Setup Guide</div>
+                        <div style="font-size: 11px; color: var(--text-muted);">How-to Guide</div>
+                      </td>
+                      <td style="border-bottom: 1px solid #ddd;">Pedro Cruz</td>
+                      <td style="border-bottom: 1px solid #ddd; text-align: center;">
+                        <span style="background: #e3f2fd; color: #1976d2; padding: 4px 8px; border-radius: 12px; font-size: 11px;">8</span>
+                      </td>
+                      <td style="border-bottom: 1px solid #ddd;">1 day ago</td>
+                      <td style="border-bottom: 1px solid #ddd; text-align: center;">
+                        <span style="background: #fff3e0; color: #f57c00; padding: 4px 8px; border-radius: 12px; font-size: 11px;">Pending</span>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- Discussions Tab -->
+          <div class="tab-pane fade" id="discussions" role="tabpanel">
+            <div class="discussions-content">
+              <h5 style="color: var(--text-color); margin-bottom: 15px;">Forum Discussions</h5>
+              <p style="color: var(--text-muted); margin-bottom: 20px;">Manage all forum discussions and posts.</p>
+              
+              <!-- Enhanced Table for Discussions -->
+              <div class="table-container" style="max-height: 400px; overflow-y: auto; overflow-x: auto; width: 100%;">
+                <table id="discussionsTable" class="accounts-table table table-bordered theme-header" style="width: 100%; min-width: 900px;">
+                  <thead style="font-size: 13px; font-weight: bolder; background-color: #2C6E49; color: #fff;">
+                    <tr>
+                      <th style="width: 60px; min-width: 60px;">ID</th>
+                      <th style="min-width: 250px;">Discussion</th>
+                      <th style="min-width: 120px;">Author</th>
+                      <th style="min-width: 100px;">Category</th>
+                      <th style="min-width: 80px;">Replies</th>
+                      <th style="min-width: 120px;">Last Activity</th>
+                      <th style="width: 180px; min-width: 180px;">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody style="font-size: 12px;" id="discussionsTableBody">
+                    {% comment %} Sample data - replace with your actual data {% endcomment %}
+                    <tr class="discussion-row" data-discussion-id="001" data-discussion-title="Rice Farming Best Practices" data-discussion-author="John Farmer" style="border-bottom: 1px solid #ddd;">
+                      <td style="border-bottom: 1px solid #ddd; text-align: center;">001</td>
+                      <td style="border-bottom: 1px solid #ddd;" class="discussion-title-cell">
+                        <div style="font-weight: 600; color: var(--primary-color); margin-bottom: 4px;">Rice Farming Best Practices</div>
+                        <div style="font-size: 11px; color: var(--text-muted);">How to improve rice yield with organic methods...</div>
+                      </td>
+                      <td style="border-bottom: 1px solid #ddd;" class="discussion-author-cell">John Farmer</td>
+                      <td style="border-bottom: 1px solid #ddd;">
+                        <span style="background: #e3f2fd; color: #1976d2; padding: 4px 8px; border-radius: 12px; font-size: 11px;">Rice</span>
+                      </td>
+                      <td style="border-bottom: 1px solid #ddd; text-align: center;">
+                        <span style="background: #e8f5e8; color: #2e7d32; padding: 4px 8px; border-radius: 12px; font-size: 11px;">23</span>
+                      </td>
+                      <td style="border-bottom: 1px solid #ddd;">2 hours ago</td>
+                      <td style="border-bottom: 1px solid #ddd;">
+                        <div class="action-buttons" style="display: flex; justify-content: center; gap: 5px; flex-wrap: wrap;">
+                          <button type="button" class="btn btn-sm btn-info view-btn" title="View Discussion">
+                            <i class="fas fa-eye"></i>
+                          </button>
+                          <button type="button" class="btn btn-sm btn-warning edit-btn" title="Edit Discussion">
+                            <i class="fas fa-edit"></i>
+                          </button>
+                          <button type="button" class="btn btn-sm btn-danger delete-btn" title="Delete Discussion">
+                            <i class="fas fa-trash"></i>
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                    {% comment %} Add more sample data or use actual Django data {% endcomment %}
+                  </tbody>
+                </table>
+
+                <!-- No Results Message -->
+                <div id="noResultsMessage" style="display: none; text-align: center; padding: 40px; color: #6c757d;">
+                  <i class="fas fa-search fa-3x" style="margin-bottom: 20px; opacity: 0.5;"></i>
+                  <h5>No discussions found</h5>
+                  <p>Try adjusting your search criteria or clear filters to view all discussions.</p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-</div>
 
-<div class="masonry-item col-12">
-  <div class="bd bgc-white">
-    <div class="peers fxw-nw@lg+ ai-s">
-      <div class="peer peer-greed w-70p@lg+ w-100@lg- p-20">
-        <div class="layers">
-          <div class="layer w-100 mB-10">
-            <h5 class="lh-1">Forum Management</h5>
-          </div>
-          <div class="layer w-100">
-            <ul class="nav nav-tabs">
-              <li class="nav-item">
-                <a class="nav-link active" id="dashboard-tab" data-toggle="tab" href="#dashboard">Analytics Dashboard</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" id="discussions-tab" data-toggle="tab" href="#discussions">Discussions Forum</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" id="reports-tab" data-toggle="tab" href="#reports">Reported Content</a>
-              </li>
-            </ul>
-          </div>
-          <div class="layer w-100">
-            <div class="tab-content">
-              <br />
-              <!-- Dashboard Tab -->
-              {% include "pages/forum-tab/forum-dashboard-tab.html" %}
-
-              <!-- Discussions Tab -->
-              {% include "pages/forum-tab/forum-management-tab.html" %}
-
-              <!-- Reported Content Tab -->
-              {% include "pages/forum-tab/forum-reports-tab.html" %}
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-{% include 'modal/forum/view-forum-modal.html' %}
-{% include 'modal/forum/delete-confirmation-modal.html' %}
+  {% include 'modal/forum/view-forum-modal.html' %}
+  {% include 'modal/forum/delete-confirmation-modal.html' %}
 {% endblock %}
 
 {% block script %}
-<script src="{% static 'script/admin.forum.js' %}"></script>
-<script>
-  function confirmDelete(event, element) {
-    event.preventDefault();
-    
-    var deleteUrl = element.getAttribute('href');
-    
-    // Set the confirm button URL
-    document.getElementById('confirmDeleteBtn').href = deleteUrl;
-    
-    // Show the confirmation modal
-    $('#confirmationModal').modal('show');
-    
-    return false;
-  }
-  
-  // Initialize DataTables
-  $(document).ready(function() {
-    $('#discussionsTable').DataTable({
-      language: {
-        lengthMenu: '_MENU_',
-        search: '',
-        searchPlaceholder: 'Search discussions...'
-      },
-      lengthMenu: [
-        [10, 25, 50, -1],
-        [10, 25, 50, 'All']
-      ],
-      paging: true,
-      lengthChange: true,
-      autoWidth: false,
-      bInfo: true,
-      bSort: true,
-      responsive: true,
-      buttons: [
-        {
-          text: 'CSV',
-          extend: 'csv'
-        },
-        {
-          text: 'PDF',
-          extend: 'pdf'
-        }
-      ],
-      dom: '<"row"<"col-md-1"l><"col-md-8"B><"col-md-3"f>>' + 
-           '<"row"<"col-md-12"tr>>' + 
-           '<"row"<"col-md-5"i><"col-md-7"p>>'
+  <script src="{% static 'style/js/admin.forum.js' %}"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      // Initialize search functionality
+      initializeForumSearch();
+      
+      // Initialize DataTables with custom styling
+      initializeDataTables();
+      
+      // Initialize tab functionality
+      initializeTabFunctionality();
     });
-    
-    // Handle view forum modal
-    $('.view-forum-btn').on('click', function() {
-      // Get data from data attributes
-      var id = $(this).data('id');
-      var title = $(this).data('title');
-      var question = $(this).data('question');
-      var author = $(this).data('author');
-      var date = $(this).data('date');
-      var commodities = $(this).data('commodities');
-      var slug = $(this).data('slug');
+
+    function initializeForumSearch() {
+      const searchFields = {
+        discussion_id: document.getElementById('search_discussion_id'),
+        discussion_title: document.getElementById('search_discussion_title'),
+        discussion_author: document.getElementById('search_discussion_author')
+      };
       
-      // Populate modal
-      $('#forum-title').text(title);
-      $('#forum-author').text(author);
-      $('#forum-date').text(date);
-      $('#forum-question').html(question.replace(/\n/g, '<br>'));
+      const clearButtons = {
+        discussion_id: document.getElementById('clear_discussion_id'),
+        discussion_title: document.getElementById('clear_discussion_title'),
+        discussion_author: document.getElementById('clear_discussion_author')
+      };
       
-      // Create commodity tags
-      var commoditiesHtml = '';
-      if (commodities) {
-        var commodityArray = commodities.split('|');
-        commodityArray.forEach(function(commodity) {
-          if (commodity.trim() !== '') {
-            commoditiesHtml += '<span class="commodity-tag">' + commodity + '</span>';
-          }
+      const searchResultsSummary = document.getElementById('searchResultsSummary');
+      const clearAllFiltersBtn = document.getElementById('clearAllFilters');
+      const visibleCountSpan = document.getElementById('visibleCount');
+      const totalCountSpan = document.getElementById('totalCount');
+      const tableBody = document.getElementById('discussionsTableBody');
+      const noResultsMessage = document.getElementById('noResultsMessage');
+      
+      // Set total count
+      const totalDiscussions = document.querySelectorAll('#discussionsTableBody .discussion-row').length;
+      if (totalCountSpan) totalCountSpan.textContent = totalDiscussions;
+      
+      // Add event listeners for search inputs
+      Object.keys(searchFields).forEach(key => {
+        const input = searchFields[key];
+        const clearBtn = clearButtons[key];
+        
+        if (input && clearBtn) {
+          input.addEventListener('input', performForumSearch);
+          
+          // Show/hide clear button
+          input.addEventListener('input', function() {
+            clearBtn.style.display = this.value ? 'block' : 'none';
+          });
+          
+          // Clear button functionality
+          clearBtn.addEventListener('click', function() {
+            input.value = '';
+            this.style.display = 'none';
+            performForumSearch();
+          });
+        }
+      });
+      
+      // Clear all filters
+      if (clearAllFiltersBtn) {
+        clearAllFiltersBtn.addEventListener('click', function() {
+          Object.values(searchFields).forEach(input => {
+            if (input) input.value = '';
+          });
+          Object.values(clearButtons).forEach(btn => {
+            if (btn) btn.style.display = 'none';
+          });
+          performForumSearch();
         });
       }
-      $('#forum-commodities').html(commoditiesHtml);
       
-      // Set view on site button URL
-      $('#viewOnSiteBtn').attr('href', '{% url "appCmi:display-forum" slug="placeholder" %}'.replace('placeholder', slug));
-    });
-  });
-</script>
-{% if messages %}
-  {% for message in messages %}
-    {% if message.tags == 'success' %}
-      <script>
-        // Display SweetAlert success message
-        Swal.fire({
-          icon: 'success',
-          title: 'Success!',
-          text: '{{ message }}'
+      function performForumSearch() {
+        const discussionIdValue = searchFields.discussion_id?.value.toLowerCase() || '';
+        const discussionTitleValue = searchFields.discussion_title?.value.toLowerCase() || '';
+        const discussionAuthorValue = searchFields.discussion_author?.value.toLowerCase() || '';
+        
+        const rows = document.querySelectorAll('#discussionsTableBody .discussion-row');
+        let visibleCount = 0;
+        
+        const hasActiveSearch = discussionIdValue || discussionTitleValue || discussionAuthorValue;
+        
+        rows.forEach(row => {
+          const discussionId = row.getAttribute('data-discussion-id')?.toLowerCase() || '';
+          const discussionTitle = row.getAttribute('data-discussion-title')?.toLowerCase() || '';
+          const discussionAuthor = row.getAttribute('data-discussion-author')?.toLowerCase() || '';
+          
+          const showRow = 
+            (!discussionIdValue || discussionId.includes(discussionIdValue)) &&
+            (!discussionTitleValue || discussionTitle.includes(discussionTitleValue)) &&
+            (!discussionAuthorValue || discussionAuthor.includes(discussionAuthorValue));
+          
+          if (showRow) {
+            row.style.display = '';
+            visibleCount++;
+            highlightMatchingForumText(row, discussionIdValue, discussionTitleValue, discussionAuthorValue);
+          } else {
+            row.style.display = 'none';
+          }
         });
-      </script>
-    {% else %}
-      <script>
-        // Display SweetAlert error message
-        Swal.fire({
-          icon: 'error',
-          title: 'Error!',
-          text: '{{ message }}'
+        
+        if (visibleCountSpan) visibleCountSpan.textContent = visibleCount;
+        
+        if (hasActiveSearch) {
+          if (searchResultsSummary) searchResultsSummary.style.display = 'flex';
+        } else {
+          if (searchResultsSummary) searchResultsSummary.style.display = 'none';
+        }
+        
+        if (visibleCount === 0 && hasActiveSearch) {
+          if (noResultsMessage) noResultsMessage.style.display = 'block';
+          if (tableBody) tableBody.style.display = 'none';
+        } else {
+          if (noResultsMessage) noResultsMessage.style.display = 'none';
+          if (tableBody) tableBody.style.display = '';
+        }
+      }
+      
+      function highlightMatchingForumText(row, discussionIdValue, discussionTitleValue, discussionAuthorValue) {
+        const cells = row.querySelectorAll('td');
+        cells.forEach(cell => {
+          if (!cell.querySelector('button')) {
+            const originalText = cell.getAttribute('data-original-text') || cell.textContent;
+            cell.setAttribute('data-original-text', originalText);
+            cell.innerHTML = originalText;
+          }
         });
-      </script>
-    {% endif %}
-  {% endfor %}
-{% endif %}
+        
+        if (discussionTitleValue) {
+          const titleCell = row.querySelector('.discussion-title-cell');
+          highlightText(titleCell, discussionTitleValue);
+        }
+        
+        if (discussionAuthorValue) {
+          const authorCell = row.querySelector('.discussion-author-cell');
+          highlightText(authorCell, discussionAuthorValue);
+        }
+      }
+      
+      function highlightText(element, searchTerm) {
+        if (!element || !searchTerm) return;
+        
+        const originalText = element.getAttribute('data-original-text') || element.textContent;
+        const regex = new RegExp(`(${escapeRegExp(searchTerm)})`, 'gi');
+        const highlightedText = originalText.replace(regex, '<mark style="background-color: #fff3cd; padding: 2px 4px; border-radius: 3px;">$1</mark>');
+        element.innerHTML = highlightedText;
+      }
+      
+      function escapeRegExp(string) {
+        return string.replace(/[.*+?^${}()|[\]\\]/g, '\\      function highlightMatchingForumText(row, discussionIdValue, discussionTitleValue, discussionAuthorValue) {
+        const cells = row.querySelectorAll('td');
+        cells.forEach(cell => {
+          if (!cell.querySelector('button')) {
+            const originalText = cell.getAttribute('data-original-text') || cell.textContent;');
+      }
+    }
+
+    function initializeDataTables() {
+      $('#discussionsTable').DataTable({
+        language: {
+          lengthMenu: '_MENU_',
+          search: '',
+          searchPlaceholder: 'Search discussions...'
+        },
+        lengthMenu: [
+          [10, 25, 50, -1],
+          [10, 25, 50, 'All']
+        ],
+        paging: true,
+        lengthChange: true,
+        autoWidth: false,
+        bInfo: true,
+        bSort: true,
+        responsive: true,
+        buttons: [
+          {
+            text: 'CSV',
+            extend: 'csv',
+            className: 'btn btn-outline-primary btn-sm'
+          },
+          {
+            text: 'PDF',
+            extend: 'pdf',
+            className: 'btn btn-outline-primary btn-sm'
+          }
+        ],
+        dom: '<"row"<"col-md-3"l><"col-md-6"B><"col-md-3"f>>' +
+             '<"row"<"col-md-12"tr>>' +
+             '<"row"<"col-md-5"i><"col-md-7"p>>'
+      });
+    }
+
+    function initializeTabFunctionality() {
+      // Enhanced tab functionality with smooth transitions
+      $('.nav-link[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+        $(e.target.getAttribute('href')).addClass('fade-in');
+      });
+    }
+
+    function confirmDelete(event, element) {
+      event.preventDefault();
+      
+      var deleteUrl = element.getAttribute('href');
+      
+      // Set the confirm button URL
+      document.getElementById('confirmDeleteBtn').href = deleteUrl;
+      
+      // Show the confirmation modal
+      $('#confirmationModal').modal('show');
+      
+      return false;
+    }
+  </script>
+
+  <!-- Enhanced styles for better color contrast and mobile responsiveness -->
+  <style>
+    /* Analytics Overview Section */
+    .analytics-overview {
+      margin-bottom: 2rem;
+    }
+
+    .analytics-cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .analytics-card {
+      background: white;
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      border: 1px solid #e9ecef;
+      transition: all 0.3s ease;
+    }
+
+    .analytics-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    }
+
+    .analytics-header {
+      margin-bottom: 1rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid #e9ecef;
+    }
+
+    .analytics-title {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #2C6E49;
+      margin: 0;
+      display: flex;
+      align-items: center;
+    }
+
+    /* Stats List Styling */
+    .stats-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .stat-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.75rem 0;
+      border-bottom: 1px solid #f1f1f1;
+    }
+
+    .stat-item:last-child {
+      border-bottom: none;
+    }
+
+    .stat-info {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .stat-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .stat-text {
+      font-size: 13px;
+      color: #374151;
+      font-weight: 500;
+    }
+
+    .stat-number {
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    /* Activity List Styling */
+    .activity-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .activity-item {
+      display: flex;
+      align-items: center;
+      padding: 0.75rem;
+      border-radius: 8px;
+      background: #f8f9fa;
+      transition: all 0.3s ease;
+    }
+
+    .activity-item:hover {
+      background: #e9ecef;
+    }
+
+    .activity-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 0.75rem;
+      flex-shrink: 0;
+    }
+
+    .activity-icon i {
+      color: white;
+      font-size: 12px;
+    }
+
+    .activity-content {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .activity-title {
+      font-size: 13px;
+      font-weight: 500;
+      color: #374151;
+      margin-bottom: 0.25rem;
+    }
+
+    .activity-time {
+      font-size: 11px;
+      color: #6B7280;
+    }
+
+    /* Category List Styling */
+    .category-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .category-card {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.75rem;
+      border-radius: 8px;
+      background: #f8f9fa;
+      border: 1px solid #e9ecef;
+      transition: all 0.3s ease;
+    }
+
+    .category-card:hover {
+      background: white;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .category-name {
+      font-size: 13px;
+      color: #374151;
+      font-weight: 500;
+    }
+
+    .category-count {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 4px 8px;
+      border-radius: 12px;
+    }
+
+    .category-count.rice {
+      background: #e3f2fd;
+      color: #1976d2;
+    }
+
+    .category-count.corn {
+      background: #e8f5e8;
+      color: #388e3c;
+    }
+
+    .category-count.aqua {
+      background: #fff3e0;
+      color: #f57c00;
+    }
+
+    .category-count.coconut {
+      background: #fce4ec;
+      color: #c2185b;
+    }
+
+    /* Forum Management Panel */
+    .forum-management-panel {
+      margin-bottom: 2rem;
+    }
+
+    /* Search Container Styles */
+    .search-container {
+      background: #f8f9fa;
+      padding: 20px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+    }
+
+    .search-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .search-field {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .search-label {
+      font-weight: 600;
+      color: #374151;
+      margin-bottom: 8px;
+      font-size: 13px;
+    }
+
+    .search-input-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 12px;
+      color: #6B7280;
+      font-size: 14px;
+      z-index: 2;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 10px 12px 10px 35px;
+      border: 1px solid #e9ecef;
+      border-radius: 6px;
+      font-size: 13px;
+      transition: all 0.3s ease;
+      background: white;
+      color: #374151;
+    }
+
+    .search-input:focus {
+      border-color: #2C6E49;
+      box-shadow: 0 0 0 3px rgba(44, 110, 73, 0.1);
+      outline: none;
+    }
+
+    .search-input::placeholder {
+      color: #9CA3AF;
+    }
+
+    .search-clear {
+      position: absolute;
+      right: 12px;
+      color: #6B7280;
+      cursor: pointer;
+      font-size: 12px;
+      padding: 4px;
+      border-radius: 50%;
+      transition: all 0.3s ease;
+    }
+
+    .search-clear:hover {
+      background: #e9ecef;
+      color: #dc3545;
+    }
+
+    .search-results-summary {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 16px;
+      background: white;
+      border-radius: 6px;
+      border: 1px solid #e9ecef;
+      margin-top: 1rem;
+    }
+
+    .results-text {
+      font-size: 13px;
+      color: #374151;
+      font-weight: 500;
+    }
+
+    /* Custom Tabs Styling */
+    .custom-tabs {
+      border-bottom: 2px solid #e9ecef;
+      margin-bottom: 0;
+    }
+
+    .custom-tabs .nav-link {
+      padding: 12px 20px;
+      border: none;
+      border-radius: 8px 8px 0 0;
+      margin-right: 5px;
+      color: #6B7280;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      background: #f8f9fa;
+    }
+
+    .custom-tabs .nav-link:hover {
+      color: #2C6E49;
+      background: #e9ecef;
+    }
+
+    .custom-tabs .nav-link.active {
+      color: #2C6E49;
+      background: white;
+      border-bottom: 2px solid #2C6E49;
+      font-weight: 600;
+    }
+
+    .custom-tab-content {
+      padding: 20px;
+      background: white;
+      border-radius: 0 0 12px 12px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Enhanced table styles matching users.html */
+    .accounts-table {
+      background: white;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .accounts-table thead th {
+      background-color: #2C6E49 !important;
+      color: #fff !important;
+      border: none;
+      padding: 15px;
+      font-weight: 600;
+      text-align: left;
+      font-size: 13px;
+    }
+
+    .accounts-table tbody tr {
+      transition: all 0.3s ease;
+    }
+
+    .accounts-table tbody tr:hover {
+      background-color: #f8f9fa;
+    }
+
+    .accounts-table tbody td {
+      padding: 12px 15px;
+      vertical-align: middle;
+      font-size: 12px;
+      color: #374151;
+    }
+
+    /* Action button styles */
+    .action-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 5px;
+      flex-wrap: wrap;
+    }
+
+    .btn-sm {
+      padding: 6px 10px;
+      font-size: 11px;
+      border-radius: 4px;
+      transition: all 0.3s ease;
+    }
+
+    .btn-warning {
+      background-color: #ffc107;
+      border-color: #ffc107;
+      color: #000;
+    }
+
+    .btn-warning:hover {
+      background-color: #e0a800;
+      border-color: #d39e00;
+      transform: translateY(-1px);
+    }
+
+    .btn-info {
+      background-color: #17a2b8;
+      border-color: #17a2b8;
+      color: #fff;
+    }
+
+    .btn-info:hover {
+      background-color: #138496;
+      border-color: #117a8b;
+      transform: translateY(-1px);
+    }
+
+    .btn-danger {
+      background-color: #dc3545;
+      border-color: #dc3545;
+      color: #fff;
+    }
+
+    .btn-danger:hover {
+      background-color: #c82333;
+      border-color: #bd2130;
+      transform: translateY(-1px);
+    }
+
+    .btn-success {
+      background-color: #28a745;
+      border-color: #28a745;
+      color: #fff;
+    }
+
+    .btn-success:hover {
+      background-color: #218838;
+      border-color: #1e7e34;
+      transform: translateY(-1px);
+    }
+
+    /* Custom card styling */
+    .custom-card {
+      box-shadow: 0 6px 24px rgba(44, 110, 73, 0.15);
+      border: 1.5px solid #2C6E49;
+      border-radius: 12px;
+    }
+
+    /* Warning stat change color */
+    .stat-change.warning {
+      color: #ffa726;
+    }
+
+    /* Custom scrollbar */
+    .table-container::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+
+    .table-container::-webkit-scrollbar-track {
+      background: #f1f1f1;
+      border-radius: 4px;
+    }
+
+    .table-container::-webkit-scrollbar-thumb {
+      background: #c1c1c1;
+      border-radius: 4px;
+    }
+
+    .table-container::-webkit-scrollbar-thumb:hover {
+      background: #a8a8a8;
+    }
+
+    /* Mobile Responsive Design */
+    @media (max-width: 1200px) {
+      .analytics-cards-grid {
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 1rem;
+      }
+    }
+
+    @media (max-width: 768px) {
+      /* Dashboard header adjustments */
+      .dashboard-header {
+        text-align: center;
+        padding: 1rem;
+      }
+      
+      .dashboard-title {
+        font-size: 1.5rem;
+      }
+      
+      .dashboard-subtitle {
+        font-size: 0.875rem;
+      }
+
+      /* Stats grid mobile layout */
+      .stats-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+
+      /* Analytics cards mobile layout */
+      .analytics-cards-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .analytics-card {
+        padding: 1rem;
+      }
+      
+      /* Search grid mobile layout */
+      .search-grid {
+        grid-template-columns: 1fr;
+        gap: 0.75rem;
+      }
+      
+      .search-container {
+        padding: 15px;
+      }
+      
+      /* Chart controls mobile */
+      .chart-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+      }
+      
+      .chart-title {
+        font-size: 1.125rem;
+      }
+      
+      /* Custom tabs mobile */
+      .custom-tabs .nav-link {
+        padding: 8px 12px;
+        font-size: 12px;
+        margin-right: 3px;
+      }
+
+      .custom-tab-content {
+        padding: 15px;
+      }
+      
+      /* Action buttons mobile layout */
+      .action-buttons {
+        flex-direction: column;
+        gap: 3px;
+      }
+      
+      .btn-sm {
+        width: 100%;
+        min-width: 60px;
+      }
+      
+      /* Table container mobile */
+      .table-container {
+        font-size: 11px;
+        max-height: 400px;
+      }
+      
+      .accounts-table {
+        min-width: 700px;
+      }
+      
+      .accounts-table thead th {
+        padding: 10px 8px;
+        font-size: 11px;
+      }
+      
+      .accounts-table tbody td {
+        padding: 8px;
+      }
+
+      /* Activity items mobile */
+      .activity-item {
+        padding: 0.5rem;
+      }
+
+      .activity-icon {
+        width: 28px;
+        height: 28px;
+        margin-right: 0.5rem;
+      }
+
+      .category-card {
+        padding: 0.5rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      /* Extra small screens */
+      .custom-card {
+        padding: 1rem;
+      }
+      
+      .table-container {
+        max-height: 350px;
+      }
+      
+      .search-results-summary {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+      }
+      
+      .results-text {
+        font-size: 12px;
+      }
+      
+      /* Stat cards mobile */
+      .stat-card {
+        padding: 1rem;
+      }
+      
+      .stat-value {
+        font-size: 1.5rem;
+      }
+      
+      .stat-label {
+        font-size: 0.75rem;
+      }
+
+      /* Analytics cards extra small */
+      .analytics-card {
+        padding: 0.75rem;
+      }
+
+      .analytics-title {
+        font-size: 0.875rem;
+      }
+
+      .stat-text,
+      .activity-title,
+      .category-name {
+        font-size: 12px;
+      }
+
+      .activity-time {
+        font-size: 10px;
+      }
+    }
+
+    /* Tablet landscape adjustments */
+    @media (min-width: 769px) and (max-width: 1024px) {
+      .analytics-cards-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.25rem;
+      }
+      
+      .search-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      
+      .accounts-table {
+        min-width: 800px;
+      }
+    }
+
+    /* Focus indicators for accessibility */
+    .search-input:focus,
+    .btn:focus,
+    .nav-link:focus {
+      outline: 2px solid #2C6E49;
+      outline-offset: 2px;
+    }
+
+    /* High contrast mode support */
+    @media (prefers-contrast: high) {
+      .stat-card,
+      .analytics-card,
+      .category-card,
+      .activity-item {
+        border: 2px solid #374151;
+      }
+    }
+
+    /* Reduced motion support */
+    @media (prefers-reduced-motion: reduce) {
+      .stat-card,
+      .analytics-card,
+      .accounts-table tbody tr,
+      .btn-sm,
+      .activity-item,
+      .category-card {
+        animation: none;
+        transition: none;
+      }
+    }
+
+    /* Print styles */
+    @media print {
+      .search-container,
+      .chart-controls,
+      .action-buttons,
+      .custom-tabs {
+        display: none;
+      }
+      
+      .analytics-cards-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .accounts-table {
+        font-size: 10px;
+      }
+      
+      .dashboard-header {
+        margin-bottom: 1rem;
+      }
+    }
+  </style>
 {% endblock %}

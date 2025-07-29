@@ -4,727 +4,1255 @@
 {% block title %}
   Admin Accounts Management
 {% endblock %}
+
 {% block stylesheet %}
-  <link rel="stylesheet" href="{% static 'style/css/admin.accounts.css' %}" />
+
 {% endblock %}
 
 {% block content %}
-  <div class="masonry-item col-12">
-    <div class="bd bgc-white">
-      <div class="peers fxw-nw@lg+ ai-s">
-        <div class="peer peer-greed w-70p@lg+ w-100@lg- p-20">
-          <div class="layers container">
-            <div class="layer w-100 mB-10">
-              <h5 class="lh-1">Accounts Table</h5>
-              <div class="row">
-                <div class="col-12">
-                  <form action="#" method="POST" class="form-search">
-                    {% csrf_token %}
-                    <input type="text" id="search_user_id" name="search_user_id" class="form-control" placeholder="Search by User ID" />
-                    <input type="text" id="search_name" name="search_name" class="form-control" placeholder="Search by Name" />
-                    <input type="text" id="search_institution" name="search_institution" class="form-control" placeholder="Search by Institution" />
-                    <button type="button" id="searchButton" class="btn btn-primary">Search</button>
-                  </form>
-                </div>
-              </div>
-            </div>
-            <br />
-            <div class="layer w-100">
-              <div class="table-container" style="max-height: 500px; overflow-y: auto; width: 100%;">
-                <table id="accountsTable" class="accounts-table table table-bordered" style="width: 100%; min-width: 600px;">
-                  <thead style="font-size: 13px; font-weight: bolder;">
-                    <tr>
-                      <th style="width: 8px;">User ID</th>
-                      <th>Name</th>
-                      <th>Date Joined</th>
-                      <th>Email</th>
-                      <th>Institution</th>
-                      <th>Status</th>
-                      <th>Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody style="font-size: 12px;">
-                    {% for user in users %}
-                      <tr style="border-bottom: 1px solid #ddd;">
-                        <td style="border-bottom: 1px solid #ddd; text-align: center;">{{ user.id }}</td>
-                        <td style="border-bottom: 1px solid #ddd;">
-                          {{ user.first_name|capfirst }} {% if user.middle_name %}{{ user.middle_name|capfirst }}{% endif %} {{ user.last_name|capfirst }}
-                        </td>
-                        <td style="border-bottom: 1px solid #ddd;">{{ user.date_joined|date:'Y-m-d' }}</td>
-                        <td style="border-bottom: 1px solid #ddd;">{{ user.email }}</td>
-                        <td style="border-bottom: 1px solid #ddd;">{{ user.institution }}</td>
-                        <td style="border-bottom: 1px solid #ddd;">
-                          <div style="display: flex; justify-content: center; gap: 5px;">
-                            {% if user.is_active %}
-                              <span style="background-color: #698474; color: #fff; padding: 3px 7px 3px 7px; border-radius: 7px;">Activated</span>
-                            {% else %}
-                              <span style="background-color: orangered; color: #fff; padding: 3px 10px 3px 10px; border-radius: 7px;">Pending</span>
-                            {% endif %}
-                          </div>
-                        </td>
-                        <td style="border-bottom: 1px solid #ddd;">
-                          <div style="display: flex; justify-content: center; gap: 5px;">
-                            <button type="button" style="background-color: #FF8F00; color: #FEFBF6;" class="btn btn-sm edit-btn" data-toggle="modal" data-target="#editAccountModal" data-userid="{{ user.id }}" data-firstname="{{ user.first_name|capfirst }}" data-middlename="{% if user.middle_name %}{{ user.middle_name|capfirst }}{% endif %}" data-lastname="{{ user.last_name|capfirst }}" data-datejoined="{{ user.date_joined|date:'Y-m-d' }}" data-email="{{ user.email }}" data-institution="{{ user.institution }}" data-position="{{ user.position|capfirst }}" data-usertype="{{ user.user_type|capfirst }}" data-sex="{% if user.sex %}{{ user.sex|capfirst }}{% endif %}" data-gender="{% if user.gender %}{{ user.gender }}{% endif %}" data-birthdate="{{ user.date_birth|date:'Y-m-d' }}" data-contactnum="{% if user.contact_num %}{{ user.contact_num }}{% endif %}" data-highesteduc="{{ user.highest_educ|capfirst }}s Degree" data-specialization="{% if user.specialization %}{{ user.specialization|capfirst }}{% endif %}">Update</button>
+  <!-- Page Header -->
+  <div class="dashboard-header">
+    <h1 class="dashboard-title">User Management</h1>
+    <p class="dashboard-subtitle">Manage user accounts and permissions</p>
+  </div>
 
-                            <button type="button" style="background-color: #0C356A; color: #FEFBF6;" class="btn btn-sm view-btn" data-toggle="modal" data-target="#viewAccountModal" data-userid="{{ user.id }}" data-firstname="{{ user.first_name|capfirst }}" data-middlename="{% if user.middle_name %}{{ user.middle_name|capfirst }}{% endif %}" data-lastname="{{ user.last_name|capfirst }}" data-datejoined="{{ user.date_joined|date:'Y-m-d' }}" data-email="{{ user.email }}" data-institution="{{ user.institution }}" data-position="{{ user.position|capfirst }}" data-usertype="{{ user.user_type|capfirst }} User" data-sex="{% if user.sex %}{{ user.sex|capfirst }}{% endif %}" data-gender="{% if user.gender %}{{ user.gender }}{% endif %}" data-birthdate="{{ user.date_birth|date:'Y-m-d' }}" data-contactnum="{% if user.contact_num %}{{ user.contact_num }}{% endif %}" data-highesteduc="{{ user.highest_educ|capfirst }}s Degree" data-specialization="{% if user.specialization %}{{ user.specialization|capfirst }}{% endif %}">View</button>
-
-                            <a data-placement="top" style="background-color: #D71313; color: #FEFBF6;" data-toggle="tooltip" title="delete" href="" class="btn btn-sm delete-btn">Delete</a>
-                          </div>
-                        </td>
-                      </tr>
-                    {% endfor %}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
+  <!-- Enhanced Analytics Dashboard -->
+  <div class="analytics-dashboard">
+    <!-- Overview Stats Cards -->
+    <div class="stats-overview">
+      <div class="stat-card total-users">
+        <div class="stat-icon">
+          <i class="fas fa-users"></i>
         </div>
+        <div class="stat-content">
+          <div class="stat-number">{{ users|length }}</div>
+          <div class="stat-label">Total Users</div>
+        </div>
+      </div>
 
-        <div class="peer bdL p-20 w-30p@lg+ w-100p@lg-">
-          <div class="layers">
-            <div class="layer w-100">
-              <div class="layers">
-                <div class="layer w-100">
-                  <h5 class="mB-5">Accounts Distribution</h5>
-                </div>
-              </div>
-              <div class="peers pT-20 mT-20 bdT fxw-nw@lg+ jc-sb ta-c gap-10">
-                <div class="peer">
-                  <div id="generalUserChart" class="user-chart-pie" data-percent="{{ gen_user_percent }}">
-                    <span>{{ gen_user_percent }}%</span>
-                  </div>
-                  <h6 class="fsz-sm">General Users ({{ total_gen_user }})</h6>
-                </div>
-                <div class="peer">
-                  <div id="cmiUserChart" class="user-chart-pie" data-percent="{{ cmi_user_percent }}">
-                    <span>{{ cmi_user_percent }}%</span>
-                  </div>
-                  <h6 class="fsz-sm">CMI Users ({{ total_cmi_user }})</h6>
-                </div>
-                <div class="peer">
-                  <div id="secretariatUserChart" class="user-chart-pie" data-percent="{{ sec_user_percent }}">
-                    <span>{{ sec_user_percent }}%</span>
-                  </div>
-                  <h6 class="fsz-sm">Secretariat ({{ total_sec_user }})</h6>
-                </div>
-              </div>
+      <div class="stat-card cmi-users">
+        <div class="stat-icon">
+          <i class="fas fa-building"></i>
+        </div>
+        <div class="stat-content">
+          <div class="stat-number">{{ total_cmi_user|length }}</div>
+          <div class="stat-label">CMI Users</div>
+        </div>
+      </div>
 
-              <div class="peers pT-20 mT-20 bdT fxw-nw@lg+ jc-sb ta-c gap-10">
-                <h5 class="mB-5">Institution Distribution (Display only top 5)</h5>
-              </div>
-
-              {% for institution in top_institutions %}
-                <div class="layer w-100 mT-15">
-                  <small class="fw-600 c-grey-700">{{ institution.institution }}</small>
-                  <span class="pull-right c-grey-600 fsz-sm">{{ institution.percentage }}%</span>
-                  <div class="progress mT-10">
-                    <div class="progress-bar" role="progressbar" aria-valuenow="{{ institution.percentage }}" aria-valuemin="0" aria-valuemax="100" style="width:{{ institution.percentage }}%; background-color: #678171;">
-                      <span class="visually-hidden">{{ institution.percentage }}% Complete</span>
-                    </div>
-                  </div>
-                </div>
-              {% endfor %}
-            </div>
-          </div>
+      <div class="stat-card secretariat-users">
+        <div class="stat-icon">
+          <i class="fas fa-user-tie"></i>
+        </div>
+        <div class="stat-content">
+          <div class="stat-number">{{ total_secre_user|length }}</div>
+          <div class="stat-label">Secretariat</div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Add User Modal -->
-  <div class="modal fade" id="accountRegistrationModal" tabindex="-1" role="dialog" aria-labelledby="accountRegistrationModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="accountRegistrationModalLabel">Add New User</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
+  <!-- Main User Management Panel -->
+  <div class="user-management-panel">
+    <div class="chart-card custom-card">
+      <div class="chart-header">
+        <h3 class="chart-title">User Accounts</h3>
+        <div class="chart-controls">
+          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#accountRegistrationModal"><i class="fas fa-plus"></i> Add User</button>
         </div>
-        <form action="" method="POST">
-          {% csrf_token %}
-          <div class="modal-body">
-            <!-- Personal Information Fieldset -->
-            <div class="fieldset">
-              <legend class="legend">Personal Information</legend>
-              <div class="row">
-                <div class="col-md-4 mb-3">
-                  <label for="first_name">First Name</label>
-                  <input type="text" class="form-control" id="first_name" name="first_name" required>
-                </div>
-                <div class="col-md-4 mb-3">
-                  <label for="middle_name">Middle Name</label>
-                  <input type="text" class="form-control" id="middle_name" name="middle_name">
-                </div>
-                <div class="col-md-4 mb-3">
-                  <label for="last_name">Last Name</label>
-                  <input type="text" class="form-control" id="last_name" name="last_name" required>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-6 mb-3">
-                  <label for="sex">Biological Sex</label>
-                  <select class="form-control" id="sex" name="sex" required>
-                    <option value="">Select</option>
-                    <option value="male">Male</option>
-                    <option value="female">Female</option>
-                  </select>
-                </div>
-                <div class="col-md-6 mb-3">
-                  <label for="gender">Gender</label>
-                  <select class="form-control" id="gender" name="gender">
-                    <option value="">Select</option>
-                    <option value="male">Male</option>
-                    <option value="female">Female</option>
-                    <option value="non-binary">Non-Binary</option>
-                    <option value="other">Other</option>
-                  </select>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-6 mb-3">
-                  <label for="date_birth">Date of Birth</label>
-                  <input type="date" class="form-control" id="date_birth" name="date_birth">
-                </div>
-                <div class="col-md-6 mb-3">
-                  <label for="contact_num">Contact Number</label>
-                  <input type="text" class="form-control" id="contact_num" name="contact_num">
-                </div>
-              </div>
-            </div>
-            
-            <!-- Account Information Fieldset -->
-            <div class="fieldset">
-              <legend class="legend">Account Information</legend>
-              <div class="row">
-                <div class="col-md-12 mb-3">
-                  <label for="email">Email</label>
-                  <input type="email" class="form-control" id="email" name="email" required>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-6 mb-3">
-                  <label for="user_type">User Type</label>
-                  <select class="form-control" id="user_type" name="user_type" required>
-                    <option value="">Select</option>
-                    <option value="general">General User</option>
-                    <option value="cmi">CMI User</option>
-                    <option value="secretariat">Secretariat</option>
-                  </select>
-                </div>
-                <div class="col-md-6 mb-3">
-                  <label for="password">Password</label>
-                  <input type="password" class="form-control" id="password" name="password" required>
-                </div>
-              </div>
-            </div>
-            
-            <!-- Professional Information Fieldset -->
-            <div class="fieldset">
-              <legend class="legend">Professional Information</legend>
-              <div class="row">
-                <div class="col-md-12 mb-3">
-                  <label for="institution">Institution</label>
-                  <input type="text" class="form-control" id="institution" name="institution" required>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-6 mb-3">
-                  <label for="position">Position</label>
-                  <input type="text" class="form-control" id="position" name="position">
-                </div>
-                <div class="col-md-6 mb-3">
-                  <label for="highest_educ">Highest Education</label>
-                  <select class="form-control" id="highest_educ" name="highest_educ">
-                    <option value="">Select</option>
-                    <option value="high_school">High School</option>
-                    <option value="associate">Associate's</option>
-                    <option value="bachelor">Bachelor's</option>
-                    <option value="master">Master's</option>
-                    <option value="doctoral">Doctoral</option>
-                  </select>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-12 mb-3">
-                  <label for="specialization">Specialization</label>
-                  <input type="text" class="form-control" id="specialization" name="specialization">
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-primary">Save</button>
-          </div>
-        </form>
       </div>
-    </div>
-  </div>
-  
-  <!-- View User Modal -->
-  <div class="modal fade" id="viewAccountModal" tabindex="-1" role="dialog" aria-labelledby="viewAccountModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="viewAccountModalLabel">User Details</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <form>
-            <!-- User Information -->
-            <div class="fieldset">
-              <legend class="legend">Personal Information</legend>
-              <div class="row">
-                <div class="col-md-4 mb-3">
-                  <label for="first_name">First Name</label>
-                  <input type="text" class="form-control view-modal" id="first_name" readonly>
-                </div>
-                <div class="col-md-4 mb-3">
-                  <label for="middle_name">Middle Name</label>
-                  <input type="text" class="form-control view-modal" id="middle_name" readonly>
-                </div>
-                <div class="col-md-4 mb-3">
-                  <label for="last_name">Last Name</label>
-                  <input type="text" class="form-control view-modal" id="last_name" readonly>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-6 mb-3">
-                  <label for="sex">Biological Sex</label>
-                  <input type="text" class="form-control view-modal" id="sex" readonly>
-                </div>
-                <div class="col-md-6 mb-3">
-                  <label for="gender">Gender</label>
-                  <input type="text" class="form-control view-modal" id="gender" readonly>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-6 mb-3">
-                  <label for="date_birth">Date of Birth</label>
-                  <input type="text" class="form-control view-modal" id="date_birth" readonly>
-                </div>
-                <div class="col-md-6 mb-3">
-                  <label for="contact_num">Contact Number</label>
-                  <input type="text" class="form-control view-modal" id="contact_num" readonly>
-                </div>
-              </div>
-            </div>
 
-            <!-- Account Information -->
-            <div class="fieldset">
-              <legend class="legend">Account Information</legend>
-              <div class="row">
-                <div class="col-md-12 mb-3">
-                  <label for="email">Email</label>
-                  <input type="email" class="form-control view-modal" id="email" readonly>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-6 mb-3">
-                  <label for="user_type">User Type</label>
-                  <input type="text" class="form-control view-modal" id="user_type" readonly>
-                </div>
-                <div class="col-md-6 mb-3">
-                  <label for="id">User ID</label>
-                  <input type="text" class="form-control view-modal" id="id" readonly>
-                </div>
-              </div>
+      <!-- Real-time Search Form -->
+      <div class="search-container" style="margin-bottom: 20px;">
+        <div class="search-grid">
+          <div class="search-field">
+            <label for="search_user_id" class="search-label">User ID</label>
+            <div class="search-input-wrapper">
+              <i class="fas fa-search search-icon"></i>
+              <input type="text" id="search_user_id" name="search_user_id" class="search-input" placeholder="Search by User ID" />
+              <span class="search-clear" id="clear_user_id" style="display: none;"><i class="fas fa-times"></i></span>
             </div>
+          </div>
 
-            <!-- Professional Information -->
-            <div class="fieldset">
-              <legend class="legend">Professional Information</legend>
-              <div class="row">
-                <div class="col-md-12 mb-3">
-                  <label for="institution">Institution</label>
-                  <input type="text" class="form-control view-modal" id="institution" readonly>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-6 mb-3">
-                  <label for="position">Position</label>
-                  <input type="text" class="form-control view-modal" id="position" readonly>
-                </div>
-                <div class="col-md-6 mb-3">
-                  <label for="highest_educ">Highest Education</label>
-                  <input type="text" class="form-control view-modal" id="highest_educ" readonly>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-12 mb-3">
-                  <label for="specialization">Specialization</label>
-                  <input type="text" class="form-control view-modal" id="specialization" readonly>
-                </div>
-              </div>
+          <div class="search-field">
+            <label for="search_name" class="search-label">Name</label>
+            <div class="search-input-wrapper">
+              <i class="fas fa-search search-icon"></i>
+              <input type="text" id="search_name" name="search_name" class="search-input" placeholder="Search by Name" />
+              <span class="search-clear" id="clear_name" style="display: none;"><i class="fas fa-times"></i></span>
             </div>
-          </form>
+          </div>
+
+          <div class="search-field">
+            <label for="search_institution" class="search-label">Institution</label>
+            <div class="search-input-wrapper">
+              <i class="fas fa-search search-icon"></i>
+              <input type="text" id="search_institution" name="search_institution" class="search-input" placeholder="Search by Institution" />
+              <span class="search-clear" id="clear_institution" style="display: none;"><i class="fas fa-times"></i></span>
+            </div>
+          </div>
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+        <!-- Search Results Summary -->
+        <div class="search-results-summary" id="searchResultsSummary" style="display: none;">
+          <span class="results-text">Showing <span id="visibleCount">0</span> of <span id="totalCount">0</span> users</span>
+          <button type="button" class="btn btn-sm btn-outline-secondary" id="clearAllFilters"><i class="fas fa-times"></i> Clear All</button>
+        </div>
+      </div>
+
+      <!-- Users Table -->
+      <div class="table-container" style="max-height: 500px; overflow-y: auto; overflow-x: auto; width: 100%;">
+        <table id="accountsTable" class="accounts-table table table-bordered theme-header" style="width: 100%; min-width: 800px;">
+          <thead style="font-size: 13px; font-weight: bolder; background-color: #2C6E49; color: #fff;">
+            <tr>
+              <th style="width: 80px; min-width: 80px;">User ID</th>
+              <th style="min-width: 200px;">Name</th>
+              <th style="min-width: 120px;">Date Joined</th>
+              <th style="min-width: 200px;">Email</th>
+              <th style="min-width: 180px;">Institution</th>
+              <th style="width: 100px; min-width: 100px;">Status</th>
+              <th style="width: 180px; min-width: 180px;">Actions</th>
+            </tr>
+          </thead>
+          <tbody style="font-size: 12px;" id="usersTableBody">
+            {% for user in users %}
+              <tr class="user-row" data-user-id="{{ user.id }}" data-user-name="{{ user.first_name|capfirst }} {% if user.middle_name %}{{ user.middle_name|capfirst }}{% endif %} {{ user.last_name|capfirst }}" data-user-institution="{{ user.institution }}" style="border-bottom: 1px solid #ddd;">
+                <td style="border-bottom: 1px solid #ddd; text-align: center;">{{ user.id }}</td>
+                <td style="border-bottom: 1px solid #ddd;" class="user-name-cell">
+                  {{ user.first_name|capfirst }} {% if user.middle_name %}{{ user.middle_name|capfirst }}{% endif %} {{ user.last_name|capfirst }}
+                </td>
+                <td style="border-bottom: 1px solid #ddd;">{{ user.date_joined|date:'Y-m-d' }}</td>
+                <td style="border-bottom: 1px solid #ddd;" class="user-email-cell">{{ user.email }}</td>
+                <td style="border-bottom: 1px solid #ddd;" class="user-institution-cell">{{ user.institution }}</td>
+                <td style="border-bottom: 1px solid #ddd;">
+                  <div style="display: flex; justify-content: center; gap: 5px;">
+                    {% if user.is_active %}
+                      <span class="status-badge status-active">Activated</span>
+                    {% else %}
+                      <span class="status-badge status-pending">Pending</span>
+                    {% endif %}
+                  </div>
+                </td>
+                <td style="border-bottom: 1px solid #ddd;">
+                  <div class="action-buttons" style="display: flex; justify-content: center; gap: 5px; flex-wrap: wrap;">
+                    <button type="button" class="btn btn-sm btn-warning edit-btn" data-toggle="modal" data-target="#editAccountModal" title="Edit User"><i class="fas fa-edit"></i></button>
+                    <button type="button" class="btn btn-sm btn-info view-btn" data-toggle="modal" data-target="#viewAccountModal" title="View User"><i class="fas fa-eye"></i></button>
+                    <button type="button" class="btn btn-sm btn-danger delete-btn" data-toggle="tooltip" title="Delete User" onclick="confirmDeleteUser({{ user.id }}, '{{ user.first_name|capfirst }} {{ user.last_name|capfirst }}')"><i class="fas fa-trash"></i></button>
+                  </div>
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+
+        <!-- No Results Message -->
+        <div id="noResultsMessage" style="display: none; text-align: center; padding: 40px; color: #6c757d;">
+          <i class="fas fa-search fa-3x" style="margin-bottom: 20px; opacity: 0.5;"></i>
+          <h5>No users found</h5>
+          <p>Try adjusting your search criteria or clear filters to view all users.</p>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Edit User Modal -->
-  <div class="modal fade" id="editAccountModal" tabindex="-1" role="dialog" aria-labelledby="editAccountModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="editAccountModalLabel">Edit User</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <form id="editAccountForm" method="POST">
-          {% csrf_token %}
-          <div class="modal-body">
-            <!-- Personal Information -->
-            <div class="fieldset">
-              <legend class="legend">Personal Information</legend>
-              <div class="row">
-                <div class="col-md-4 mb-3">
-                  <label for="first_name">First Name</label>
-                  <input type="text" class="form-control" id="first_name" name="first_name" required>
-                </div>
-                <div class="col-md-4 mb-3">
-                  <label for="middle_name">Middle Name</label>
-                  <input type="text" class="form-control" id="middle_name" name="middle_name">
-                </div>
-                <div class="col-md-4 mb-3">
-                  <label for="last_name">Last Name</label>
-                  <input type="text" class="form-control" id="last_name" name="last_name" required>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-6 mb-3">
-                  <label for="sex">Biological Sex</label>
-                  <select class="form-control" id="sex" name="sex">
-                    <option value="">Select</option>
-                    <option value="male">Male</option>
-                    <option value="female">Female</option>
-                  </select>
-                </div>
-                <div class="col-md-6 mb-3">
-                  <label for="gender">Gender</label>
-                  <select class="form-control" id="gender" name="gender">
-                    <option value="">Select</option>
-                    <option value="male">Male</option>
-                    <option value="female">Female</option>
-                    <option value="non-binary">Non-Binary</option>
-                    <option value="other">Other</option>
-                  </select>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-6 mb-3">
-                  <label for="date_birth">Date of Birth</label>
-                  <input type="date" class="form-control" id="date_birth" name="date_birth">
-                </div>
-                <div class="col-md-6 mb-3">
-                  <label for="contact_num">Contact Number</label>
-                  <input type="text" class="form-control" id="contact_num" name="contact_num">
-                </div>
-              </div>
-            </div>
-
-            <!-- Account Information -->
-            <div class="fieldset">
-              <legend class="legend">Account Information</legend>
-              <div class="row">
-                <div class="col-md-12 mb-3">
-                  <label for="email">Email</label>
-                  <input type="email" class="form-control" id="email" name="email" required>
-                  <input type="hidden" id="id" name="id">
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-12 mb-3">
-                  <label for="user_type">User Type</label>
-                  <select class="form-control" id="user_type" name="user_type" required>
-                    <option value="">Select</option>
-                    <option value="general">General User</option>
-                    <option value="cmi">CMI User</option>
-                    <option value="secretariat">Secretariat</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-
-            <!-- Professional Information -->
-            <div class="fieldset">
-              <legend class="legend">Professional Information</legend>
-              <div class="row">
-                <div class="col-md-12 mb-3">
-                  <label for="institution">Institution</label>
-                  <input type="text" class="form-control" id="institution" name="institution" required>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-6 mb-3">
-                  <label for="position">Position</label>
-                  <input type="text" class="form-control" id="position" name="position">
-                </div>
-                <div class="col-md-6 mb-3">
-                  <label for="highest_educ">Highest Education</label>
-                  <select class="form-control" id="highest_educ" name="highest_educ">
-                    <option value="">Select</option>
-                    <option value="high_school">High School</option>
-                    <option value="associate">Associate's</option>
-                    <option value="bachelor">Bachelor's</option>
-                    <option value="master">Master's</option>
-                    <option value="doctoral">Doctoral</option>
-                  </select>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-12 mb-3">
-                  <label for="specialization">Specialization</label>
-                  <input type="text" class="form-control" id="specialization" name="specialization">
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-primary">Save Changes</button>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
+  {% include 'modal/users/add-users.html' %}
+  {% include 'modal/users/view-users.html' %}
+  {% include 'modal/users/edit-users.html' %}
 {% endblock %}
 
 {% block script %}
-  <!-- Include easy-pie-chart library -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/easy-pie-chart/2.1.6/jquery.easypiechart.min.js"></script>
+  <!-- Chart.js for better charts -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
   <script>
-    document.addEventListener('DOMContentLoaded', function () {
-      // Initialize the pie charts using jQuery
-      $('.user-chart-pie').each(function() {
-        const $this = $(this);
-        const percent = $this.data('percent');
-        const barColor = $this.attr('id') === 'generalUserChart' ? '#f44336' : 
-                         $this.attr('id') === 'cmiUserChart' ? '#2196f3' : '#ff9800';
-                         
-        $this.easyPieChart({
-          size: 80,
-          barColor: barColor,
-          scaleColor: false,
-          trackColor: '#e5e5e5',
-          lineWidth: 5,
-          lineCap: 'round',
-          animate: 1000
-        });
-      });
-      
-      // Function to handle user deletion confirmation
-      $('.delete-btn').on('click', function(event) {
-        event.preventDefault(); // Prevent the default link behavior
-        
-        const deleteUrl = $(this).attr('href');
-        
-        Swal.fire({
-          title: 'Are you sure?',
-          text: 'Do you really want to delete this user? This action cannot be undone.',
-          icon: 'warning',
-          showCancelButton: true,
-          confirmButtonColor: '#3085d6',
-          cancelButtonColor: '#d33',
-          confirmButtonText: 'Yes, delete it!'
-        }).then((result) => {
-          if (result.isConfirmed) {
-            // If confirmed, proceed with the deletion
-            window.location.href = deleteUrl;
-          }
-        });
-      });
-      
-      // Initialize the DataTable
-      const accountsTable = $('#accountsTable').DataTable({
-        language: {
-          lengthMenu: 'Show _MENU_ entries',
-          search: '',
-          searchPlaceholder: 'Search...'
+document.addEventListener('DOMContentLoaded', function () {
+    // Initialize Charts
+    initializeCharts();
+    
+    // Search functionality
+    initializeSearch();
+    
+    // Modal handlers
+    initializeModals();
+});
+
+function initializeCharts() {
+    // User Distribution Donut Chart
+    const distributionCtx = document.getElementById('userDistributionChart').getContext('2d');
+    const distributionChart = new Chart(distributionCtx, {
+        type: 'doughnut',
+        data: {
+            labels: ['General Users', 'CMI Users', 'Secretariat'],
+            datasets: [{
+                data: [{{ total_gen_user }}, {{ total_cmi_user }}, {{ total_sec_user }}],
+                backgroundColor: [
+                    '#28a745',
+                    '#007bff', 
+                    '#ffc107'
+                ],
+                borderWidth: 0,
+                cutout: '70%'
+            }]
         },
-        lengthMenu: [
-          [7, 10, 25, -1],
-          [7, 10, 25, 'All']
-        ],
-        paging: true,
-        lengthChange: true,
-        autoWidth: false,
-        bInfo: true,
-        bSort: true,
-        responsive: true,
-        buttons: [
-          {
-            text: 'CSV',
-            extend: 'csv',
-            className: 'btn-sm'
-          },
-          {
-            text: 'PDF',
-            extend: 'pdf',
-            className: 'btn-sm'
-          },
-          {
-            text: 'ADD',
-            className: 'btn btn-primary btn-sm',
-            action: function () {
-              $('#accountRegistrationModal').modal('show');
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: false
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            const label = context.label || '';
+                            const value = context.raw;
+                            const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                            const percentage = Math.round((value / total) * 100);
+                            return `${label}: ${value} (${percentage}%)`;
+                        }
+                    }
+                }
+            },
+            animation: {
+                animateRotate: true,
+                duration: 2000
             }
-          }
-        ],
-        dom:
-          '<"row"<"col-md-3"l><"col-md-9 text-right"B>>' +
-          '<"row"<"col-md-12"tr>>' +
-          '<"row"<"col-md-5"i><"col-md-7"p>>'
-      });
-      
-      // Ensure proper styling for DataTable elements
-      $('.dataTables_length').addClass('float-left d-inline-block').css('width', 'auto');
-      $('.dt-buttons').addClass('float-right d-inline-block');
-      
-      // Custom search functionality
-      $('#searchButton').on('click', function() {
-        filterTable();
-      });
-      
-      // Also filter when user types in any of the search fields
-      $('#search_user_id, #search_name, #search_institution').on('keyup', function() {
-        filterTable();
-      });
-      
-      // Function to handle table filtering
-      function filterTable() {
-        const userId = $('#search_user_id').val().toLowerCase();
-        const name = $('#search_name').val().toLowerCase();
-        const institution = $('#search_institution').val().toLowerCase();
+        }
+    });
+
+    // Activity Timeline Chart
+    const activityCtx = document.getElementById('activityChart').getContext('2d');
+    const activityChart = new Chart(activityCtx, {
+        type: 'line',
+        data: {
+            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+            datasets: [{
+                label: 'New Users',
+                data: [12, 19, 8, 15, 20, 25],
+                borderColor: '#007bff',
+                backgroundColor: 'rgba(0, 123, 255, 0.1)',
+                borderWidth: 3,
+                fill: true,
+                tension: 0.4,
+                pointBackgroundColor: '#007bff',
+                pointBorderColor: '#ffffff',
+                pointBorderWidth: 2,
+                pointRadius: 6
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: false
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    grid: {
+                        color: 'rgba(0, 0, 0, 0.1)'
+                    },
+                    ticks: {
+                        font: {
+                            size: 12
+                        }
+                    }
+                },
+                x: {
+                    grid: {
+                        display: false
+                    },
+                    ticks: {
+                        font: {
+                            size: 12
+                        }
+                    }
+                }
+            },
+            animation: {
+                duration: 2000,
+                easing: 'easeOutQuart'
+            }
+        }
+    });
+}
+
+function initializeSearch() {
+    const searchUserId = document.getElementById('search_user_id');
+    const searchName = document.getElementById('search_name');
+    const searchInstitution = document.getElementById('search_institution');
+    const searchResultsSummary = document.getElementById('searchResultsSummary');
+    const visibleCountSpan = document.getElementById('visibleCount');
+    const totalCountSpan = document.getElementById('totalCount');
+    const clearAllFiltersBtn = document.getElementById('clearAllFilters');
+    const noResultsMessage = document.getElementById('noResultsMessage');
+    const tableBody = document.getElementById('usersTableBody');
+    
+    const userRows = document.querySelectorAll('.user-row');
+    const totalUsers = userRows.length;
+    
+    totalCountSpan.textContent = totalUsers;
+    
+    // Clear button functionality
+    function setupClearButton(inputElement, clearButtonId) {
+        const clearButton = document.getElementById(clearButtonId);
         
-        // Use DataTables API for more efficient searching
-        accountsTable.search('').draw(); // Clear any existing search
-        
-        // Apply custom filtering
-        $.fn.dataTable.ext.search.push(function(settings, data, dataIndex) {
-          const rowUserId = data[0].toLowerCase();
-          const rowName = data[1].toLowerCase();
-          const rowInstitution = data[4].toLowerCase();
-          
-          const userIdMatch = userId === '' || rowUserId.includes(userId);
-          const nameMatch = name === '' || rowName.includes(name);
-          const institutionMatch = institution === '' || rowInstitution.includes(institution);
-          
-          return userIdMatch && nameMatch && institutionMatch;
+        inputElement.addEventListener('input', function() {
+            if (this.value.length > 0) {
+                clearButton.style.display = 'flex';
+            } else {
+                clearButton.style.display = 'none';
+            }
         });
         
-        accountsTable.draw();
+        clearButton.addEventListener('click', function() {
+            inputElement.value = '';
+            this.style.display = 'none';
+            performSearch();
+            inputElement.focus();
+        });
+    }
+    
+    setupClearButton(searchUserId, 'clear_user_id');
+    setupClearButton(searchName, 'clear_name');
+    setupClearButton(searchInstitution, 'clear_institution');
+    
+    // Real-time search function
+    function performSearch() {
+        const userIdValue = searchUserId.value.toLowerCase().trim();
+        const nameValue = searchName.value.toLowerCase().trim();
+        const institutionValue = searchInstitution.value.toLowerCase().trim();
         
-        // Remove the custom filter after drawing
-        $.fn.dataTable.ext.search.pop();
-      }
-      
-      // Handle view modal data population
-      $('.view-btn').on('click', function() {
-        const userId = $(this).data('userid');
-        const firstName = $(this).data('firstname');
-        const middleName = $(this).data('middlename');
-        const lastName = $(this).data('lastname');
-        const dateJoined = $(this).data('datejoined');
-        const userEmail = $(this).data('email');
-        const institution = $(this).data('institution');
-        const position = $(this).data('position');
-        const userType = $(this).data('usertype');
-        const sex = $(this).data('sex');
-        const gender = $(this).data('gender');
-        const dateBirth = $(this).data('birthdate');
-        const contactNum = $(this).data('contactnum');
-        const highestEduc = $(this).data('highesteduc');
-        const specialization = $(this).data('specialization');
+        let visibleCount = 0;
+        let hasActiveSearch = userIdValue || nameValue || institutionValue;
         
-        const modal = $('#viewAccountModal');
-        modal.find('#id').val(userId);
-        modal.find('#first_name').val(firstName);
-        modal.find('#middle_name').val(middleName);
-        modal.find('#last_name').val(lastName);
-        modal.find('#email').val(userEmail);
-        modal.find('#institution').val(institution);
-        modal.find('#position').val(position);
-        modal.find('#user_type').val(userType);
-        modal.find('#sex').val(sex);
-        modal.find('#gender').val(gender);
-        modal.find('#date_birth').val(dateBirth);
-        modal.find('#contact_num').val(contactNum);
-        modal.find('#highest_educ').val(highestEduc);
-        modal.find('#specialization').val(specialization);
-      });
-      
-      // Handle edit modal data population and form action
-      $('.edit-btn').on('click', function() {
-        const userId = $(this).data('userid');
-        const firstName = $(this).data('firstname');
-        const middleName = $(this).data('middlename');
-        const lastName = $(this).data('lastname');
-        const dateJoined = $(this).data('datejoined');
-        const userEmail = $(this).data('email');
-        const institution = $(this).data('institution');
-        const position = $(this).data('position');
-        const userType = $(this).data('usertype');
-        const sex = $(this).data('sex');
-        const gender = $(this).data('gender');
-        const dateBirth = $(this).data('birthdate');
-        const contactNum = $(this).data('contactnum');
-        const highestEduc = $(this).data('highesteduc');
-        const specialization = $(this).data('specialization');
+        userRows.forEach(function(row) {
+            const userId = row.getAttribute('data-user-id').toLowerCase();
+            const userName = row.getAttribute('data-user-name').toLowerCase();
+            const userInstitution = row.getAttribute('data-user-institution').toLowerCase();
+            
+            let showRow = true;
+            
+            if (userIdValue && !userId.includes(userIdValue)) {
+                showRow = false;
+            }
+            
+            if (nameValue && !userName.includes(nameValue)) {
+                showRow = false;
+            }
+            
+            if (institutionValue && !userInstitution.includes(institutionValue)) {
+                showRow = false;
+            }
+            
+            if (showRow) {
+                row.style.display = '';
+                visibleCount++;
+                highlightMatchingText(row, userIdValue, nameValue, institutionValue);
+            } else {
+                row.style.display = 'none';
+            }
+        });
         
-        const modal = $('#editAccountModal');
-        modal.find('#id').val(userId);
-        modal.find('#first_name').val(firstName);
-        modal.find('#middle_name').val(middleName);
-        modal.find('#last_name').val(lastName);
-        modal.find('#email').val(userEmail);
-        modal.find('#institution').val(institution);
-        modal.find('#position').val(position);
+        visibleCountSpan.textContent = visibleCount;
         
-        // For select elements, we need to select the correct option
-        modal.find('#user_type').val(userType.toLowerCase());
-        modal.find('#sex').val(sex ? sex.toLowerCase() : '');
-        modal.find('#gender').val(gender ? gender.toLowerCase() : '');
+        if (hasActiveSearch) {
+            searchResultsSummary.style.display = 'flex';
+        } else {
+            searchResultsSummary.style.display = 'none';
+        }
         
-        modal.find('#date_birth').val(dateBirth);
-        modal.find('#contact_num').val(contactNum);
+        if (visibleCount === 0 && hasActiveSearch) {
+            noResultsMessage.style.display = 'block';
+            tableBody.style.display = 'none';
+        } else {
+            noResultsMessage.style.display = 'none';
+            tableBody.style.display = '';
+        }
+    }
+    
+    // Highlight matching text function
+    function highlightMatchingText(row, userIdValue, nameValue, institutionValue) {
+        const cells = row.querySelectorAll('td');
+        cells.forEach(cell => {
+            if (!cell.querySelector('button')) {
+                const originalText = cell.getAttribute('data-original-text') || cell.textContent;
+                cell.setAttribute('data-original-text', originalText);
+                cell.innerHTML = originalText;
+            }
+        });
         
-        // Extract just the education level from "X's Degree"
-        const educLevel = highestEduc ? highestEduc.split(' ')[0].toLowerCase() : '';
-        modal.find('#highest_educ').val(educLevel);
+        if (userIdValue) {
+            const userIdCell = cells[0];
+            highlightText(userIdCell, userIdValue);
+        }
         
-        modal.find('#specialization').val(specialization);
+        if (nameValue) {
+            const nameCell = row.querySelector('.user-name-cell');
+            highlightText(nameCell, nameValue);
+        }
         
-        // Set the form action URL
-        $('#editAccountForm').attr('action', formAction);
-      });
-      
-      // Display SweetAlert messages if provided from the server
-      {% if messages %}
-        {% for message in messages %}
-          {% if message.tags == 'success' %}
-            Swal.fire({
-              icon: 'success',
-              title: 'Success!',
-              text: '{{ message }}'
-            });
-          {% else %}
-            Swal.fire({
-              icon: 'error',
-              title: 'Error!',
-              text: '{{ message }}'
-            });
-          {% endif %}
-        {% endfor %}
-      {% endif %}
+        if (institutionValue) {
+            const institutionCell = row.querySelector('.user-institution-cell');
+            highlightText(institutionCell, institutionValue);
+        }
+    }
+    
+    function highlightText(element, searchTerm) {
+        if (!element || !searchTerm) return;
+        
+        const originalText = element.getAttribute('data-original-text') || element.textContent;
+        const regex = new RegExp(`(${escapeRegExp(searchTerm)})`, 'gi');
+        const highlightedText = originalText.replace(regex, '<mark style="background-color: #fff3cd; padding: 2px 4px; border-radius: 3px;">$1</mark>');
+        element.innerHTML = highlightedText;
+    }
+    
+    function escapeRegExp(string) {
+        return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    }
+    
+    function debounce(func, wait) {
+        let timeout;
+        return function executedFunction(...args) {
+            const later = () => {
+                clearTimeout(timeout);
+                func(...args);
+            };
+            clearTimeout(timeout);
+            timeout = setTimeout(later, wait);
+        };
+    }
+    
+    const debouncedSearch = debounce(performSearch, 150);
+    
+    searchUserId.addEventListener('input', debouncedSearch);
+    searchName.addEventListener('input', debouncedSearch);
+    searchInstitution.addEventListener('input', debouncedSearch);
+    
+    clearAllFiltersBtn.addEventListener('click', function() {
+        searchUserId.value = '';
+        searchName.value = '';
+        searchInstitution.value = '';
+        
+        document.querySelectorAll('.search-clear').forEach(btn => {
+            btn.style.display = 'none';
+        });
+        
+        performSearch();
     });
-  </script>
+}
+
+function initializeModals() {
+    // Modal handlers would go here
+    console.log('Modals initialized');
+}
+
+// Delete confirmation function
+function confirmDeleteUser(userId, userName) {
+    Swal.fire({
+        title: 'Are you sure?',
+        text: `Do you want to delete user "${userName}"? This action cannot be undone.`,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#D71313',
+        cancelButtonColor: '#6c757d',
+        confirmButtonText: 'Yes, delete it!',
+        cancelButtonText: 'Cancel'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            console.log(`Deleting user ${userId}`);
+        }
+    });
+}
+
+// Animate numbers on load
+function animateCounters() {
+    const counters = document.querySelectorAll('.stat-number');
+    
+    counters.forEach(counter => {
+        const target = parseInt(counter.textContent);
+        const duration = 2000;
+        const step = target / (duration / 16);
+        let current = 0;
+        
+        const timer = setInterval(() => {
+            current += step;
+            if (current >= target) {
+                counter.textContent = target;
+                clearInterval(timer);
+            } else {
+                counter.textContent = Math.floor(current);
+            }
+        }, 16);
+    });
+}
+
+// Call animation on load
+window.addEventListener('load', animateCounters);
+</script>
+
+  <!-- Enhanced Styles -->
+  <style>
+/* Analytics Dashboard */
+.analytics-dashboard {
+    margin-bottom: 2rem;
+}
+
+/* Stats Overview Cards */
+.stats-overview {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.stat-card {
+    background: white;
+    border-radius: 16px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    border: 1px solid #f0f0f0;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.stat-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+}
+
+.stat-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+}
+
+.stat-card.total-users::before {
+    background: linear-gradient(90deg, #667eea, #764ba2);
+}
+
+.stat-card.general-users::before {
+    background: linear-gradient(90deg, #28a745, #20c997);
+}
+
+.stat-card.cmi-users::before {
+    background: linear-gradient(90deg, #007bff, #6f42c1);
+}
+
+.stat-card.secretariat-users::before {
+    background: linear-gradient(90deg, #ffc107, #fd7e14);
+}
+
+.stat-card .stat-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    color: white;
+    margin-bottom: 1rem;
+    background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+}
+
+.general-users .stat-icon {
+    background: linear-gradient(135deg, #28a745, #20c997);
+}
+
+.cmi-users .stat-icon {
+    background: linear-gradient(135deg, #007bff, #6f42c1);
+}
+
+.secretariat-users .stat-icon {
+    background: linear-gradient(135deg, #ffc107, #fd7e14);
+}
+
+.stat-number {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--text-color);
+    margin-bottom: 0.5rem;
+    line-height: 1;
+}
+
+.stat-label {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    margin-bottom: 0.75rem;
+    font-weight: 500;
+}
+
+.stat-percentage {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    margin-bottom: 1rem;
+}
+
+.stat-trend {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.stat-trend.positive {
+    color: var(--success-color);
+}
+
+.stat-progress {
+    width: 100%;
+    height: 6px;
+    background: #f0f0f0;
+    border-radius: 3px;
+    overflow: hidden;
+    margin-top: 1rem;
+}
+
+.stat-progress .progress-bar {
+    height: 100%;
+    border-radius: 3px;
+    transition: width 2s cubic-bezier(0.4, 0, 0.2, 1);
+    background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+}
+
+.general-users .progress-bar {
+    background: linear-gradient(90deg, #28a745, #20c997);
+}
+
+.cmi-users .progress-bar {
+    background: linear-gradient(90deg, #007bff, #6f42c1);
+}
+
+.secretariat-users .progress-bar {
+    background: linear-gradient(90deg, #ffc107, #fd7e14);
+}
+
+/* Analytics Grid */
+.analytics-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+/* Chart Container */
+.chart-container {
+    background: white;
+    border-radius: 16px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    border: 1px solid #f0f0f0;
+}
+
+.chart-header {
+    margin-bottom: 1.5rem;
+}
+
+.chart-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--text-color);
+    margin-bottom: 0.25rem;
+}
+
+.chart-subtitle {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+}
+
+.donut-chart-container {
+    position: relative;
+    height: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.chart-center-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+.center-number {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--text-color);
+    line-height: 1;
+}
+
+.center-label {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+.chart-legend {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.legend-color {
+    width: 16px;
+    height: 16px;
+    border-radius: 4px;
+}
+
+.legend-color.general {
+    background: #28a745;
+}
+
+.legend-color.cmi {
+    background: #007bff;
+}
+
+.legend-color.secretariat {
+    background: #ffc107;
+}
+
+.legend-label {
+    font-size: 0.875rem;
+    color: var(--text-color);
+    font-weight: 500;
+}
+
+/* Institutions Panel */
+.institutions-panel {
+    background: white;
+    border-radius: 16px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    border: 1px solid #f0f0f0;
+}
+
+.panel-header {
+    margin-bottom: 1.5rem;
+}
+
+.panel-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--text-color);
+    margin-bottom: 0.25rem;
+}
+
+.panel-subtitle {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+}
+
+.institutions-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.institution-card {
+    padding: 1rem;
+    border: 1px solid #f0f0f0;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+}
+
+.institution-card:hover {
+    border-color: var(--primary-color);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+}
+
+.institution-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.75rem;
+}
+
+.institution-name {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+.institution-count {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    background: #f8f9fa;
+    padding: 0.25rem 0.5rem;
+    border-radius: 6px;
+}
+
+.institution-progress {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.progress-track {
+    flex: 1;
+    height: 6px;
+    background: #f0f0f0;
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+    border-radius: 3px;
+    transition: width 2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.percentage-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--text-color);
+    min-width: 35px;
+    text-align: right;
+}
+
+/* Activity Panel */
+.activity-panel {
+    background: white;
+    border-radius: 16px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    border: 1px solid #f0f0f0;
+}
+
+.activity-chart {
+    height: 200px;
+    margin-bottom: 1.5rem;
+}
+
+.activity-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+}
+
+.activity-stat {
+    text-align: center;
+    padding: 1rem;
+    background: #f8f9fa;
+    border-radius: 12px;
+}
+
+.activity-stat .stat-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin-bottom: 0.25rem;
+}
+
+.activity-stat .stat-label {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+/* User Management Panel */
+.user-management-panel {
+    width: 100%;
+}
+
+/* Search Styles */
+.search-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.search-field {
+    display: flex;
+    flex-direction: column;
+}
+
+.search-label {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--text-color);
+    margin-bottom: 0.5rem;
+}
+
+.search-input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.search-input {
+    width: 100%;
+    padding: 0.75rem 2.5rem 0.75rem 2.5rem;
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    font-size: 0.875rem;
+    transition: all 0.3s ease;
+    background-color: white;
+}
+
+.search-input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(12, 53, 106, 0.1);
+}
+
+.search-icon {
+    position: absolute;
+    left: 0.75rem;
+    color: #6c757d;
+    font-size: 0.875rem;
+    z-index: 1;
+}
+
+.search-clear {
+    position: absolute;
+    right: 0.75rem;
+    color: #6c757d;
+    cursor: pointer;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+    z-index: 1;
+}
+
+.search-clear:hover {
+    background-color: #f8f9fa;
+    color: var(--danger-color);
+}
+
+.search-results-summary {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    border: 1px solid #e9ecef;
+}
+
+.results-text {
+    font-size: 0.875rem;
+    color: var(--text-color);
+    font-weight: 500;
+}
+
+.status-badge {
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.status-badge.status-active {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.status-badge.status-pending {
+    background-color: #fff3cd;
+    color: #856404;
+}
+
+/* Responsive Design */
+@media (max-width: 1400px) {
+    .analytics-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+    
+    .activity-panel {
+        grid-column: span 2;
+    }
+}
+
+@media (max-width: 1024px) {
+    .analytics-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .activity-panel {
+        grid-column: span 1;
+    }
+    
+    .stats-overview {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .stats-overview {
+        grid-template-columns: 1fr;
+    }
+    
+    .search-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .search-results-summary {
+        flex-direction: column;
+        gap: 0.5rem;
+        align-items: stretch;
+    }
+    
+    .results-text {
+        text-align: center;
+    }
+    
+    .table-container {
+        max-height: 400px;
+    }
+    
+    .action-buttons {
+        flex-direction: column !important;
+        gap: 3px !important;
+    }
+    
+    .btn-sm {
+        font-size: 0.75rem;
+        padding: 0.25rem 0.5rem;
+    }
+    
+    .activity-stats {
+        grid-template-columns: 1fr;
+    }
+    
+    .chart-legend {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 576px) {
+    .search-input {
+        padding: 0.5rem 2rem 0.5rem 2rem;
+        font-size: 0.8rem;
+    }
+    
+    .search-icon {
+        left: 0.5rem;
+    }
+    
+    .search-clear {
+        right: 0.5rem;
+    }
+    
+    .dashboard-title {
+        font-size: 1.5rem;
+    }
+    
+    .chart-header {
+        flex-direction: column;
+        gap: 1rem;
+        align-items: stretch;
+    }
+    
+    .chart-controls {
+        width: 100%;
+    }
+    
+    .btn {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .stat-card {
+        padding: 1rem;
+    }
+    
+    .stat-number {
+        font-size: 2rem;
+    }
+    
+    .donut-chart-container {
+        height: 250px;
+    }
+    
+    .center-number {
+        font-size: 1.5rem;
+    }
+}
+
+/* Animation Classes */
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.stat-card {
+    animation: slideInUp 0.6s ease-out forwards;
+}
+
+.stat-card:nth-child(1) { animation-delay: 0.1s; }
+.stat-card:nth-child(2) { animation-delay: 0.2s; }
+.stat-card:nth-child(3) { animation-delay: 0.3s; }
+.stat-card:nth-child(4) { animation-delay: 0.4s; }
+
+.chart-container,
+.institutions-panel,
+.activity-panel {
+    animation: fadeIn 0.8s ease-out;
+}
+
+.institution-card {
+    animation: slideInUp 0.4s ease-out forwards;
+}
+
+.institution-card:nth-child(1) { animation-delay: 0.1s; }
+.institution-card:nth-child(2) { animation-delay: 0.2s; }
+.institution-card:nth-child(3) { animation-delay: 0.3s; }
+.institution-card:nth-child(4) { animation-delay: 0.4s; }
+.institution-card:nth-child(5) { animation-delay: 0.5s; }
+.institution-card:nth-child(6) { animation-delay: 0.6s; }
+
+/* Highlight animation for search results */
+@keyframes highlight {
+    0% { background-color: transparent; }
+    50% { background-color: #fff3cd; }
+    100% { background-color: transparent; }
+}
+
+.user-row.highlight {
+    animation: highlight 1s ease-in-out;
+}
+
+/* Loading states */
+.loading-skeleton {
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+    0% {
+        background-position: 200% 0;
+    }
+    100% {
+        background-position: -200% 0;
+    }
+}
+
+/* Custom scrollbar for table */
+.table-container::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+.table-container::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+.table-container::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 4px;
+}
+
+.table-container::-webkit-scrollbar-thumb:hover {
+    background: #a8a8a8;
+}
+
+/* Enhanced tooltips */
+[data-tooltip] {
+    position: relative;
+}
+
+[data-tooltip]:hover::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 0.5rem;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    white-space: nowrap;
+    z-index: 1000;
+    pointer-events: none;
+}
+
+/* Focus indicators for accessibility */
+.search-input:focus,
+.btn:focus {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    .stat-card {
+        border: 2px solid var(--text-color);
+    }
+    
+    .legend-color {
+        border: 1px solid var(--text-color);
+    }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+    .stat-card,
+    .chart-container,
+    .institutions-panel,
+    .activity-panel,
+    .institution-card {
+        animation: none;
+    }
+    
+    .progress-fill,
+    .progress-bar {
+        transition: none;
+    }
+}
+</style>
+
+  {% if messages %}
+    {% for message in messages %}
+      {% if message.tags == 'success' %}
+        <script>
+        Swal.fire({icon: 'success',title: 'Success!',text: '{{ message }}'})
+      </script>
+      {% endif %}
+    {% endfor %}
+  {% endif %}
 {% endblock %}

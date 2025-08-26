@@ -30,7 +30,7 @@ def load_knowledge_base_from_db():
             ResourceMetadata, KnowledgeResources, Commodity, Event,
             InformationSystem, Map, Media, News, Policy, Project,
             Publication, Technology, TrainingSeminar, Webinar, Product,
-            CMI, About
+            CMI, AboutRationale, AboutObjective, AboutActivity, AboutTimeline, AboutTeamMember, AboutSubProject, AboutSubProjectRationale, AboutSubProjectObjective, AboutSubProjectTeamMember, AboutSubProjectTimeline
         )
         from appCmi.models import Forum, FAQ
         
@@ -598,68 +598,251 @@ def load_knowledge_base_from_db():
         except Exception as e:
             print(f"⚠️ Error loading FAQs: {e}")
 
-        # 19. Load About Content
-        print("📄 Loading About content...")
-        try:
-            about_contents = About.objects.all()
-            print(f"Found {about_contents.count()} about content items")
+            # 19. Load About Rationales
+            print("💡 Loading About Rationales...")
+            rationales = AboutRationale.objects.all()
+            print(f"Found {rationales.count()} rationales")
 
-            for about in about_contents:
-                try:
-                    # Extract sections from HTML content
-                    sections = parse_about_content(about.content)
-                    
-                    # If we found sections, create separate entries for each
-                    if sections:
-                        for section_name, section_content in sections.items():
-                            combined_text = f"About AANR Knowledge Hub {section_name} {section_content}"
-                            
-                            knowledge_item = {
-                                'id': f"about_{about.about_id}_{section_name.lower().replace(' ', '_')}",
-                                'actual_id': about.about_id,
-                                'title': f"About AANR Knowledge Hub - {section_name}",
-                                'description': section_content[:300] + "..." if len(section_content) > 300 else section_content,
-                                'content': section_content,
-                                'section': section_name,
-                                'type': 'about',
-                                'url': '/cmis/about-km/',
-                                'created_at': about.date_created.isoformat() if about.date_created else None,
-                                'raw_text': combined_text
-                            }
-                            
-                            knowledge_data.append(knowledge_item)
-                            document_texts.append(combined_text)
-                    else:
-                        # Fallback: create general about entry
-                        import re
-                        clean_content = re.sub(r'<[^>]+>', ' ', about.content)
-                        clean_content = re.sub(r'\s+', ' ', clean_content).strip()
-                        
-                        combined_text = f"About AANR Knowledge Hub {clean_content}"
-                        
-                        knowledge_item = {
-                            'id': f"about_{about.about_id}",
-                            'actual_id': about.about_id,
-                            'title': "About AANR Knowledge Hub",
-                            'description': clean_content[:300] + "..." if len(clean_content) > 300 else clean_content,
-                            'content': about.content,
-                            'type': 'about',
-                            'url': '/cmis/about-km/',
-                            'created_at': about.date_created.isoformat() if about.date_created else None,
-                            'raw_text': combined_text
-                        }
-                        
-                        knowledge_data.append(knowledge_item)
-                        document_texts.append(combined_text)
-                        
-                except Exception as e:
-                    print(f"⚠️ Error processing About {about.about_id}: {e}")
-                    continue
+            for rationale in rationales:
+                combined_text = f"{rationale.title} {rationale.detail}"
 
-            print(f"✅ Loaded {len([item for item in knowledge_data if item['type'] == 'about'])} about content items")
-            
-        except Exception as e:
-            print(f"⚠️ Error loading About content: {e}")
+                knowledge_item = {
+                    'id': f"rationale_{rationale.rationale_id}",
+                    'actual_id': rationale.rationale_id,
+                    'title': rationale.title,
+                    'description': rationale.detail,
+                    'type': 'rationale',
+                    'about_id': rationale.about.about_id,
+                    'raw_text': combined_text
+                }
+
+                knowledge_data.append(knowledge_item)
+                document_texts.append(combined_text)
+
+            print(f"✅ Loaded {len([item for item in knowledge_data if item['type'] == 'rationale'])} rationales")
+
+            # 20. Load About Objectives
+            print("🎯 Loading About Objectives...")
+            objectives = AboutObjective.objects.prefetch_related('details').all()
+            print(f"Found {objectives.count()} objectives")
+
+            for objective in objectives:
+                combined_text = f"{objective.title} {' '.join([detail.detail for detail in objective.details.all()])}"
+
+                knowledge_item = {
+                    'id': f"objective_{objective.objective_id}",
+                    'actual_id': objective.objective_id,
+                    'title': objective.title,
+                    'description': combined_text,
+                    'type': 'objective',
+                    'about_id': objective.about.about_id,
+                    'raw_text': combined_text
+                }
+
+                knowledge_data.append(knowledge_item)
+                document_texts.append(combined_text)
+
+            print(f"✅ Loaded {len([item for item in knowledge_data if item['type'] == 'objective'])} objectives")
+
+            # 21. Load About Activities
+            print("📋 Loading About Activities...")
+            activities = AboutActivity.objects.all()
+            print(f"Found {activities.count()} activities")
+
+            for activity in activities:
+                combined_text = f"{activity.title} {activity.detail}"
+
+                knowledge_item = {
+                    'id': f"activity_{activity.activity_id}",
+                    'actual_id': activity.activity_id,
+                    'title': activity.title,
+                    'description': activity.detail,
+                    'type': 'activity',
+                    'about_id': activity.about.about_id,
+                    'raw_text': combined_text
+                }
+
+                knowledge_data.append(knowledge_item)
+                document_texts.append(combined_text)
+
+            print(f"✅ Loaded {len([item for item in knowledge_data if item['type'] == 'activity'])} activities")
+
+            # 22. Load About Timelines
+            print("📅 Loading About Timelines...")
+            timelines = AboutTimeline.objects.prefetch_related('bullets', 'images').all()
+            print(f"Found {timelines.count()} timelines")
+
+            for timeline in timelines:
+                combined_text = f"{timeline.title} {timeline.description} {' '.join([bullet.details for bullet in timeline.bullets.all()])}"
+
+                knowledge_item = {
+                    'id': f"timeline_{timeline.timeline_id}",
+                    'actual_id': timeline.timeline_id,
+                    'title': timeline.title,
+                    'description': timeline.description,
+                    'type': 'timeline',
+                    'about_id': timeline.about.about_id,
+                    'start_date': timeline.date_start.strftime('%Y-%m-%d') if timeline.date_start else None,
+                    'end_date': timeline.date_end.strftime('%Y-%m-%d') if timeline.date_end else None,
+                    'raw_text': combined_text
+                }
+
+                knowledge_data.append(knowledge_item)
+                document_texts.append(combined_text)
+
+            print(f"✅ Loaded {len([item for item in knowledge_data if item['type'] == 'timeline'])} timelines")
+
+            # 23. Load About Team Members
+            print("👥 Loading About Team Members...")
+            team_members = AboutTeamMember.objects.prefetch_related('socials').all()
+            print(f"Found {team_members.count()} team members")
+
+            for member in team_members:
+                combined_text = f"{member.first_name} {member.last_name} {member.role} {member.description}"
+
+                knowledge_item = {
+                    'id': f"team_member_{member.member_id}",
+                    'actual_id': member.member_id,
+                    'title': f"{member.first_name} {member.last_name}" or "Unnamed Member",
+                    'name': f"{member.first_name} {member.last_name}".strip(),
+                    'role': member.role,
+                    'description': member.description or "No description available",
+                    'type': 'team_member',
+                    'about_id': member.about.about_id,
+                    'social_links': [{'platform': social.platform, 'link': social.link} for social in member.socials.all()],
+                    'raw_text': combined_text
+                }
+
+                knowledge_data.append(knowledge_item)
+                document_texts.append(combined_text)
+
+            print(f"✅ Loaded {len([item for item in knowledge_data if item['type'] == 'team_member'])} team members")
+
+        print("📂 Loading Sub Projects...")
+        sub_projects = AboutSubProject.objects.all()
+        print(f"Found {sub_projects.count()} sub projects")
+
+        for sub_project in sub_projects:
+            combined_text = f"{sub_project.project_name} {sub_project.project_details} {sub_project.project_rationale_desc}"
+
+            knowledge_item = {
+                'id': f"sub_project_{sub_project.sub_id}",
+                'actual_id': sub_project.sub_id,
+                'title': sub_project.project_name,
+                'description': sub_project.project_details,
+                'type': 'sub_project',
+                'about_id': sub_project.about.about_id,
+                'rationale_desc': sub_project.project_rationale_desc,
+                'date_created': sub_project.date_created.strftime('%Y-%m-%d') if sub_project.date_created else None,
+                'raw_text': combined_text
+            }
+
+            knowledge_data.append(knowledge_item)
+            document_texts.append(combined_text)
+
+        print(f"✅ Loaded {len([item for item in knowledge_data if item['type'] == 'sub_project'])} sub projects")
+
+        # 25. Load Sub Project Rationales
+        print("💡 Loading Sub Project Rationales...")
+        sub_rationales = AboutSubProjectRationale.objects.all()
+        print(f"Found {sub_rationales.count()} sub project rationales")
+
+        for rationale in sub_rationales:
+            combined_text = f"{rationale.title} {rationale.detail}"
+
+            knowledge_item = {
+                'id': f"sub_rationale_{rationale.rationale_id}",
+                'actual_id': rationale.rationale_id,
+                'title': rationale.title,
+                'description': rationale.detail,
+                'type': 'sub_rationale',
+                'about_id': rationale.about.sub_id,
+                'raw_text': combined_text
+            }
+
+            knowledge_data.append(knowledge_item)
+            document_texts.append(combined_text)
+
+        print(f"✅ Loaded {len([item for item in knowledge_data if item['type'] == 'sub_rationale'])} sub project rationales")
+
+        # 26. Load Sub Project Objectives
+        print("🎯 Loading Sub Project Objectives...")
+        sub_objectives = AboutSubProjectObjective.objects.prefetch_related('details').all()
+        print(f"Found {sub_objectives.count()} sub project objectives")
+
+        for objective in sub_objectives:
+            details = [detail.detail for detail in objective.get_details()]
+            combined_text = f"{objective.title} {' '.join(details)}"
+
+            knowledge_item = {
+                'id': f"objective_{objective.objective_id}",
+                'actual_id': objective.objective_id,
+                'title': objective.title,
+                'description': combined_text or "No description available", 
+                'type': 'objective',
+                'about_id': objective.about.about_id,
+                'raw_text': combined_text or "" 
+            }
+
+            knowledge_data.append(knowledge_item)
+            document_texts.append(combined_text)
+
+        print(f"✅ Loaded {len([item for item in knowledge_data if item['type'] == 'sub_objective'])} sub project objectives")
+
+        # 27. Load Sub Project Timelines
+        print("📅 Loading Sub Project Timelines...")
+        sub_timelines = AboutSubProjectTimeline.objects.prefetch_related('bullets', 'images').all()
+        print(f"Found {sub_timelines.count()} sub project timelines")
+
+        for timeline in sub_timelines:
+            bullets = [bullet.details for bullet in timeline.bullets.all()]
+            combined_text = f"{timeline.title} {timeline.description} {' '.join(bullets)}"
+
+            knowledge_item = {
+                'id': f"sub_timeline_{timeline.timeline_id}",
+                'actual_id': timeline.timeline_id,
+                'title': timeline.title,
+                'description': timeline.description,
+                'bullets': bullets,
+                'type': 'sub_timeline',
+                'about_id': timeline.about.sub_id,
+                'start_date': timeline.date_start.strftime('%Y-%m-%d') if timeline.date_start else None,
+                'end_date': timeline.date_end.strftime('%Y-%m-%d') if timeline.date_end else None,
+                'raw_text': combined_text
+            }
+
+            knowledge_data.append(knowledge_item)
+            document_texts.append(combined_text)
+
+        print(f"✅ Loaded {len([item for item in knowledge_data if item['type'] == 'sub_timeline'])} sub project timelines")
+
+        # 28. Load Sub Project Team Members
+        print("👥 Loading Sub Project Team Members...")
+        sub_team_members = AboutSubProjectTeamMember.objects.prefetch_related('socials').all()
+        print(f"Found {sub_team_members.count()} sub project team members")
+
+        for member in sub_team_members:
+            name = f"{member.first_name or ''} {member.mid_name or ''} {member.last_name or ''}".strip()
+            combined_text = f"{name} {member.role} {member.description} {member.email or ''}"
+
+            knowledge_item = {
+                'id': f"sub_team_member_{member.member_id}",
+                'actual_id': member.member_id,
+                'title': name or "Unnamed Member",
+                'name': name,
+                'role': member.role,
+                'description': member.description or "No description available",
+                'email': member.email,
+                'type': 'sub_team_member',
+                'about_id': member.about.sub_id,
+                'social_links': [{'platform': social.platform, 'link': social.link} for social in member.socials.all()],
+                'raw_text': combined_text
+            }
+
+            knowledge_data.append(knowledge_item)
+            document_texts.append(combined_text)
+
+        print(f"✅ Loaded {len([item for item in knowledge_data if item['type'] == 'sub_team_member'])} sub project team members")
 
         print(f"🎉 Successfully loaded {len(knowledge_data)} total items into knowledge base")
         
@@ -671,7 +854,7 @@ def load_knowledge_base_from_db():
         print("📊 Summary by type:")
         for item_type, count in sorted(type_counts.items()):
             print(f"   • {item_type}: {count}")
-        
+
         return knowledge_data, document_texts
         
     except Exception as e:
@@ -681,45 +864,6 @@ def load_knowledge_base_from_db():
         print(traceback.format_exc())
         return [], []
 
-def parse_about_content(html_content):
-    """Parse HTML content to extract ALL sections"""
-    try:
-        from bs4 import BeautifulSoup
-        
-        sections = {}
-        
-        # Try to parse with BeautifulSoup first
-        try:
-            soup = BeautifulSoup(html_content, 'html.parser')
-            
-            # Extract all content without truncation
-            for element in soup.find_all(['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'div']):
-                if element.name in ['h1', 'h2', 'h3', 'h4', 'h5', 'h6']:
-                    section_title = element.get_text(strip=True)
-                    # Get all following content until next header
-                    content_parts = []
-                    for sibling in element.next_siblings:
-                        if sibling.name and sibling.name in ['h1', 'h2', 'h3', 'h4', 'h5', 'h6']:
-                            break
-                        if hasattr(sibling, 'get_text'):
-                            text = sibling.get_text(strip=True)
-                            if text:
-                                content_parts.append(text)
-                    
-                    if content_parts:
-                        # DON'T TRUNCATE - Keep full content
-                        sections[section_title] = ' '.join(content_parts)
-            
-        except ImportError:
-            # Fallback without BeautifulSoup
-            sections['About Content'] = html_content
-        
-        return sections
-        
-    except Exception as e:
-        print(f"Error parsing about content: {e}")
-        return {'About Content': html_content} 
-    
 def get_database_statistics():
     """Get statistics about the database content for reporting"""
     try:
